@@ -15,7 +15,7 @@ env:
   ECR_REPOSITORY: cago/cago-web
   ECS_SERVICE: cago-web-service
   ECS_CLUSTER: cago-cluster
-  ECS_TASK_DEFINITION: ./cago-web/ECS-task-definition
+  ECS_TASK_DEFINITION: ./cago-web/ECS-task-definition.json
   CONTAINER_NAME: cago-web
 
 permissions:
