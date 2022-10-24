@@ -9,8 +9,12 @@ https://docs.djangoproject.com/en/4.1/howto/deployment/wsgi/
 
 import os
 
+from decouple import config
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cago.settings')
+if config("MODE").casefold() == "DEVELOPMENT".casefold():
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cago.settings.development")
+else:
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cago.settings.production")
 
 application = get_wsgi_application()

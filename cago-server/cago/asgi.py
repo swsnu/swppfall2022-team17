@@ -9,8 +9,12 @@ https://docs.djangoproject.com/en/4.1/howto/deployment/asgi/
 
 import os
 
+from decouple import config
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cago.settings')
+if config("MODE").casefold() == "DEVELOPMENT".casefold():
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cago.settings.development")
+else:
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cago.settings.production")
 
 application = get_asgi_application()
