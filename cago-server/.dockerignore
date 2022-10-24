@@ -2,4 +2,3 @@
 .git
 *Dockerfile*
 db.sqlite3
-.env
