@@ -14,7 +14,7 @@ env:
   AWS_REGION: ap-northeast-2
   ECR_REPOSITORY: cago/cago-server
   ECS_SERVICE: cago-server-service
-  ECS_CLUSTER: cago-cluster
+  ECS_CLUSTER: cago-ecs-cluster
   ECS_TASK_DEFINITION: ./cago-server/ECS-task-definition.json
   CONTAINER_NAME: cago-server
 
@@ -48,12 +48,13 @@ jobs:
         MODE: PRODUCTION
         DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_HOST: $$ {{ secrets.DB_HOST }}
       run: |
         touch ./cago-server/.env
         echo MODE=$MODE >> ./cago-server/.env
         echo DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY >> ./cago-server/.env
         echo DB_PASSWORD=$DB_PASSWORD >> ./cago-server/.env
-        cat ./cago-server/.env
+        echo DB_HOST=$DB_HOST >> ./cago-server/.env
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image

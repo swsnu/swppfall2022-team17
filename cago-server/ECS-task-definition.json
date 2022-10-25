@@ -36,7 +36,7 @@
   "volumes": [],
   "placementConstraints": [],
   "requiresCompatibilities": ["FARGATE"],
-  "cpu": "2048",
+  "cpu": "1024",
   "memory": "4096",
   "runtimePlatform": {
     "cpuArchitecture": "X86_64",
