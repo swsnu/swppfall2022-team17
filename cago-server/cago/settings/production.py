@@ -17,7 +17,7 @@ DATABASES = {
         "NAME": "cago",
         "USER": "postgres",
         "PASSWORD": config("DB_PASSWORD"),
-        "HOST": "cago-database.cf6av8nj1vlu.ap-northeast-2.rds.amazonaws.com",
+        "HOST": config("DB_HOST"),
         "PORT": "5432",
     }
 }
