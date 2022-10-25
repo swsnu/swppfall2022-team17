@@ -15,7 +15,7 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>Welcome to Cago!</h1>
       </main>
 
-      <footer className={styles.footer}>Powered by SWPP-TEAM17</footer>
+      <footer className={styles.footer}>Powered by SWPP TEAM17</footer>
     </div>
   );
 };
