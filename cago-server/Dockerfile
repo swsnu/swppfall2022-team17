@@ -8,7 +8,8 @@ RUN ln -sf /dev/stdout /var/log/nginx/access.log  && ln -sf /dev/stderr /var/log
 
 COPY . .
 RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN python3 manage.py collectstatic --noinput
 
 EXPOSE 8000
-STOPSIGNAL SIGTERM
+
 CMD ["./start-server.sh"]
