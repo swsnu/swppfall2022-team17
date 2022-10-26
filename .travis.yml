@@ -1,0 +1,39 @@
+# CI Environment
+dist: bionic
+
+# Job Configurations
+jobs:
+  include:
+    - language: python
+      python: "3.10"
+      env:
+        - MODE="DEVELOPMENT"
+        - DJANGO_SECRET_KEY="django-insecure-u(^8h(h2@+++ayblbqsn!zw#w4yl$^6o2(_mi3j*iijd#l1m3h"
+      before_install:
+        - cd cago-server
+      install:
+        - pip install -r requirements.txt
+      before_script:
+        - export PYTHONPATH=$PYTHONPATH:$PWD
+        - export DJANGO_SETTINGS_MODULE=cago.settings.development
+      script:
+        - black **/*.py
+        - pylint **/*.py --load-plugins pylint_django
+        - coverage run --source='.' manage.py test
+        - coverage xml
+
+    - language: node_js
+      node_js: 16
+      addons:
+        sonarcloud:
+          organization: swsnu
+          token:
+            secure: "Jc9oxrzqviRxdezF8u1C7URgVW+PJtUTberlzCvlCuuqpf9/d2YfnZf2gdSTzP8Fd6WnFkwBwtyTAjvMxyC9lHwlz6LozOxKbypinxaphImZ+M+oHprZG6D+4uzyUWlfuEXi2EFoZS5Xo1KnBbAWD2bkFRzDf9/dU+U3zf1Lw9eklgZ3y2pFggYYxzho5KhXQ4La4TDcqNyv8MIDLoxjFDezpLqmquJ9ZKrGDGIVujodTa4xvNwRc2Fw+YrAWvG7ZDg7mdaYmTEe3AjG3pUdBeQVzEpqp15SrCQ9YHzZuav6F2cviIJ8xiDAHyCd1n1yINaSQc4RAMJh7mLXKl9hP0Uaxu+PctwpAJi/u9QV1yYptz8gmV4LC2//yJFGMmpSWD0mec1EKi005jzT5rAIzHB5nQkRu1gAmyih9j/89yMpvygRN8JQqahPy7MKs+26OnwiOzTJT3v9ZdcrGL6YU4v58691RReCV//PlXGnw7hsr+z8iJoDLxIt3GKN2uqmWQJAFTPB6MMBmFTgXZjAiMsvJh6KrKIZKRjOpQLYONFqOIeqyIxxvqgF+E1z+aRZaFGqkML0vStmxbJ1YUMhotMpwY49rILJ5hEZ/9CcTQzGXS2B3sfxYSwVOa/I7gy7RhHhGGITZEADsl/LhTZq2R5CfDeRFb7DqTWEAa5j4pE="
+      before_install:
+        - cd cago-web
+      install:
+        - yarn install -y
+      script:
+        - ./node_modules/.bin/eslint src
+        - yarn test --coverage --watchAll=false --passWithNoTests
+        - cd .. && sonar-scanner
