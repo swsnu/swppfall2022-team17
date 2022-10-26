@@ -15,6 +15,8 @@ pathspec==0.10.1
 platformdirs==2.5.2
 psycopg2==2.9.4
 pylint==2.15.5
+pylint-django==2.5.3
+pylint-plugin-utils==0.7
 python-decouple==3.6
 pytz==2022.5
 sqlparse==0.4.3
