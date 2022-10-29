@@ -1,6 +1,6 @@
 ## For *Cago* web
 
-#
+
 
 ## Getting Started
 
@@ -39,7 +39,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## For *Cago* server
 
-#
 
 
 ## Environment Variables
