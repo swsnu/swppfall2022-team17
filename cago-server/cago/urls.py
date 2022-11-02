@@ -15,9 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from rest_framework import routers
 
 urlpatterns = [
-    path("api/v1/admin/", admin.site.urls),
-    path("api/v1/ping/", include("cago.ping.urls")),
+    path("admin/", admin.site.urls),
+    path("ping/", include("cago.ping.urls")),
 ]
