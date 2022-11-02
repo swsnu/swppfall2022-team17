@@ -13,12 +13,8 @@ jobs:
         - cd cago-server
       install:
         - pip install -r requirements.txt
-      before_script:
-        - export PYTHONPATH=$PYTHONPATH:$PWD
-        - export DJANGO_SETTINGS_MODULE=cago.settings.development
       script:
         - black **/*.py
-        - pylint **/*.py --load-plugins pylint_django
         - coverage run --source='.' manage.py test
         - coverage xml
 
