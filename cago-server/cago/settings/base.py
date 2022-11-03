@@ -84,7 +84,7 @@ WSGI_APPLICATION = "cago.wsgi.application"
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = "ko-KR"
+LANGUAGE_CODE = "en-US"
 
 TIME_ZONE = "Asia/Seoul"
 
