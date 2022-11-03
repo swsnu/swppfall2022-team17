@@ -15,7 +15,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     def validate_password_confirm(self, password_confirm):
         password = self.get_initial().get("password")
         if password != password_confirm:
-            raise serializers.ValidationError("Password does not match")
+            raise serializers.ValidationError("password does not match.")
 
         return password_confirm
 
