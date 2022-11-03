@@ -19,5 +19,5 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("cago.user.urls", namespace="auth")),
-    path("ping/", include("cago.ping.urls")),
+    path("ping/", include("cago.ping.urls", namespace="ping")),
 ]
