@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "cago.cafe",
     "cago.ping",
+    "cago.user",
 ]
 
 MIDDLEWARE = [
