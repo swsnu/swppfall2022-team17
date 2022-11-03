@@ -11,6 +11,7 @@ django-extensions==3.2.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 drf-spectacular==0.24.2
+drf-standardized-errors==0.12.2
 gunicorn==20.1.0
 inflection==0.5.1
 isort==5.10.1
