@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.http import SimpleCookie
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -25,7 +26,7 @@ class LoginAPITestCase(APITestCase):
 
         data = response.json()
         access_token = AccessToken(data.get("access"))
-        refresh_token = RefreshToken(data.get("refresh"))
+        refresh_token = RefreshToken(response.cookies.get("refresh_token").value)
         self.assertEqual(access_token.get("user_id"), self.user.id)
         self.assertEqual(refresh_token.get("user_id"), self.user.id)
 
@@ -91,22 +92,22 @@ class SignUpAPITestCase(APITestCase):
         self.assertContains(response, "email", status_code=status.HTTP_400_BAD_REQUEST)
 
 
-class RefrehAPITestCase(APITestCase):
+class RefreshAPITestCase(APITestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create_user(email="test1@test.com", password="qwer1234")
         cls.refresh_token = RefreshToken.for_user(cls.user)
 
     def test_refresh_success(self):
-        response = self.client.post(
-            reverse("auth:refresh"), {"refresh": str(self.refresh_token)}
-        )
+        self.client.cookies = SimpleCookie({"refresh_token": str(self.refresh_token)})
+        response = self.client.post(reverse("auth:refresh"), None)
         self.assertContains(response, "access")
 
     def test_refresh_invalid_token(self):
-        response = self.client.post(
-            reverse("auth:refresh"), {"refresh": str(self.refresh_token) + "0"}
+        self.client.cookies = SimpleCookie(
+            {"refresh_token": str(self.refresh_token) + "0"}
         )
+        response = self.client.post(reverse("auth:refresh"), None)
         self.assertContains(
             response, "token_not_valid", status_code=status.HTTP_401_UNAUTHORIZED
         )
@@ -126,9 +127,8 @@ class VerifyAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_verify_refresh_success(self):
-        response = self.client.post(
-            reverse("auth:verify"), {"token": str(self.refresh_token)}
-        )
+        self.client.cookies = SimpleCookie({"refresh_token": str(self.refresh_token)})
+        response = self.client.post(reverse("auth:verify"), None)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_verify_invalid_token(self):
