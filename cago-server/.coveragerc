@@ -1,0 +1,14 @@
+[run]
+omit = 
+    manage.py
+    cago/asgi.py
+    cago/wsgi.py
+    cago/settings/*
+    **/migrations/*
+
+[report]
+ignore_errors = True
+skip_empty = True
+
+[html]
+title = Cago API coverage report
