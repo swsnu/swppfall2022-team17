@@ -14,3 +14,5 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+SECURE_COOKIE = False

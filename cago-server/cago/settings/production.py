@@ -21,3 +21,5 @@ DATABASES = {
         "PORT": "5432",
     }
 }
+
+SECURE_COOKIE = True
