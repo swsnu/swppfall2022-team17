@@ -47,6 +47,19 @@ class LoginAPITestCase(APITestCase):
         )
 
 
+class LogoutAPITestCase(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = User.objects.create_user(email="test1@test.com", password="qwer1234")
+        cls.refresh_token = RefreshToken.for_user(cls.user)
+
+    def test_logout_success(self):
+        self.client.cookies = SimpleCookie({"refresh_token": str(self.refresh_token)})
+        response = self.client.get(reverse("auth:logout"))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(response.cookies.get("refresh_token").value, "")
+
+
 class SignUpAPITestCase(APITestCase):
     @classmethod
     def setUpTestData(cls):
