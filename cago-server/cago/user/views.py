@@ -1,6 +1,7 @@
 from django.conf import settings
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView, Response
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -26,6 +27,13 @@ class LoginView(TokenObtainPairView):
             del response.data["refresh"]
 
         return super().finalize_response(request, response, *args, **kwargs)
+
+
+class LogoutView(APIView):
+    def get(self, request):
+        response = Response(status=status.HTTP_204_NO_CONTENT)
+        response.delete_cookie("refresh_token")
+        return response
 
 
 class SignUpView(generics.CreateAPIView):
