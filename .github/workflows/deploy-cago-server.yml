@@ -48,7 +48,7 @@ jobs:
         MODE: PRODUCTION
         DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_HOST: $${{ secrets.DB_HOST }}
+        DB_HOST: ${{ secrets.DB_HOST }}
       run: |
         touch ./cago-server/.env
         echo MODE=$MODE >> ./cago-server/.env
