@@ -2,6 +2,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.db import models
+from cafe.models import Cafe
 from django.utils import timezone
 
 
@@ -55,6 +56,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
+
+    cafes = models.ManyToManyField(Cafe)
 
     class Meta:
         verbose_name = "user"
