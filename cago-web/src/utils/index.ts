@@ -1,5 +1,14 @@
 import axios from "axios";
 
+export interface CagoAPIError {
+  type: string;
+  errors: {
+    code: string;
+    detail: string;
+    attr: string;
+  }[];
+}
+
 /**
  * Get a method to call Cago API.
  */
