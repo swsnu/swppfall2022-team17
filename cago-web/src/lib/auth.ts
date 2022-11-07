@@ -35,7 +35,7 @@ export const logout = async () => {
   // TODO: Implement logout API.
   await getCagoRequest()("/auth/logout/");
 
-  mutate("/auth/refresh/", undefined, { revalidate: false });
+  mutate("/auth/refresh/");
 };
 
 export const signup = async (email: string, password: string, passwordConfirm: string) => {
@@ -82,7 +82,7 @@ export const useAuth = () => {
 
   const [user, setUser] = useState<User>();
 
-  const loggedIn = !!data;
+  const loggedIn = !!data && !error;
   const loading = !data && !error;
 
   useEffect(() => {
