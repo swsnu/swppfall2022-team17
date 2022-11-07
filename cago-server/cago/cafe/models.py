@@ -12,14 +12,14 @@ class Cafe(models.Model):
     day_off = models.CharField(max_length=64)
     bussiness_hour = models.CharField(max_length=64)
     representative_name = models.CharField(max_length=16)
-    registration_number = models.CharField()
+    registration_number = models.CharField(max_length=16)
     location = models.CharField(max_length=64)
     address = models.CharField(max_length=64)
     phone_number = models.CharField(max_length=16)
     managers = models.ManyToManyField(
         get_user_model(),
         through="ManagerProfile",
-        through_fields=("group", "person"),
+        through_fields=("cafe", "get_user_model()"),
     )
 
 
