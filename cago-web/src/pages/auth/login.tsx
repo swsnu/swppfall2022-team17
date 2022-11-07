@@ -17,7 +17,10 @@ const Login: NextPageWithLayout = () => {
         <div className="mb-4">
           <LoginForm />
         </div>
-        <Link href="/auth/signup" className="block w-fit ml-auto underline underline-offset-2">
+        <Link
+          href={{ pathname: "/auth/signup", query: { redirect } }}
+          className="block w-fit ml-auto underline underline-offset-2"
+        >
           회원가입
         </Link>
       </div>
