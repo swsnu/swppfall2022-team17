@@ -28,6 +28,7 @@ const LoginForm: NextComponentType = () => {
         type="email"
         placeholder="이메일"
         required
+        autoFocus
         onChange={(e) => setEmail(e.target.value)}
         className="outlined font-normal mb-2"
       />

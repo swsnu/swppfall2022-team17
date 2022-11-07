@@ -37,6 +37,7 @@ const SignUpForm = () => {
             type="email"
             placeholder="이메일"
             required
+            autoFocus
             onChange={(e) => setEmail(e.target.value)}
             className="outlined font-normal mb-2"
           />
@@ -51,6 +52,7 @@ const SignUpForm = () => {
             type="password"
             placeholder="비밀번호"
             required
+            autoFocus
             onChange={(e) => setPassword(e.target.value)}
             className="outlined font-normal mb-2"
           />
