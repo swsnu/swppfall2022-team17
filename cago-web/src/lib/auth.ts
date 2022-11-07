@@ -55,6 +55,23 @@ export const signup = async (email: string, password: string, passwordConfirm: s
   }
 };
 
+export const isUniqueEmail = async (email: string) => {
+  try {
+    await getCagoRequest<{ id: number; email: string }>("post")("/auth/signup/", {
+      email,
+    });
+  } catch (error) {
+    if (axios.isAxiosError<CagoAPIError>(error)) {
+      const { errors } = error.response?.data!;
+      if (errors.some((v) => v.code === "unique")) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+};
+
 /**
  * A handy hook for user authorization.
  */
