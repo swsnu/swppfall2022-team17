@@ -1,10 +1,13 @@
 import SignUpForm from "components/forms/SignUpForm";
 import Container from "components/layouts/Container";
 import { useRequireLogout } from "lib/auth";
+import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
 
 const SignUp: NextPageWithLayout = () => {
-  useRequireLogout("/cafes");
+  const router = useRouter();
+  const redirect = (router.query?.redirect as string) || "/cafes";
+  useRequireLogout(redirect);
 
   return (
     <main className="flex flex-col h-screen items-center justify-center">
