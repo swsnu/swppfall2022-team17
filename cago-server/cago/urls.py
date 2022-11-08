@@ -21,9 +21,12 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
+from .cafe.urls import cafe_router
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("cago.user.urls", namespace="auth")),
+    path("", include(cafe_router.urls)),
     path("ping/", include("cago.ping.urls", namespace="ping")),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
