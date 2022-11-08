@@ -1,5 +1,4 @@
 import RegisterCafeForm from "components/forms/RegisterCafeForm";
-import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
 import { NextPageWithLayout } from "pages/_app";
@@ -20,8 +19,7 @@ const RegisterCafe: NextPageWithLayout = () => {
 
 RegisterCafe.getLayout = (page) => (
   <RequireLogin>
-    <CagoAdminHeader />
-    <Container>{page}</Container>;
+    <Container>{page}</Container>
   </RequireLogin>
 );
 
