@@ -1,14 +1,9 @@
 import SignUpForm from "components/forms/SignUpForm";
 import Container from "components/layouts/Container";
-import { useRequireLogout } from "lib/auth";
-import { useRouter } from "next/router";
+import RequireLogout from "components/layouts/RequireLogout";
 import { NextPageWithLayout } from "pages/_app";
 
 const SignUp: NextPageWithLayout = () => {
-  const router = useRouter();
-  const redirect = (router.query?.redirect as string) || "/cafes";
-  useRequireLogout(redirect);
-
   return (
     <main className="flex flex-col h-screen items-center justify-center">
       <h1 className="font-bold text-4xl mb-8">Welcome to Cago!</h1>
@@ -21,6 +16,10 @@ const SignUp: NextPageWithLayout = () => {
   );
 };
 
-SignUp.getLayout = (page) => <Container>{page}</Container>;
+SignUp.getLayout = (page) => (
+  <RequireLogout>
+    <Container>{page}</Container>;
+  </RequireLogout>
+);
 
 export default SignUp;
