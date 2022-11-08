@@ -21,6 +21,9 @@ export const registerCafe = async (
       id: number;
       registration_number: string;
       business_name: string;
+      representative_name: string;
+      address: string;
+      phone_number: string;
     }>("post")("/cafes/", {
       registration_number: registrationNumber,
       business_name: businessName,
@@ -45,8 +48,11 @@ export const isUniqueCafe = async (
   try {
     await getCagoRequest<{
       id: number;
-      registrationNumber: string;
-      businessName: string;
+      registration_number: string;
+      business_name: string;
+      representative_name: string;
+      address: string;
+      phone_number: string;
     }>("post")("/cafes/", {
       registration_number: registrationNumber,
       business_name: businessName,
