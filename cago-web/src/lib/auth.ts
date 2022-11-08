@@ -1,5 +1,4 @@
 import axios, { AxiosError } from "axios";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR, { mutate } from "swr";
 import { CagoAPIError, getCagoRequest } from "utils";
@@ -103,36 +102,4 @@ export const useAuth = () => {
   }, [data, mutate]);
 
   return { loading, loggedIn, user };
-};
-
-/**
- * Redirect to the url if the user is logged out.
- */
-export const useRequireLogin = (url: string) => {
-  const { loading, loggedIn } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    router.prefetch(url);
-
-    if (!loading && !loggedIn) {
-      router.replace(url);
-    }
-  }, [loading, loggedIn, url, router]);
-};
-
-/**
- * Redirect to the url if the user is logged in.
- */
-export const useRequireLogout = (url: string) => {
-  const { loggedIn } = useAuth();
-  const router = useRouter();
-
-  useEffect(() => {
-    router.prefetch(url);
-
-    if (loggedIn) {
-      router.replace(url);
-    }
-  }, [loggedIn, url, router]);
 };
