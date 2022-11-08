@@ -23,6 +23,7 @@ class LoginView(TokenObtainPairView):
                 max_age=max_age,
                 httponly=True,
                 secure=settings.SECURE_COOKIE,
+                samesite="lax",
             )
             del response.data["refresh"]
 
