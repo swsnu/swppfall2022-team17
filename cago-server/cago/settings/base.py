@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "drf_spectacular",
     "drf_standardized_errors",
+    "phonenumber_field",
     "cago.cafe",
     "cago.ping",
     "cago.user",

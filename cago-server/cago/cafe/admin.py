@@ -1,3 +1,9 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Cafe, CafeImage, CafeMenu, CustomerProfile, ManagedCafe
+
+admin.site.register(Cafe)
+admin.site.register(CafeImage)
+admin.site.register(CafeMenu)
+admin.site.register(CustomerProfile)
+admin.site.register(ManagedCafe)
