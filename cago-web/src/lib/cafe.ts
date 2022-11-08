@@ -1,7 +1,4 @@
-import axios, { AxiosError } from "axios";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import useSWR, { mutate } from "swr";
+import axios from "axios";
 import { CagoAPIError, getCagoRequest } from "utils";
 
 export const registerCafe = async (
