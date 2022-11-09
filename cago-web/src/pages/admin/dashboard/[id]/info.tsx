@@ -7,11 +7,11 @@ import BusinessIntroduction from "components/contents/BusinessIntroduction";
 
 const Info: NextPageWithLayout = () => {
   return (
-    <>
+    <div>
       <CafeStatistic />
       <CafeIntroduction />
       <BusinessIntroduction />
-    </>
+    </div>
   );
 };
 
