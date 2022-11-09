@@ -9,8 +9,8 @@ const CafeIntroduction: NextComponentType = () => {
     const router = useRouter()
     const id = router.query.id as string | undefined;
     return (
-        <div className="flex flex-col justify-center h-96 mt-2">
-            <div className="border-b-2 border-black w-full mb-2">
+        <div className="flex flex-col justify-center h-48 mt-2">
+            <div className="text-2xl font-bold border-b-2 border-black w-full mb-2 shadow">
                 Cafe Introduction
             </div>
             <div className="border border-solid border-black rounded h-full text-center align-middle mb-2">
