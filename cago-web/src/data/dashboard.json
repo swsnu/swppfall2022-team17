@@ -4,29 +4,41 @@
     "name": "Starbucks",
     "introduction": "Most famous cafe in the world",
     "address": "gwanak-saguri 12, gwanak-district",
-    "phone number": "03-123-4321",
-    "best":"Mood",
-    "reviews":9.5,
-    "likes":7
+    "phone_number": "03-123-4321",
+    "best": "Mood",
+    "reviews": 9.5,
+    "likes": 7,
+    "business_hour": "08:00 AM - 21:00 PM",
+    "day_off": "sunday and national day",
+    "name_of_representative" : "Gildong Hong",
+    "business_registration_number" : "123-45-67890"
   },
   {
     "id": 2,
     "name": "Ediya",
     "introduction": "Proper price.",
     "address": "hapjeongro 43, mapo-district",
-    "phone number": "03-499-4329",
-    "best":"Price",
-    "reviews":7.5,
-    "likes":199
+    "phone_number": "03-499-4329",
+    "best": "Price",
+    "reviews": 7.5,
+    "likes": 199,
+    "business_hour": "08:30 AM - 22:00 PM",
+    "day_off": "saturday",
+    "name_of_representative" : "Ceolsu Kim",
+    "business_registration_number" : "412-52-72343"
   },
   {
     "id": 3,
     "name": "Pascucci",
     "introduction": "Came from Italy.",
     "address": "teheranro 1, gangnam-district",
-    "phone number": "03-392-3849",
-    "best":"Service",
-    "reviews":8,
-    "likes":235
+    "phone_number": "03-392-3849",
+    "best": "Service",
+    "reviews": 8,
+    "likes": 235,
+    "business_hour": "07:00 AM - 21:00 PM",
+    "day_off": "None",
+    "name_of_representative" : "Yeonghui Kim",
+    "business_registration_number" : "625-36-12672"
   }
 ]

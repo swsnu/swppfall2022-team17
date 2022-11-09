@@ -10,10 +10,10 @@ const CafeIntroduction: NextComponentType = () => {
     const id = router.query.id as string | undefined;
     return (
         <div className="flex flex-col justify-center h-48 mt-2">
-            <div className="text-2xl font-bold border-b-2 border-black w-full mb-2 shadow">
+            <div className="text-2xl font-bold w-full mb-4">
                 Cafe Introduction
             </div>
-            <div className="border border-solid border-black rounded h-full text-center align-middle mb-2">
+            <div className="bg-slate-50 py-4 shadow-lg rounded h-full text-center align-middle mb-2 text-2xl font-medium">
                 {id && dashboardData[parseInt(id)-1].introduction}
             </div>
         </div>
