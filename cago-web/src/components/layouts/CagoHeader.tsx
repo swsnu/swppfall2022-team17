@@ -1,9 +1,12 @@
 import { logout, useAuth } from "lib/auth";
+import { useCustomerProfile } from "lib/customer-profile";
+import Image from "next/image";
 import Link from "next/link";
 import Container from "./Container";
 
 const CagoHeader = () => {
   const { loading, loggedIn } = useAuth();
+  const { data: customerProfile } = useCustomerProfile();
 
   const handleLogoutButtonClick: React.MouseEventHandler = async (e) => {
     e.preventDefault();
@@ -22,13 +25,26 @@ const CagoHeader = () => {
               </Link>
             </li>
           </ul>
-          <ul className="flex gap-4">
+          <ul className="flex gap-6">
             {loggedIn && (
-              <li>
-                <button className="font-semibold" onClick={(e) => handleLogoutButtonClick(e)}>
-                  로그아웃
-                </button>
-              </li>
+              <>
+                <li>
+                  <button className="font-semibold h-full" onClick={(e) => handleLogoutButtonClick(e)}>
+                    로그아웃
+                  </button>
+                </li>
+                {customerProfile && (
+                  <li>
+                    <Image
+                      src={customerProfile.avatar}
+                      alt="customer-profile-avatar"
+                      width={35}
+                      height={35}
+                      className="mx-auto rounded-full border border-slate-800 h-full"
+                    />
+                  </li>
+                )}
+              </>
             )}
             {!loading && !loggedIn && (
               <>
