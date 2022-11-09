@@ -1,16 +1,16 @@
 import Container from "components/layouts/Container";
 import { NextPageWithLayout } from "pages/_app";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
-import CafeIntroductionForm from "components/forms/CafeIntroductionForm";
-import CafeStatisticForm from "components/forms/CafeStatisticsForm";
-import BusinessIntroductionForm from "components/forms/BusinessIntroductionForm";
+import CafeIntroduction from "components/contents/CafeIntroduction";
+import CafeStatistic from "components/contents/CafeStatistics";
+import BusinessIntroduction from "components/contents/BusinessIntroduction";
 
 const Info: NextPageWithLayout = () => {
   return (
     <>
-      <CafeStatisticForm />
-      <CafeIntroductionForm />
-      <BusinessIntroductionForm />
+      <CafeStatistic />
+      <CafeIntroduction />
+      <BusinessIntroduction />
     </>
   );
 };

@@ -5,7 +5,7 @@ import React from "react";
 import dashboardData from "data/dashboard.json";
 
 
-const CafeIntroductionForm: NextComponentType = () => {
+const CafeIntroduction: NextComponentType = () => {
     const router = useRouter()
     const id = router.query.id as string | undefined;
     return (
@@ -13,7 +13,7 @@ const CafeIntroductionForm: NextComponentType = () => {
             <div className="border-b-2 border-black w-full mb-2">
                 Cafe Introduction
             </div>
-            <div className="border border-solid border-black rounded h-full text-center align-middle">
+            <div className="border border-solid border-black rounded h-full text-center align-middle mb-2">
                 {id && dashboardData[parseInt(id)-1].introduction}
             </div>
         </div>
@@ -21,4 +21,4 @@ const CafeIntroductionForm: NextComponentType = () => {
 }
 
 
-export default CafeIntroductionForm;
+export default CafeIntroduction;
