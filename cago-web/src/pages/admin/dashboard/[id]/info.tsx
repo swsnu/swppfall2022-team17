@@ -3,6 +3,7 @@ import { NextPageWithLayout } from "pages/_app"
 import { useRouter } from 'next/router'
 import CagoAdminHeader from "components/layouts/CagoAdminHeader"
 import CafeIntroductionForm from "components/forms/CafeIntroductionForm"
+import CafeStatisticForm from "components/forms/CafeStatisticsForm"
 
 const Info: NextPageWithLayout = () => {
     const router = useRouter()
@@ -10,6 +11,7 @@ const Info: NextPageWithLayout = () => {
     return (
         <>
             <CafeIntroductionForm/>
+            <CafeStatisticForm />
             HI! This is for test for info page! And This is your Cafe ID : {id}
         </>
     )

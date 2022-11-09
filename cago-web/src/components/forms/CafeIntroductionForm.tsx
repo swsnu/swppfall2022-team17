@@ -2,7 +2,7 @@
 import { NextComponentType } from "next";
 import { useRouter } from 'next/router'
 import React from "react";
-import dashboardData from "data/dashboard.json"
+import dashboardData from "data/dashboard.json";
 
 
 const CafeIntroductionForm: NextComponentType = () => {

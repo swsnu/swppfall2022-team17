@@ -1,17 +1,32 @@
 [
-    {
-        "id": 1,
-        "name": "Starbucks",
-        "introduction":"Most famous cafe in the world"
-    },
-    {
-        "id": 2,
-        "name": "Ediya",
-        "introduction" : "Proper price."
-    },
-    {
-        "id": 3,
-        "name": "Pascucci",
-        "introduction" : "Came from Italy."
-    }
+  {
+    "id": 1,
+    "name": "Starbucks",
+    "introduction": "Most famous cafe in the world",
+    "address": "gwanak-saguri 12, gwanak-district",
+    "phone number": "03-123-4321",
+    "best":"Mood",
+    "reviews":9.5,
+    "likes":7
+  },
+  {
+    "id": 2,
+    "name": "Ediya",
+    "introduction": "Proper price.",
+    "address": "hapjeongro 43, mapo-district",
+    "phone number": "03-499-4329",
+    "best":"Price",
+    "reviews":7.5,
+    "likes":199
+  },
+  {
+    "id": 3,
+    "name": "Pascucci",
+    "introduction": "Came from Italy.",
+    "address": "teheranro 1, gangnam-district",
+    "phone number": "03-392-3849",
+    "best":"Service",
+    "reviews":8,
+    "likes":235
+  }
 ]
