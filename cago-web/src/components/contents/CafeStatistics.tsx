@@ -2,7 +2,7 @@ import { NextComponentType } from "next";
 import { useRouter } from "next/router";
 import React from "react";
 import dashboardData from "data/dashboard.json";
-import ComponentContainer from "components/contents/ComponentContainer";
+import ContentSection from "components/contents/ContentSection";
 
 const CafeStatistic: NextComponentType = () => {
   const router = useRouter();
@@ -15,21 +15,21 @@ const CafeStatistic: NextComponentType = () => {
 
   const StatisticBox = ({dataName,data}:Props) => {
     return (
-      <div className="bg-slate-50 shadow-lg flex flex-col rounded w-2/6 mr-2 place-content-evenly py-4">
-        <div className="text-3xl">{dataName}</div>
-        <div>{data}</div>
+      <div className="bg-slate-50 shadow-lg flex flex-col rounded-sm w-2/6 mr-2 place-content-evenly py-4">
+        <div>{dataName}</div>
+        <div className="text-2xl font-bold">{data}</div>
       </div>
     );
   };
   
   return (
-    <ComponentContainer title="Cafe Statistics">
+    <ContentSection title="통계">
       <div className="flex h-full text-center align-middle place mb-2">
-        <StatisticBox dataName="Best" data={id && dashboardData[parseInt(id) - 1].best}/>
-        <StatisticBox dataName="Reviews" data={id && dashboardData[parseInt(id) - 1].reviews}/>
-        <StatisticBox dataName="Likes" data={id && dashboardData[parseInt(id) - 1].likes}/>
+        <StatisticBox dataName="장점" data={id && dashboardData[parseInt(id) - 1].best}/>
+        <StatisticBox dataName="리뷰" data={id && dashboardData[parseInt(id) - 1].reviews}/>
+        <StatisticBox dataName="좋아요" data={id && dashboardData[parseInt(id) - 1].likes}/>
       </div>
-    </ComponentContainer>
+    </ContentSection>
   );
 };
 
