@@ -39,7 +39,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "cdn0.iconfinder.com",
-        port: "",
         pathname: "/data/icons/**",
       },
     ],
