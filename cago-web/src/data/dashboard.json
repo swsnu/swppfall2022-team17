@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "name": "Starbucks",
+        "introduction":"Most famous cafe in the world"
+    },
+    {
+        "id": 2,
+        "name": "Ediya",
+        "introduction" : "Proper price."
+    },
+    {
+        "id": 3,
+        "name": "Pascucci",
+        "introduction" : "Came from Italy."
+    }
+]
