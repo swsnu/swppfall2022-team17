@@ -26,9 +26,8 @@ class CustomerProfile(models.Model):
 
 
 class Cafe(models.Model):
-    business_name = models.CharField(max_length=128)
-    slug = models.SlugField(max_length=128, unique=True)
-    phone_number = PhoneNumberField()
+    name = models.CharField(max_length=128)  # auto-created name by parsing
+    phone_number = PhoneNumberField(unique=True)
     # TODO: Use Google map API's geocoding (https://developers.google.com/maps/documentation/geocoding/overview)
     # location = PointField()
     # address = models.CharField(max_length=256)
@@ -36,10 +35,6 @@ class Cafe(models.Model):
     class Meta:
         verbose_name = "cafe"
         verbose_name_plural = "cafes"
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.slug)
-        super().save(*args, **kwargs)
 
     @property
     def is_managed(self):
@@ -59,11 +54,10 @@ class ManagedCafe(Cafe):
     registration_number = models.PositiveBigIntegerField(
         validators=[MaxValueValidator(9999999999)]
     )
-    representative = models.ForeignKey(
+    owner = models.ForeignKey(
         User, related_name="owned_cafes", on_delete=models.CASCADE
     )
     managers = models.ManyToManyField(User, related_name="managed_cafes")
-    display_name = models.CharField(max_length=64)
     avatar = models.URLField(max_length=256, default=default_avatar)
     force_closed = models.BooleanField(default=False)
     crowdedness = models.IntegerField(
@@ -73,20 +67,6 @@ class ManagedCafe(Cafe):
     class Meta:
         verbose_name = "managed_cafe"
         verbose_name_plural = "managed_cafes"
-
-    def save(self, *args, **kwargs):
-        self.full_clean()
-        super().save(*args, **kwargs)
-
-    def validate_unique(self, *args, **kwargs):
-        queryset = ManagedCafe.objects.filter(
-            registration_number=self.registration_number,
-            business_name=self.business_name,
-        )
-        if queryset.exists():
-            raise ValidationError("cafe already exists")
-
-        return super().validate_unique(*args, **kwargs)
 
 
 class CafeImage(models.Model):
