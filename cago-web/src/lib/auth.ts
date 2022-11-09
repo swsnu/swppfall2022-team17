@@ -31,7 +31,6 @@ export const login = async (email: string, password: string) => {
 };
 
 export const logout = async () => {
-  // TODO: Implement logout API.
   await getCagoRequest()("/auth/logout/");
 
   mutate("/auth/refresh/");
@@ -75,11 +74,8 @@ export const isUniqueEmail = async (email: string) => {
  * A handy hook for user authorization.
  */
 export const useAuth = () => {
-  const {
-    data,
-    error,
-    mutate: keyedMutate,
-  } = useSWR<Token, AxiosError>("/auth/refresh/", getCagoRequest("post"), {
+  // Refresh token whether or not the user is logged in, since a browser doesn't have an access to the refresh token.
+  const { data, error, mutate } = useSWR<Token, AxiosError>("/auth/refresh/", getCagoRequest("post"), {
     shouldRetryOnError: false,
   });
 
@@ -89,7 +85,7 @@ export const useAuth = () => {
   const loading = !data && !error;
 
   useEffect(() => {
-    if (data) {
+    if (loggedIn) {
       // Get payload from the access token.
       const { access: token } = data;
       const payload = JSON.parse(window.atob(token.split(".")[1]));
@@ -100,14 +96,13 @@ export const useAuth = () => {
         setUser({ id: payload.user_id, token });
       } else {
         // Refresh if expired.
-        keyedMutate();
+        mutate();
       }
+    } else {
+      // Set user to undefined if logged out.
+      setUser(undefined);
     }
-  }, [data, keyedMutate]);
-
-  useEffect(() => {
-    mutate("/customer-profile/me/");
-  }, [loggedIn, data]);
+  }, [loggedIn, data, mutate]);
 
   return { loading, loggedIn, user };
 };

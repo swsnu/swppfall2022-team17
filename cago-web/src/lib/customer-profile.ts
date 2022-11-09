@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { useEffect } from "react";
 import useSWR, { mutate } from "swr";
 import { CagoAPIError, getCagoRequest } from "utils";
 import { useAuth } from "./auth";
@@ -19,7 +20,7 @@ export const createCustomerProfile = async (
 ) => {
   try {
     await getCagoRequest("post", token)("/customer-profiles/", data);
-    mutate("/customer-profiles/me/");
+    await mutate("/customer-profiles/me/");
   } catch (error) {
     if (axios.isAxiosError<CagoAPIError>(error)) {
       if (error.response?.status === 401) {
@@ -37,13 +38,24 @@ export const createCustomerProfile = async (
 export const useCustomerProfile = () => {
   const { user } = useAuth();
 
-  const { data, error } = useSWR<CustomerProfile, AxiosError>(
-    user ? "/customer-profiles/me/" : null,
-    getCagoRequest("get", user?.token),
-    { shouldRetryOnError: false }
+  // Fetch customer profile only when the user object is available.
+  const { data, error, mutate } = useSWR<CustomerProfile, AxiosError>(
+    user && "/customer-profiles/me/",
+    getCagoRequest("get", user?.token)
   );
 
-  const loading = !data && !error;
+  // Initially the loading state is false if the user is not available.
+  const loading = !!user && !data && !error;
 
-  return { loading, data };
+  // This is true only when the user is logged in but one's profile is not yet created.
+  const isUnprofiledUser = !!user && !!error;
+
+  useEffect(() => {
+    // Set data to undefined if user is undefined, e.g., logged out.
+    if (!user) {
+      mutate(undefined, { revalidate: false });
+    }
+  }, [user, mutate]);
+
+  return { loading, profile: data, isUnprofiledUser };
 };

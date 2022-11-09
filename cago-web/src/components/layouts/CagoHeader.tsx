@@ -6,7 +6,7 @@ import Container from "./Container";
 
 const CagoHeader = () => {
   const { loading, loggedIn } = useAuth();
-  const { data: customerProfile } = useCustomerProfile();
+  const { profile } = useCustomerProfile();
 
   const handleLogoutButtonClick: React.MouseEventHandler = async (e) => {
     e.preventDefault();
@@ -33,10 +33,10 @@ const CagoHeader = () => {
                     로그아웃
                   </button>
                 </li>
-                {customerProfile && (
+                {profile && (
                   <li>
                     <Image
-                      src={customerProfile.avatar}
+                      src={profile.avatar}
                       alt="customer-profile-avatar"
                       width={35}
                       height={35}
@@ -58,7 +58,7 @@ const CagoHeader = () => {
                 </li>
                 <li>
                   <Link
-                    href={{ pathname: "/auth/signup", query: { redirect: "/cafes" } }}
+                    href={{ pathname: "/auth/signup", query: { redirect: "/create-profile" } }}
                     className="font-semibold"
                   >
                     회원가입
