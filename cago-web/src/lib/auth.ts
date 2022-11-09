@@ -75,7 +75,11 @@ export const isUniqueEmail = async (email: string) => {
  * A handy hook for user authorization.
  */
 export const useAuth = () => {
-  const { data, error, mutate } = useSWR<Token, AxiosError>("/auth/refresh/", getCagoRequest("post"), {
+  const {
+    data,
+    error,
+    mutate: keyedMutate,
+  } = useSWR<Token, AxiosError>("/auth/refresh/", getCagoRequest("post"), {
     shouldRetryOnError: false,
   });
 
@@ -96,10 +100,14 @@ export const useAuth = () => {
         setUser({ id: payload.user_id, token });
       } else {
         // Refresh if expired.
-        mutate();
+        keyedMutate();
       }
     }
-  }, [data, mutate]);
+  }, [data, keyedMutate]);
+
+  useEffect(() => {
+    mutate("/customer-profile/me/");
+  }, [loggedIn, data]);
 
   return { loading, loggedIn, user };
 };
