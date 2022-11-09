@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "display_name": "카페드림 서울대학교300동점",
+        "avatar": "https://cdn4.iconfinder.com/data/icons/sketchy-basic-icons/94/coffee-512.png"
+    },
+    {
+        "id": 2,
+        "display_name": "파스쿠찌 서울대점(임시휴업중)",
+        "avatar": "https://cdn4.iconfinder.com/data/icons/sketchy-basic-icons/94/coffee-512.png"
+    },
+    {
+        "id": 3,
+        "display_name": "투썸플레이스 서울대점",
+        "avatar": "https://cdn4.iconfinder.com/data/icons/sketchy-basic-icons/94/coffee-512.png"
+    }
+]
