@@ -8,7 +8,7 @@ const CafeButtonGroup = () => {
   const ariaCurrentFalse = "py-2 px-4 rounded-md text-sm font-semibold bg-white hover:bg-slate-50";
 
   return (
-    <nav className="inline-flex rounded-md ring-2 ring-black fixed bottom-6 left-1/2 -translate-x-1/2 shadow-2xl">
+    <nav className="inline-flex rounded-md ring-2 ring-black fixed bottom-6 left-1/2 -translate-x-1/2 shadow-2xl min-w-max">
       <Link
         href={`/cafes/${router.query.id}/info`}
         className={path === "info" ? ariaCurrentTrue : ariaCurrentFalse}
