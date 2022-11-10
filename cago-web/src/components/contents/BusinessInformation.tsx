@@ -2,9 +2,9 @@ import { NextComponentType } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import dashboardData from "data/dashboard.json";
-import ComponentContainer from "components/contents/ComponentContainer";
+import ContentSection from "components/contents/ContentSection";
 
-const BusinessIntroduction: NextComponentType = () => {
+const BusinessInformation: NextComponentType = () => {
   const router = useRouter();
   const id = router.query.id as string | undefined;
 
@@ -23,41 +23,41 @@ const BusinessIntroduction: NextComponentType = () => {
   };
 
   return (
-    <ComponentContainer title="Business Introduction">
-      <div className="bg-slate-50 py-4 shadow-lg rounded h-full text-center align-middle mb-2 flex flex-col place-content-evenly">
+    <ContentSection title="사업장 정보">
+      <div className="bg-slate-50 py-4 shadow-lg rounded-sm h-full text-center align-middle mb-2 flex flex-col place-content-evenly">
         <InformationBox
-          dataName="Cafe name :"
+          dataName="카페 명 :"
           data={id && dashboardData[parseInt(id) - 1].name}
         />
         <InformationBox
-          dataName="Business hour :"
+          dataName="오픈 시간 :"
           data={id && dashboardData[parseInt(id) - 1].business_hour}
         />
         <InformationBox
-          dataName="Day-off :"
+          dataName="쉬는 날 :"
           data={id && dashboardData[parseInt(id) - 1].day_off}
         />
         <InformationBox
-          dataName="Phone number :"
-          data={id && dashboardData[parseInt(id) - 1].phone_number}
+          dataName="전화번호 :"
+          data={id && dashboardData[parseInt(id) - 1].phone}
         />
         <InformationBox
-          dataName="Address :"
+          dataName="주소 :"
           data={id && dashboardData[parseInt(id) - 1].address}
         />
         <InformationBox
-          dataName="Name of representative:"
+          dataName="대표자 명 :"
           data={id && dashboardData[parseInt(id) - 1].name_of_representative}
         />
         <InformationBox
-          dataName="Business registration number :"
+          dataName="사업자 등록 번호 :"
           data={
             id && dashboardData[parseInt(id) - 1].business_registration_number
           }
         />
       </div>
-    </ComponentContainer>
+    </ContentSection>
   );
 };
 
-export default BusinessIntroduction;
+export default BusinessInformation;
