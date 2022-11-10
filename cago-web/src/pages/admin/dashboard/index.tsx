@@ -7,7 +7,7 @@ import { NextPageWithLayout } from "pages/_app";
 
 const Dashboard: NextPageWithLayout = () => {
   return (
-    <main className="flex flex-col h-screen place-content-evenly justify-center">
+    <main className="flex flex-col mt-16 place-content-evenly justify-center">
       <h1 className="container contents-top text-center text-3xl italic font-bold mb-8">
         운영중인 카페
       </h1>
@@ -27,10 +27,10 @@ const Dashboard: NextPageWithLayout = () => {
 };
 
 Dashboard.getLayout = (page) => (
-  <>
+  <RequireLogin>
     <CagoAdminHeader />
     <Container>{page}</Container>
-  </>
+  </RequireLogin>
 );
 
 export default Dashboard;

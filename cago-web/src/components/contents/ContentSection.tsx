@@ -5,7 +5,7 @@ interface Props {
     children?: React.ReactNode;
 }
 
-const ComponentContainer = ({title, children}: Props)=>{
+const ContentSection = ({title, children}: Props)=>{
     return(
         <div className="flex flex-col justify-center max-h-[60vh] my-4">
             <div className="text-2xl font-bold w-full mb-4">
@@ -18,4 +18,4 @@ const ComponentContainer = ({title, children}: Props)=>{
         )
 }
 
-export default ComponentContainer;
+export default ContentSection;
