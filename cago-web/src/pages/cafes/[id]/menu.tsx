@@ -2,13 +2,13 @@ import CafeButtonGroup from "components/layouts/CafeButtonGroup";
 import CagoHeader from "components/layouts/CagoHeader";
 import Container from "components/layouts/Container";
 import { NextPageWithLayout } from "pages/_app";
+import CafeMenuContents from "components/contents/CafeMenuContents";
 
 const Menu: NextPageWithLayout = () => {
   return (
-    <main>
-      <h1 className="text-center italic">(Menu)</h1>
-      <div className="h-screen" />
-    </main>
+    <>
+      <CafeMenuContents />
+    </>
   );
 };
 
