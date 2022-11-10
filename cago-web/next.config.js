@@ -32,6 +32,11 @@ const nextConfig = {
         destination: "/admin/dashboard",
         permanent: true,
       },
+      {
+        source: "/cafes/:id",
+        destination: "/cafes/:id/info",
+        permanent: true,
+      },
     ];
   },
   images: {

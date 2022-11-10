@@ -92,3 +92,5 @@ class CafeMenu(models.Model):
     name = models.CharField(max_length=64)
     price = models.PositiveIntegerField()
     image = models.URLField(max_length=256, default=default_menu_image)
+    
+#TODO CafeMenuCategory...?
