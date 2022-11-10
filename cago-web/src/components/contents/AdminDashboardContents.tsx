@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import demo from "data/dashboard.json";
 import { NextComponentType } from "next";
 
@@ -13,7 +12,7 @@ const AdminDashboardContents: NextComponentType = () => {
           Cafe #{item.id} : {item.name}
         </h1>
         <h2 className="text-lg italic">{item.address}</h2>
-        <h2 className="text-lg">{item.phone_number}</h2>
+        <h2 className="text-lg">{item.phone}</h2>
       </div>
     );
   });
