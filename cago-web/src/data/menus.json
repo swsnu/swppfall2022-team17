@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "아메리카노",
+    "price": 1500,
+    "is_representative" : true
+  },
+  {
+    "id": 2,
+    "name": "자몽에이드",
+    "price": 3500,
+    "is_representative" : false
+  },
+  {
+    "id": 3,
+    "name": "아이스티",
+    "price": 2500,
+    "is_representative" : true
+  },
+  {
+    "id": 4,
+    "name": "허니브레드",
+    "price": 6500,
+    "is_representative" : false
+  },
+  {
+    "id": 5,
+    "name": "모카라떼",
+    "price": 3500,
+    "is_representative" : true
+  },
+  {
+    "id": 6,
+    "name": "수박에이드",
+    "price": 3500,
+    "is_representative" : true
+  },
+  {
+    "id": 7,
+    "name": "헤이즐넛 라떼",
+    "price": 3500,
+    "is_representative" : false
+  },
+  {
+    "id": 8,
+    "name": "맘모스 빵",
+    "price": 3500,
+    "is_representative" : true
+  }
+]
