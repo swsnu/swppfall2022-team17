@@ -12,7 +12,7 @@ const RequireLogout = ({ children }: Props) => {
   const router = useRouter();
 
   // Redirect path should be in the query parameters. Fallback is index page.
-  const redirect = (router.query.redirect as string | undefined) ?? "/";
+  const redirect = (router.query.redirect as string | undefined) ?? "/cafes";
 
   useEffect(() => {
     router.prefetch(redirect);

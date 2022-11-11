@@ -4,7 +4,7 @@ import useSWR, { mutate } from "swr";
 import { CagoAPIError, getCagoRequest } from "utils";
 import { useAuth } from "./auth";
 
-interface CustomerProfile {
+interface Profile {
   id: number;
   user: number;
   display_name: string;
@@ -14,10 +14,7 @@ interface CustomerProfile {
 export const defaultAvatar =
   "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png";
 
-export const createCustomerProfile = async (
-  data: { display_name: string; avatar?: string },
-  token: string
-) => {
+export const createProfile = async (data: { display_name: string; avatar?: string }, token: string) => {
   try {
     await getCagoRequest("post", token)("/customer-profiles/", data);
     await mutate("/customer-profiles/me/");
@@ -35,27 +32,28 @@ export const createCustomerProfile = async (
   }
 };
 
-export const useCustomerProfile = () => {
+export const useProfile = () => {
   const { user } = useAuth();
 
-  // Fetch customer profile only when the user object is available.
-  const { data, error, mutate } = useSWR<CustomerProfile, AxiosError>(
+  // Fetch profile only when the user object is available.
+  const { data, error, mutate } = useSWR<Profile, AxiosError>(
     user && "/customer-profiles/me/",
-    getCagoRequest("get", user?.token)
+    getCagoRequest("get", user?.token),
+    { shouldRetryOnError: false }
   );
 
   // Initially the loading state is false if the user is not available.
   const loading = !!user && !data && !error;
 
   // This is true only when the user is logged in but one's profile is not yet created.
-  const isUnprofiledUser = !!user && !!error;
+  const hasProfile = !!data && !error;
 
   useEffect(() => {
-    // Set data to undefined if user is undefined, e.g., logged out.
     if (!user) {
+      // Set data to undefined if user is undefined, e.g., logged out.
       mutate(undefined, { revalidate: false });
     }
   }, [user, mutate]);
 
-  return { loading, profile: data, isUnprofiledUser };
+  return { loading, profile: data, hasProfile };
 };

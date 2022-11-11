@@ -1,12 +1,14 @@
 import { logout, useAuth } from "lib/auth";
-import { useCustomerProfile } from "lib/customer-profile";
+import { useProfile } from "lib/profile";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Container from "./Container";
 
 const CagoHeader = () => {
   const { loading, loggedIn } = useAuth();
-  const { profile } = useCustomerProfile();
+  const { profile } = useProfile();
+  const router = useRouter();
 
   const handleLogoutButtonClick: React.MouseEventHandler = async (e) => {
     e.preventDefault();
@@ -37,7 +39,7 @@ const CagoHeader = () => {
                   <li>
                     <Image
                       src={profile.avatar}
-                      alt="customer-profile-avatar"
+                      alt="profile-avatar"
                       width={35}
                       height={35}
                       className="mx-auto rounded-full border border-slate-800 h-full"
@@ -50,7 +52,7 @@ const CagoHeader = () => {
               <>
                 <li>
                   <Link
-                    href={{ pathname: "/auth/login", query: { redirect: "/cafes" } }}
+                    href={{ pathname: "/auth/login", query: { redirect: router.pathname } }}
                     className="font-semibold contained"
                   >
                     로그인
@@ -58,7 +60,7 @@ const CagoHeader = () => {
                 </li>
                 <li>
                   <Link
-                    href={{ pathname: "/auth/signup", query: { redirect: "/create-profile" } }}
+                    href={{ pathname: "/auth/signup", query: { redirect: router.pathname } }}
                     className="font-semibold"
                   >
                     회원가입

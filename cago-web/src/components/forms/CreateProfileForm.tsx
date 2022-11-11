@@ -1,25 +1,19 @@
 import { useAuth } from "lib/auth";
-import { createCustomerProfile, defaultAvatar } from "lib/customer-profile";
+import { createProfile, defaultAvatar } from "lib/profile";
 import { NextComponentType } from "next";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const CreateProfileForm: NextComponentType = () => {
   const [displayName, setDisplayName] = useState<string>("");
   const { user } = useAuth();
-  const router = useRouter();
-
-  // const redirect = (router.query.redirect as string | undefined) ?? "/";
-  const redirect = "/cafes";
 
   const handleSubmit: React.FormEventHandler = async (e) => {
     e.preventDefault();
 
     try {
       if (user) {
-        await createCustomerProfile({ display_name: displayName }, user.token);
-        router.replace(redirect);
+        await createProfile({ display_name: displayName }, user.token);
       }
     } catch (e) {
       const error = e as Error;
@@ -31,7 +25,7 @@ const CreateProfileForm: NextComponentType = () => {
     <>
       <Image
         src={defaultAvatar}
-        alt="customer-profile-default-avatar"
+        alt="profile-default-avatar"
         width={150}
         height={150}
         className="mx-auto rounded-full border border-slate-800 mb-6"
