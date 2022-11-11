@@ -85,7 +85,7 @@ export const useAuth = () => {
   const loading = !data && !error;
 
   useEffect(() => {
-    if (loggedIn) {
+    if (!!data) {
       // Get payload from the access token.
       const { access: token } = data;
       const payload = JSON.parse(window.atob(token.split(".")[1]));
@@ -102,7 +102,7 @@ export const useAuth = () => {
       // Set user to undefined if logged out.
       setUser(undefined);
     }
-  }, [loggedIn, data, mutate]);
+  }, [data, mutate]);
 
   return { loading, loggedIn, user };
 };

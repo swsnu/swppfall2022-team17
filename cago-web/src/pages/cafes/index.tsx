@@ -1,5 +1,6 @@
 import CagoHeader from "components/layouts/CagoHeader";
 import Container from "components/layouts/Container";
+import RequireProfile from "components/layouts/RequireProfile";
 import { NextPageWithLayout } from "pages/_app";
 
 const Cafes: NextPageWithLayout = () => {
@@ -12,10 +13,10 @@ const Cafes: NextPageWithLayout = () => {
 };
 
 Cafes.getLayout = (page) => (
-  <>
+  <RequireProfile>
     <CagoHeader />
     <Container>{page}</Container>
-  </>
+  </RequireProfile>
 );
 
 export default Cafes;
