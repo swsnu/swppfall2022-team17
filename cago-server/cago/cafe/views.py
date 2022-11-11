@@ -2,9 +2,10 @@ from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
+from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import Response
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import GenericViewSet
 
 from cago.cafe.permissions import BaseEditOwnerOnly
 from cago.cafe.serializers import CustomerProfileSerializer
@@ -12,7 +13,7 @@ from cago.cafe.serializers import CustomerProfileSerializer
 from .models import CustomerProfile
 
 
-class CustomerProfileViewset(ModelViewSet):
+class CustomerProfileViewSet(CreateModelMixin, UpdateModelMixin, GenericViewSet):
     class EditOwnerOnly(BaseEditOwnerOnly):
         owner_field = "user"
 
