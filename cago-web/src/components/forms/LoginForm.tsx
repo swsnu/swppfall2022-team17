@@ -26,6 +26,7 @@ const LoginForm: NextComponentType = () => {
     >
       <input
         type="email"
+        aria-label="email"
         placeholder="이메일"
         required
         autoFocus
@@ -34,6 +35,7 @@ const LoginForm: NextComponentType = () => {
       />
       <input
         type="password"
+        aria-label="password"
         placeholder="비밀번호"
         required
         onChange={(e) => setPassword(e.target.value)}
