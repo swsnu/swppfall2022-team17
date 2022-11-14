@@ -10,6 +10,14 @@ export interface CagoAPIError {
 }
 
 /**
+ * Make a Cago API error response.
+ */
+export const getCagoAPIError = (code?: string): CagoAPIError => ({
+  type: "client_error",
+  errors: [{ code: code ?? "code", detail: "detail", attr: "attr" }],
+});
+
+/**
  * Get a method to call Cago API.
  */
 export const getCagoRequest = <T>(method = "get", token: string | null = null) => {
