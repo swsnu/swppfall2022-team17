@@ -33,6 +33,7 @@ const CreateProfileForm: NextComponentType = () => {
       <form className="flex flex-col" onSubmit={(e) => handleSubmit(e)}>
         <input
           type="text"
+          aria-label="display-name"
           placeholder="표시 이름"
           required
           autoFocus

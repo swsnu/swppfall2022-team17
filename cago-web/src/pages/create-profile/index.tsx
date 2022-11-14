@@ -30,12 +30,10 @@ const CreateProfile: NextPageWithLayout = () => {
   );
 };
 
-CreateProfile.getLayout = (page) => {
-  return (
-    <RequireLogin>
-      <Container>{page}</Container>
-    </RequireLogin>
-  );
-};
+CreateProfile.getLayout = (page) => (
+  <RequireLogin>
+    <Container>{page}</Container>
+  </RequireLogin>
+);
 
 export default CreateProfile;

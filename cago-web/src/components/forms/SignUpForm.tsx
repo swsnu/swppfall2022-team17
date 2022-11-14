@@ -35,6 +35,7 @@ const SignUpForm = () => {
         <>
           <input
             type="email"
+            aria-label="email"
             placeholder="이메일"
             required
             autoFocus
@@ -50,6 +51,7 @@ const SignUpForm = () => {
         <>
           <input
             type="password"
+            aria-label="password"
             placeholder="비밀번호"
             required
             autoFocus
@@ -59,6 +61,7 @@ const SignUpForm = () => {
           {!passwordMatch && <p className="text-red-700 text-sm text-right">비밀번호가 다릅니다.</p>}
           <input
             type="password"
+            aria-label="password-confirm"
             placeholder="비밀번호 확인"
             required
             onChange={(e) => setPasswordConfirm(e.target.value)}
