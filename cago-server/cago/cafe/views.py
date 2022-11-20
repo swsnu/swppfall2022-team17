@@ -1,16 +1,31 @@
+from django.contrib.auth import get_user_model
+from django.contrib.gis.measure import D
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404
+from django_filters import rest_framework as filters
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
-from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
+from rest_framework.mixins import (
+    CreateModelMixin,
+    ListModelMixin,
+    RetrieveModelMixin,
+    UpdateModelMixin,
+)
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import Response
 from rest_framework.viewsets import GenericViewSet
 
 from cago.cafe.permissions import BaseEditOwnerOnly
-from cago.cafe.serializers import CustomerProfileSerializer
+from cago.cafe.serializers import (
+    CafeReadOnlySerializer,
+    CustomerProfileSerializer,
+    ManagedCafeSerializer,
+)
+from cago.cafe.utils import parse_coordinate
 
-from .models import CustomerProfile
+from .models import Cafe, CustomerProfile, ManagedCafe
+
+User = get_user_model()
 
 
 class CustomerProfileViewSet(CreateModelMixin, UpdateModelMixin, GenericViewSet):
@@ -33,3 +48,65 @@ class CustomerProfileViewSet(CreateModelMixin, UpdateModelMixin, GenericViewSet)
         serializer = self.get_serializer(customer_profile)
 
         return Response(serializer.data)
+
+
+class CafeViewSet(
+    CreateModelMixin,
+    RetrieveModelMixin,
+    ListModelMixin,
+    UpdateModelMixin,
+    GenericViewSet,
+):
+    class EditOwnerOnly(BaseEditOwnerOnly):
+        owner_field = "owner"
+        owners_field = "managers"
+
+    class CafeFilter(filters.FilterSet):
+        location = filters.CharFilter(
+            field_name="location",
+            method="get_cafes_near",
+            label="Location to search the cafes within 3km",
+        )
+        manager = filters.ModelChoiceFilter(
+            field_name="managedcafe__managers",
+            queryset=User.objects.all(),
+            label="Manager",
+        )
+
+        def get_cafes_near(self, queryset, field_name, value):
+            try:
+                point = parse_coordinate(value)
+                return queryset.filter(location__distance_lte=(point, D(km=3)))
+            except ValueError:
+                return queryset.none()
+
+        class Meta:
+            model = Cafe
+            fields = ["location", "manager"]
+
+    permission_classes = [
+        EditOwnerOnly,
+        IsAuthenticatedOrReadOnly,
+    ]
+    filterset_class = CafeFilter
+
+    def get_queryset(self):
+        if self.request.method in ["GET"]:
+            return Cafe.objects.all()
+        else:
+            return ManagedCafe.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method in ["GET"]:
+            return CafeReadOnlySerializer
+        else:
+            return ManagedCafeSerializer
+
+    def perform_create(self, serializer):
+        # Set owner to the requesting user.
+        # Also override the duplicated unmanaged cafe, if exists.
+        instance = serializer.save(
+            owner=self.request.user, cafe_ptr=serializer.context.get("cafe_dup")
+        )
+        # Initially add the owner to the managers.
+        instance.managers.add(self.request.user)
