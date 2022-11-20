@@ -1,8 +1,8 @@
 from django.contrib.auth import get_user_model
-from django.core.exceptions import ValidationError
+from django.contrib.gis.db.models import PointField
+from django.contrib.gis.geos import Point
 from django.core.validators import MaxValueValidator
 from django.db import models
-from django.utils.text import slugify
 from phonenumber_field.modelfields import PhoneNumberField
 
 User = get_user_model()
@@ -27,10 +27,9 @@ class CustomerProfile(models.Model):
 
 class Cafe(models.Model):
     name = models.CharField(max_length=128)  # auto-created name by parsing
-    phone_number = PhoneNumberField(unique=True)
-    # TODO: Use Google map API's geocoding (https://developers.google.com/maps/documentation/geocoding/overview)
-    # location = PointField()
-    # address = models.CharField(max_length=256)
+    phone_number = PhoneNumberField(blank=True, null=True)
+    location = PointField(blank=False, null=False, default=Point(0, 0))
+    address = models.CharField(max_length=256)
 
     class Meta:
         verbose_name = "cafe"
@@ -58,6 +57,7 @@ class ManagedCafe(Cafe):
         User, related_name="owned_cafes", on_delete=models.CASCADE
     )
     managers = models.ManyToManyField(User, related_name="managed_cafes")
+    introduction = models.TextField(blank=True, null=True)
     avatar = models.URLField(max_length=256, default=default_avatar)
     force_closed = models.BooleanField(default=False)
     crowdedness = models.IntegerField(
