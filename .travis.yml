@@ -1,40 +1,51 @@
 # CI Environment
-dist: bionic
+dist: jammy
 
 # Job Configurations
 jobs:
   include:
-    - language: node_js
-      node_js: 16
-      python: "3.9.6"
-      env:
-        - MODE="DEVELOPMENT"
-        - DJANGO_SECRET_KEY="django-insecure-u(^8h(h2@+++ayblbqsn!zw#w4yl$^6o2(_mi3j*iijd#l1m3h"
-      addons:
-        sonarcloud:
-          organization: swsnu
-          token:
-            secure: "Jc9oxrzqviRxdezF8u1C7URgVW+PJtUTberlzCvlCuuqpf9/d2YfnZf2gdSTzP8Fd6WnFkwBwtyTAjvMxyC9lHwlz6LozOxKbypinxaphImZ+M+oHprZG6D+4uzyUWlfuEXi2EFoZS5Xo1KnBbAWD2bkFRzDf9/dU+U3zf1Lw9eklgZ3y2pFggYYxzho5KhXQ4La4TDcqNyv8MIDLoxjFDezpLqmquJ9ZKrGDGIVujodTa4xvNwRc2Fw+YrAWvG7ZDg7mdaYmTEe3AjG3pUdBeQVzEpqp15SrCQ9YHzZuav6F2cviIJ8xiDAHyCd1n1yINaSQc4RAMJh7mLXKl9hP0Uaxu+PctwpAJi/u9QV1yYptz8gmV4LC2//yJFGMmpSWD0mec1EKi005jzT5rAIzHB5nQkRu1gAmyih9j/89yMpvygRN8JQqahPy7MKs+26OnwiOzTJT3v9ZdcrGL6YU4v58691RReCV//PlXGnw7hsr+z8iJoDLxIt3GKN2uqmWQJAFTPB6MMBmFTgXZjAiMsvJh6KrKIZKRjOpQLYONFqOIeqyIxxvqgF+E1z+aRZaFGqkML0vStmxbJ1YUMhotMpwY49rILJ5hEZ/9CcTQzGXS2B3sfxYSwVOa/I7gy7RhHhGGITZEADsl/LhTZq2R5CfDeRFb7DqTWEAa5j4pE="
-      install:
-        - curl -sSf --retry 5 -o python-3.9.6.tar.bz2 https://storage.googleapis.com/travis-ci-language-archives/python/binaries/ubuntu/18.04/x86_64/python-3.9.6.tar.bz2
-        - sudo tar xjf python-3.9.6.tar.bz2 --directory /
-        - source ~/virtualenv/python3.9/bin/activate
-        - cd cago-web
-        - yarn install -y
-        - yarn add coveralls
-        - cd ../cago-server
-        - pip install -r requirements.txt
-        - pip install coveralls
-        - cd ..
-        - gem install coveralls-lcov
-      script:
-        - cd cago-web
-        - ./node_modules/.bin/eslint src
-        - yarn test --coverage --watchAll=false --passWithNoTests
-        - coveralls-lcov -v -n coverage/lcov.info > coverage.json
-        - cd ../cago-server
-        - black **/*.py
-        - coverage run --source='.' manage.py test
-        - coverage xml
-        - coveralls --merge=../cago-web/coverage.json
-        - cd .. && sonar-scanner
+  - language: node_js
+    node_js: 16
+    python: 3.10
+    services:
+    - postgresql
+    env:
+    - MODE="DEVELOPMENT"
+    - DJANGO_SECRET_KEY="django-insecure-u(^8h(h2@+++ayblbqsn!zw#w4yl$^6o2(_mi3j*iijd#l1m3h"
+    - DB_HOST="127.0.0.1"
+    - DB_PASSWORD="qwer1234"
+    addons:
+      sonarcloud:
+        organization: swsnu
+        token:
+          secure: "Jc9oxrzqviRxdezF8u1C7URgVW+PJtUTberlzCvlCuuqpf9/d2YfnZf2gdSTzP8Fd6WnFkwBwtyTAjvMxyC9lHwlz6LozOxKbypinxaphImZ+M+oHprZG6D+4uzyUWlfuEXi2EFoZS5Xo1KnBbAWD2bkFRzDf9/dU+U3zf1Lw9eklgZ3y2pFggYYxzho5KhXQ4La4TDcqNyv8MIDLoxjFDezpLqmquJ9ZKrGDGIVujodTa4xvNwRc2Fw+YrAWvG7ZDg7mdaYmTEe3AjG3pUdBeQVzEpqp15SrCQ9YHzZuav6F2cviIJ8xiDAHyCd1n1yINaSQc4RAMJh7mLXKl9hP0Uaxu+PctwpAJi/u9QV1yYptz8gmV4LC2//yJFGMmpSWD0mec1EKi005jzT5rAIzHB5nQkRu1gAmyih9j/89yMpvygRN8JQqahPy7MKs+26OnwiOzTJT3v9ZdcrGL6YU4v58691RReCV//PlXGnw7hsr+z8iJoDLxIt3GKN2uqmWQJAFTPB6MMBmFTgXZjAiMsvJh6KrKIZKRjOpQLYONFqOIeqyIxxvqgF+E1z+aRZaFGqkML0vStmxbJ1YUMhotMpwY49rILJ5hEZ/9CcTQzGXS2B3sfxYSwVOa/I7gy7RhHhGGITZEADsl/LhTZq2R5CfDeRFb7DqTWEAa5j4pE="
+    before_install:
+    - sudo apt-get update
+    - sudo apt-get install postgresql-14-postgis-3
+    install:
+    - cd cago-web
+    - yarn install -y
+    - yarn add coveralls
+    - cd ../cago-server
+    - pip install -r requirements.txt
+    - pip install coveralls
+    - cd ..
+    - gem install coveralls-lcov
+    before_script:
+    - psql --version
+    - psql -U postgres -c 'CREATE DATABASE cago;'
+    - psql -U postgres -c "ALTER USER postgres WITH PASSWORD '"$DB_PASSWORD"';"
+    - psql -U postgres -c "ALTER ROLE postgres SET client_encoding TO 'utf8';"
+    - psql -U postgres -c "ALTER ROLE postgres SET TIMEZONE TO 'Asia/Seoul';"
+    - psql -U postgres -c "GRANT ALL PRIVILEGES ON DATABASE cago TO postgres;"
+    script:
+    - cd cago-web
+    - ./node_modules/.bin/eslint src
+    - yarn test --coverage --watchAll=false --passWithNoTests
+    - coveralls-lcov -v -n coverage/lcov.info > coverage.json
+    - cd ../cago-server
+    - black **/*.py
+    - coverage run --source='.' manage.py test
+    - coverage xml
+    - coveralls --merge=../cago-web/coverage.json
+    - cd .. && sonar-scanner
