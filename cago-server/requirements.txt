@@ -17,6 +17,7 @@ djangorestframework-simplejwt==5.2.2
 drf-spectacular==0.24.2
 drf-standardized-errors==0.12.2
 gunicorn==20.1.0
+idna==3.4
 inflection==0.5.1
 isort==5.10.1
 jsonschema==4.17.0
@@ -36,9 +37,11 @@ pyrsistent==0.19.2
 python-decouple==3.6
 pytz==2022.5
 PyYAML==6.0
+requests==2.28.1
 sqlparse==0.4.3
 tomli==2.0.1
 tomlkit==0.11.5
 typing_extensions==4.4.0
 uritemplate==4.1.1
+urllib3==1.26.12
 wrapt==1.14.1
