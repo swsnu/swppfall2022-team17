@@ -20,7 +20,7 @@ interface User {
   token: string;
 }
 
-export const getCafeList = (user : User | undefined) => {
+export const getCafeList = (user: User | undefined) => {
   const { data, error } = useSWR<ManagedCafe[], AxiosError>(user && `/cafes/?manager=${user.id}`, getCagoRequest('get'), {
     shouldRetryOnError: false
   })
@@ -31,10 +31,10 @@ export const phone_numberChanger = (phone_number: string | null) => {
   return phone_number
 }
 
-export const setCafeClosed = (cafeId: number, token : string | undefined) => {
-  token && getCagoRequest('patch', token)(`/cafes/${cafeId}/`, { force_closed: false })
+export const setCafeClosed = (cafeId: number, token: string | undefined) => {
+  token && getCagoRequest('patch', token)(`/cafes/${cafeId}/`, { force_closed: true })
 }
 
-export const setCafeOpened = (cafeId: number, token : string | undefined) => {
+export const setCafeOpened = (cafeId: number, token: string | undefined) => {
   token && getCagoRequest('patch', token)(`/cafes/${cafeId}/`, { force_closed: false })
 }
