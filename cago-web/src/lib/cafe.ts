@@ -42,9 +42,15 @@ export const registerCafe = async (
   }
 };
 
-export const toggleOpen = async (id: number, force_closed: boolean, token: string) => {
+export const toggleOpen = async (
+  id: number,
+  force_closed: boolean,
+  token: string
+) => {
   try {
-    const data = await getCagoRequest("patch", token)(`/cafes/${id}/`, {force_closed: force_closed});
+    const data = await getCagoRequest("patch", token)(`/cafes/${id}/`, {
+      force_closed: force_closed,
+    });
     await mutate(`/cafes/${id}`, data, { revalidate: false });
   } catch (error) {
     if (axios.isAxiosError<CagoAPIError>(error)) {
