@@ -4,9 +4,11 @@ import RequireLogin from "components/layouts/RequireLogin";
 import Link from "next/link";
 import { NextPageWithLayout } from "pages/_app";
 import { getCafeList, phone_numberChanger, setCafeClosed } from "lib/dashboard";
+import { useAuth } from "lib/auth";
 
 const Dashboard: NextPageWithLayout = () => {
-  const { data } = getCafeList();
+  const { user } = useAuth();
+  const { data } = getCafeList(user);
   return (
     <main>
       <div className="my-4 m-auto border border-black flex flex-col max-h-screen overflow-auto">
@@ -23,8 +25,8 @@ const Dashboard: NextPageWithLayout = () => {
                 <div className="flex flex-col items-center">
                   <label className="inline-flex relative items-center cursor-pointer">
                     {cafeData.force_closed ?
-                      <input key={'toogle-on'} type="checkbox" value="" className="sr-only peer" onClick={() => console.log(cafeData.id)} checked/>
-                      : <input key={'toogle-off'} type="checkbox" value="" className="sr-only peer" onClick={() => console.log(cafeData.id)} />}
+                      <input key={'toogle-on'} type="checkbox" value="" className="sr-only peer" onClick={() => console.log(cafeData.id)} checked />
+                      : <input key={'toogle-off'} type="checkbox" value="" className="sr-only peer" onClick={() => setCafeClosed(cafeData.id, user?.token)} />}
                     <div className="w-11 h-6 bg-stone-400 peer-focus:ring-4 peer-focus:ring-slate-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white peer-checked:after:content-['F'] after:font-bold after:text-xs after:content-['O'] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-slate-600 transition hover:ring-2 hover:ring-black" />
                   </label>
                   <div className="mt-2">임시 휴업</div>
