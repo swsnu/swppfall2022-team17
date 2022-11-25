@@ -15,5 +15,21 @@ export const profile = {
   id: 1,
   user: 1,
   display_name: "test1",
-  avatar: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+  avatar:
+    "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+};
+
+export const managedCafe = {
+  id: 1,
+  name: "managedCafe1",
+  phone_number: "+821012341234",
+  address: "서울시 성북구 정릉동 333",
+  registration_number: "1234",
+  owner: 1,
+  managers: 1,
+  introduction: "Hi",
+  avatar:
+    "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+  force_closed: false,
+  crowdedness: 0,
 };
