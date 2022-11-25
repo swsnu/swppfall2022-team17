@@ -2,7 +2,7 @@ import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
 import { NextPageWithLayout } from "pages/_app";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { getCafeDetail } from "lib/dashboard";
 import Link from "next/link";
 
@@ -26,6 +26,8 @@ const ManagedCafeMain: NextPageWithLayout = () => {
 }
 
 const cafeInfoBox = (title: string, contents: string, redirectURL: string, rowSpan:string = "1") => {
+    const router = useRouter()
+    router.prefetch(redirectURL)
     return (
         <div className={`outlined font-extrabold w-full h-full row-span-${rowSpan}`}>
             <div className="w-full h-full flex flex-col">
