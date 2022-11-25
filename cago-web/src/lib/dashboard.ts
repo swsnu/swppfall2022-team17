@@ -9,7 +9,6 @@ interface ManagedCafe {
   phone_number: string;
   address: string;
   avatar: string;
-  crowdness: number;
   introduction: string;
   force_closed: boolean;
 }
