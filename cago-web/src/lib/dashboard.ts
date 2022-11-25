@@ -5,7 +5,6 @@ import { AxiosError } from "axios";
 
 interface ManagedCafe {
   id: number;
-  is_managed: boolean;
   name: string;
   phone_number: string;
   address: string;
@@ -28,7 +27,7 @@ export const getCafeList = (user: User | undefined) => {
 }
 
 export const getCafeDetail = (cafeId: string[] | string | undefined) => {
-  const { data, error } = useSWR<ManagedCafe[], AxiosError>(cafeId && `/cafes/${cafeId}`, getCagoRequest('get'), {
+  const { data, error } = useSWR<ManagedCafe, AxiosError>(cafeId && `/cafes/${cafeId}`, getCagoRequest('get'), {
     shouldRetryOnError: false
   })
   return { data }
