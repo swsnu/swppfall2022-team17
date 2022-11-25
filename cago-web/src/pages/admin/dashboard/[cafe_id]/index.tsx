@@ -2,7 +2,7 @@ import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
 import { NextPageWithLayout } from "pages/_app";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { getCafeDetail } from "lib/dashboard";
 import Link from "next/link";
 
@@ -15,7 +15,7 @@ const ManagedCafeMain: NextPageWithLayout = () => {
         <main className="p-4">
             {data &&
                 <div className="min-h-fit grid grid-rows-3 grid-cols-2 grid-flow-col gap-4">
-                    {cafeInfoBox("카페 사진", "Todo: pictures", `/admin/dashboard/${cafe_id}/add-pictures`,"2")}
+                    {cafeInfoBox("카페 사진", "Todo: pictures", `/admin/dashboard/${cafe_id}/add-pictures`, "2")}
                     {cafeInfoBox("게시판", "Todo: border", `/admin/dashboard/${cafe_id}/board`)}
                     {cafeInfoBox("간단 소개글", data.introduction, `/admin/dashboard/${cafe_id}/info`)}
                     {cafeInfoBox("리뷰", "Todo: Reviews", `/admin/dashboard/${cafe_id}/reviews`)}
@@ -25,9 +25,7 @@ const ManagedCafeMain: NextPageWithLayout = () => {
         </main>)
 }
 
-const cafeInfoBox = (title: string, contents: string, redirectURL: string, rowSpan:string = "1") => {
-    const router = useRouter()
-    router.prefetch(redirectURL)
+const cafeInfoBox = (title: string, contents: string, redirectURL: string, rowSpan: string = "1") => {
     return (
         <div className={`outlined font-extrabold w-full h-full row-span-${rowSpan}`}>
             <div className="w-full h-full flex flex-col">
