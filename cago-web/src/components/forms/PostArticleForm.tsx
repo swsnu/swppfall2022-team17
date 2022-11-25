@@ -34,6 +34,7 @@ const PostArticleForm: NextComponentType = () => {
     >
       <input
         type="text"
+        aria-label="title"
         placeholder="제목"
         required
         autoFocus
@@ -42,6 +43,7 @@ const PostArticleForm: NextComponentType = () => {
       />
       <textarea
         placeholder="내용"
+        aria-label="content"
         required
         onChange={(e) => setContent(e.target.value)}
         className="outlined font-normal mb-2 h-[50vh]"

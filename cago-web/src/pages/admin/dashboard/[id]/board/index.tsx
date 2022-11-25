@@ -7,7 +7,7 @@ import RequireLogin from "components/layouts/RequireLogin";
 import Link from "next/link";
 import { useArticles } from "lib/board";
 
-const Board: NextPageWithLayout = () => {
+const AdminBoard: NextPageWithLayout = () => {
   const { articles } = useArticles();
   const router = useRouter();
   const id =
@@ -32,11 +32,11 @@ const Board: NextPageWithLayout = () => {
   );
 };
 
-Board.getLayout = (page) => (
+AdminBoard.getLayout = (page) => (
   <RequireLogin>
     <CagoAdminHeader />
     <Container>{page}</Container>
   </RequireLogin>
 );
 
-export default Board;
+export default AdminBoard;

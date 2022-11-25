@@ -9,6 +9,6 @@ jest.mock("next/router", () => ({
     push: () => push(),
     replace: () => replace(),
     prefetch: jest.fn(),
-    query: {},
+    query: { id: "1" },
   }),
 }));

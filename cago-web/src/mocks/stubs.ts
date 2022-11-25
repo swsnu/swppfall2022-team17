@@ -15,5 +15,18 @@ export const profile = {
   id: 1,
   user: 1,
   display_name: "test1",
-  avatar: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+  avatar:
+    "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+};
+
+export const article = {
+  id: 1,
+  title: "title1",
+  content: "content1",
+  author: {
+    id: 1,
+    name: "managedCafe1",
+    avatar:
+      "https://cdn4.iconfinder.com/data/icons/sketchy-basic-icons/94/coffee-512.png",
+  },
 };

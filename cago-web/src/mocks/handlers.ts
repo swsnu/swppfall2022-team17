@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { profile, token, user } from "./stubs";
+import { article, profile, token, user } from "./stubs";
 
 // Simplest API handlers
 export const handlers = [
@@ -40,5 +40,13 @@ export const handlers = [
 
   rest.get("/customer-profiles/me/", (req, res, ctx) => {
     return res(ctx.json(profile));
+  }),
+
+  rest.get("/board/", (req, res, ctx) => {
+    return res(ctx.json([article]));
+  }),
+
+  rest.post("/board/", (req, res, ctx) => {
+    return res(ctx.json({ ...article, title: "title", content: "content" }));
   }),
 ];
