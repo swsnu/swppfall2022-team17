@@ -27,6 +27,13 @@ export const getCafeList = (user: User | undefined) => {
   return { data }
 }
 
+export const getCafeDetail = (cafeId: string[] | string | undefined) => {
+  const { data, error } = useSWR<ManagedCafe[], AxiosError>(cafeId && `/cafes/${cafeId}`, getCagoRequest('get'), {
+    shouldRetryOnError: false
+  })
+  return { data }
+}
+
 export const phone_numberChanger = (phone_number: string | null) => {
   return phone_number
 }
