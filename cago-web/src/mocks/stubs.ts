@@ -15,5 +15,31 @@ export const profile = {
   id: 1,
   user: 1,
   display_name: "test1",
-  avatar: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+  avatar:
+    "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
 };
+
+export const managedCafe_1 = {
+  id: 1,
+  name: "랜더링 확인용 카페",
+  phone_number: "+8212345678",
+  address: "랜더링 확인용 주소",
+  avatar: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+  introduction: "랜더링 확인용 설명",
+  force_closed: false
+}
+
+export const managedCafe_2 = {
+  id: 2,
+  name: "휴업 확인용 카페",
+  phone_number: "+82876654321",
+  address: "휴업 확인용 주소",
+  avatar: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+  introduction: "휴업 확인용 설명",
+  force_closed: true
+}
+
+export const managedCafeList = [{
+  managedCafe_1,
+  managedCafe_2
+}];

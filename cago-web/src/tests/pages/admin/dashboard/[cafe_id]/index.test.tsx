@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import ManagedCafeMain from "pages/admin/dashboard";
+import ManagedCafeMain from "pages/admin/dashboard/[cafe_id]/index";
 
 describe("admin dashboard cafe main page", () => {
   it("renders", () => {
