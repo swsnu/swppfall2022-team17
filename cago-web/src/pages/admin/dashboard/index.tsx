@@ -13,11 +13,11 @@ const Dashboard: NextPageWithLayout = () => {
   const router = useRouter();
 
   return (
-    <main>
-      <div className="my-4 m-auto border border-black flex flex-col max-h-screen overflow-auto">
+    <main className="flex flex-col justify-center outlined h-1/2">
+      <div className="my-4 w-full m-auto outlined flex flex-col max-h-screen overflow-auto">
         {data &&
           data.map((cafeData) => (
-            <button key={`managed cafe ${cafeData.id} container`} className="m-2 p-2 border border-black rounded-lg shadow bg-slate-100 flex justify-center focus:bg-slate-300 transition hover:ring-2 hover:ring-black hover:bg-slate-300">
+            <Link href={`/admin/dashboard/${cafeData.id}`} key={`managed cafe ${cafeData.id} container`} className="m-2 p-2 outlined rounded-lg shadow bg-slate-100 flex justify-center focus:bg-slate-300 transition hover:ring-2 hover:ring-black hover:bg-slate-300">
               <div className="flex items-center w-2/3 min-w-fit justify-around">
                 <img src={cafeData.avatar} className="w-2/12" />
                 <div className="flex flex-col w-1/2 min-w-fit max-w-sm">
@@ -27,20 +27,19 @@ const Dashboard: NextPageWithLayout = () => {
                 </div>
                 <div className="flex flex-col items-center">
                   <label className="inline-flex relative items-center cursor-pointer">
-                    <input type="checkbox" value="" className="sr-only peer" onChange={()=>{router.reload(); cafeData.force_closed ? setCafeOpened(cafeData.id,user?.token) : setCafeClosed(cafeData.id,user?.token)}} checked={cafeData.force_closed}/>
-                      <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-slate-400 peer-checked:bg-slate-600 hover:ring-4 hover:ring-slate-400"/>
-                      <div className="bg-white border border-slate-400 w-5 h-5 rounded-full absolute top-[2px] left-[2px] transition-all peer peer-checked:translate-x-full peer-checked:border-white"/>
+                    <input type="checkbox" value="" className="sr-only peer" onChange={() => { router.reload(); cafeData.force_closed ? setCafeOpened(cafeData.id, user?.token) : setCafeClosed(cafeData.id, user?.token) }} checked={cafeData.force_closed} />
+                    <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-slate-400 peer-checked:bg-slate-600 hover:ring-4 hover:ring-slate-400" />
+                    <div className="bg-white border border-slate-400 w-5 h-5 rounded-full absolute top-[2px] left-[2px] transition-all peer peer-checked:translate-x-full peer-checked:border-white" />
                   </label>
                   <div className="mt-2">임시 휴업</div>
                 </div>
               </div>
-            </button>
+            </Link>
           ))}
       </div>
-      <Link href="/admin/register-cafe" className="outlined">
+      <Link href="/admin/register-cafe" className="outlined w-1/4 text-center shadow transition-all mx-auto hover:ring-2 hover:ring-black hover:bg-slate-300 focus:bg-slate-300">
         카페 등록하기
       </Link>
-      <div className="h-screen" />
     </main>
   );
 };
