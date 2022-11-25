@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 export interface Cafe {
   id: number;
   name: string;
-  force_closed: boolean;
+  force_closed: boolean | null;
 }
 
 export const registerCafe = async (

@@ -1,7 +1,7 @@
 import { logout } from "lib/auth";
 import Link from "next/link";
 import Container from "./Container";
-import { Cafe, useCafe } from "../../lib/cafe";
+import { useCafe } from "../../lib/cafe";
 import OpenToggleSwitch from "components/layouts/OpenToggleSwitch";
 
 const CagoAdminHeader = () => {
