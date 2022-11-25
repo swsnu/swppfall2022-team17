@@ -14,7 +14,7 @@ const ManagedCafeMain: NextPageWithLayout = () => {
     return (
         <main className="p-4">
             {data &&
-                <div className="h-screen grid grid-rows-3 grid-cols-2 grid-flow-col gap-4">
+                <div className="min-h-fit grid grid-rows-3 grid-cols-2 grid-flow-col gap-4">
                     {cafeInfoBox("카페 사진", "Todo: pictures", `/admin/dashboard/${cafe_id}/add-pictures`,"2")}
                     {cafeInfoBox("게시판", "Todo: border", `/admin/dashboard/${cafe_id}/board`)}
                     {cafeInfoBox("간단 소개글", data.introduction, `/admin/dashboard/${cafe_id}/info`)}
@@ -35,7 +35,7 @@ const cafeInfoBox = (title: string, contents: string, redirectURL: string, rowSp
                         More
                     </Link>
                 </div>
-                <div className="w-full border border-black shadow border-2 rounded-lg my-2 h-full text-center p-4">
+                <div className="w-full h-full border border-black shadow border-2 rounded-lg my-2 text-center p-4">
                     {contents}
                 </div>
             </div>
