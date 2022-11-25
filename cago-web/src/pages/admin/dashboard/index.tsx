@@ -17,14 +17,14 @@ const Dashboard: NextPageWithLayout = () => {
       <div className="w-full m-auto border border-black flex flex-col max-h-screen overflow-auto">
         {data &&
           data.map((cafeData) => (
-            <div className="outlined m-2 p-2 rounded-lg shadow bg-slate-100 flex items-center justify-center focus:bg-slate-300 transition-all hover:ring-2 hover:ring-black hover:bg-slate-300">
-              <Link href={`/admin/dashboard/${cafeData.id}`} key={`managed cafe ${cafeData.id} container`} className="w-2/3 flex justify-center">
+            <div key={`managed cafe ${cafeData.id} container`} className="outlined m-2 p-2 rounded-lg shadow bg-slate-100 flex items-center justify-center focus:bg-slate-300 transition-all hover:ring-2 hover:ring-black hover:bg-slate-300">
+              <Link href={`/admin/dashboard/${cafeData.id}`} className="w-2/3 flex justify-center">
                 <div className="flex items-center w-10/12 justify-between">
                   <img src={cafeData.avatar} className="w-2/12" />
                   <div className="flex flex-col w-2/3">
                     {cafeInfo("카페 명", cafeData.name)}
                     {cafeInfo("주소", cafeData.address)}
-                    {cafeInfo("전화번호", cafeData.phone_number)}
+                    {cafeInfo("전화번호", phone_numberChanger(cafeData.phone_number))}
                   </div>
                 </div>
               </Link>

@@ -34,8 +34,8 @@ export const getCafeDetail = (cafeId: string[] | string | undefined) => {
   return { data }
 }
 
-export const phone_numberChanger = (phone_number: string | null) => {
-  return phone_number
+export const phone_numberChanger = (phone_number: string) => {
+  return phone_number && "0" +phone_number.substring(3,phone_number.length)
 }
 
 export const setCafeClosed = (cafeId: number, token: string | undefined) => {
