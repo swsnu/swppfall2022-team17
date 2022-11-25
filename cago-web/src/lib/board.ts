@@ -1,9 +1,12 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import useSWR from "swr";
 import { CagoAPIError, getCagoRequest } from "../utils/index";
 
 interface CafeProfile {
   id: number;
-  display_name: string;
+  name: string;
   avatar: string;
 }
 
@@ -22,7 +25,8 @@ export const postArticle = async (
   token: string
 ) => {
   try {
-    await getCagoRequest<Article>("post", token)(`/board/?${cafe_id}`, {
+    await getCagoRequest<Article>("post", token)("/board/", {
+      cafe_id,
       title,
       content,
     });
@@ -42,4 +46,26 @@ export const postArticle = async (
       }
     }
   }
+};
+
+export const useArticles = () => {
+  const router = useRouter();
+  const cafe_id = router.query.id;
+  const detail = cafe_id !== undefined;
+
+  // Fetch cafe only when the user at admin dashboard detail page.
+  const { data, error, mutate } = useSWR<Article[], AxiosError>(
+    detail && `/board/?${cafe_id}`,
+    getCagoRequest("get"),
+    { shouldRetryOnError: false }
+  );
+
+  useEffect(() => {
+    if (!detail) {
+      // Set data to undefined if user is not at the detail page.
+      mutate(undefined, { revalidate: false });
+    }
+  }, [detail, mutate]);
+
+  return { articles: data };
 };
