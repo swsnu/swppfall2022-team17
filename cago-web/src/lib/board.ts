@@ -16,7 +16,7 @@ export interface Article {
 }
 
 export const postArticle = async (
-  cafe_id: number,
+  cafe_id: string,
   title: string,
   content: string,
   token: string
