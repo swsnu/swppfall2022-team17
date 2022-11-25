@@ -52,7 +52,7 @@ const CagoHeader = () => {
               <>
                 <li>
                   <Link
-                    href={{ pathname: "/auth/login", query: { redirect: router.pathname } }}
+                    href={{ pathname: "/auth/login", query: { redirect: router.asPath } }}
                     className="font-semibold contained"
                   >
                     로그인
@@ -60,7 +60,7 @@ const CagoHeader = () => {
                 </li>
                 <li>
                   <Link
-                    href={{ pathname: "/auth/signup", query: { redirect: router.pathname } }}
+                    href={{ pathname: "/auth/signup", query: { redirect: router.asPath } }}
                     className="font-semibold"
                   >
                     회원가입

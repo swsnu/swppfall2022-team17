@@ -17,7 +17,7 @@ const RequireLogin = ({ children }: Props) => {
 
     if (!loading && !loggedIn) {
       // Redirect while setting the current path as a query parameter.
-      router.replace({ pathname: redirect, query: { redirect: router.pathname } });
+      router.replace({ pathname: redirect, query: { redirect: router.asPath } });
     }
   }, [loading, loggedIn, router]);
 
