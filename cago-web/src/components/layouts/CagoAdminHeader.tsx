@@ -3,9 +3,15 @@ import Link from "next/link";
 import Container from "./Container";
 import { useCafe } from "../../lib/cafe";
 import OpenToggleSwitch from "components/layouts/OpenToggleSwitch";
+import { useRouter } from "next/router";
 
 const CagoAdminHeader = () => {
-  const { cafeSelected, cafe } = useCafe(true);
+  const router = useRouter();
+  const query = router.query.id;
+  const detail = typeof query === "string";
+  const cafe_id = detail ? query : "-1";
+
+  const { cafe } = useCafe(cafe_id);
 
   const handleLogoutButtonClick: React.MouseEventHandler = async (e) => {
     e.preventDefault();
@@ -22,8 +28,8 @@ const CagoAdminHeader = () => {
             </Link>
           </li>
           <li className="float-left w-1/3 text-center">
-            {cafeSelected && cafe !== undefined && (
-              <>
+            {detail && cafe !== undefined && (
+              <ul>
                 <li>
                   <Link
                     href={`/admin/dashboard/${cafe.id}`}
@@ -35,7 +41,7 @@ const CagoAdminHeader = () => {
                 <li className="font-bold text-sm clear-both m-auto">
                   # of likes
                 </li>
-              </>
+              </ul>
             )}
           </li>
           <li className="float-left w-1/3 text-right">
@@ -48,7 +54,7 @@ const CagoAdminHeader = () => {
                   로그아웃
                 </button>
               </li>
-              {cafeSelected && cafe !== undefined && (
+              {detail && cafe !== undefined && (
                 <>
                   <li className="float-right">
                     <OpenToggleSwitch {...cafe} />

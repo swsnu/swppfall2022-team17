@@ -8,7 +8,7 @@ const OpenToggleSwitch = (cafe: Cafe) => {
   const isOpen =
     "py-2 px-4 rounded-3xl text-xs text-white font-semibold bg-slate-900 bg-slate-900 hover:bg-slate-700";
   const isClosed =
-    "py-2 px-4 rounded-3xl text-xs font-semibold bg-white hover:bg-slate-50 ring-1 ring-black";
+    "py-2 px-4 rounded-3xl text-xs font-semibold bg-white hover:bg-slate-50 ring-2 ring-black";
 
   const handleOpenToggleSwitch: React.MouseEventHandler = async (e) => {
     e.preventDefault();

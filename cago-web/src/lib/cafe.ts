@@ -67,27 +67,12 @@ export const toggleOpen = async (
   }
 };
 
-export const useCafe = (admin: boolean) => {
-  const router = useRouter();
-  const path = router.pathname.split("/");
-  const detail = path.length > 3;
-  const cafeID = detail ? path[admin ? 3 : 2] : -1;
-  
-  // Fetch cafe only when the user at admin dashboard detail page.
-  const { data, error, mutate } = useSWR<Cafe, AxiosError>(
-    detail && `/cafes/${cafeID}/`,
+export const useCafe = (cafe_id: string) => {
+  const { data } = useSWR<Cafe, AxiosError>(
+    `/cafes/${cafe_id}/`,
     getCagoRequest("get"),
     { shouldRetryOnError: false }
   );
 
-  const cafeSelected = !!data && !error;
-
-  useEffect(() => {
-    if (!detail) {
-      // Set data to undefined if user is not at the detail page.
-      mutate(undefined, { revalidate: false });
-    }
-  }, [detail, mutate]);
-
-  return { cafeSelected, cafe: data };
+  return { cafe: data };
 };
