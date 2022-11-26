@@ -43,8 +43,23 @@ export const handlers = [
   }),
 
   rest.get("/cafes/", (req, res, ctx) => {
-    return res(ctx.json(cafes));
+    if (req.url.searchParams.get("manager")) {
+      return res(ctx.json([cafes[0]]));
+    } else {
+      return res(ctx.json(cafes));
+    }
   }),
+
+  rest.get("/cafes/1/", (req, res, ctx) => {
+    return res(ctx.json(cafes[0]));
+  }),
+
+  rest.get("/cafes/2/", (req, res, ctx) => {
+    return res(ctx.json(cafes[1]));
+  }),
+
+  rest.patch("/cafes/1/", (req, res, ctx) => {
+    return res(ctx.json(cafes[0]));
 
   rest.post("/cafes/", (req, res, ctx) => {
     return res(ctx.status(201), ctx.json(cafes[0]));
