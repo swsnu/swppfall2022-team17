@@ -15,31 +15,31 @@ export const profile = {
   id: 1,
   user: 1,
   display_name: "test1",
-  avatar:
-    "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+  avatar: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
 };
 
-export const managedCafe_1 = {
-  id: 1,
-  name: "랜더링 확인용 카페",
-  phone_number: "+8212345678",
-  address: "랜더링 확인용 주소",
-  avatar: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
-  introduction: "랜더링 확인용 설명",
-  force_closed: false
-}
-
-export const managedCafe_2 = {
-  id: 2,
-  name: "휴업 확인용 카페",
-  phone_number: "+82876654321",
-  address: "휴업 확인용 주소",
-  avatar: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
-  introduction: "휴업 확인용 설명",
-  force_closed: true
-}
-
-export const managedCafeList = [{
-  managedCafe_1,
-  managedCafe_2
-}];
+export const cafes = [
+  {
+    id: 1,
+    is_managed: true,
+    name: "cafe1",
+    phone_number: "+821012341234",
+    location: ["127", "37"],
+    address: "address1",
+    avatar: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+    crowdedness: 1,
+    force_closed: false,
+    introduction: "hello",
+    managers: [1],
+    owner: 1,
+    registration_number: "1234567890",
+  },
+  {
+    id: 2,
+    is_managed: false,
+    name: "cafe2",
+    phone_number: "+821012341234",
+    location: ["127", "37"],
+    address: "address2",
+  },
+];

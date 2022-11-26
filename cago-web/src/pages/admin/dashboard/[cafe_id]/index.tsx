@@ -31,7 +31,7 @@ const CafeInfoContainer = ({ title, children, path }: CafeInfoBoxProps) => {
   );
 };
 
-const ManagedCafeMain: NextPageWithLayout = () => {
+const DashboardDetail: NextPageWithLayout = () => {
   const router = useRouter();
   const { cafe_id } = router.query;
   const { data: cafe } = useSWR<ManagedCafe, AxiosError>(cafe_id && `/cafes/${cafe_id}/`, getCagoRequest());
@@ -61,11 +61,11 @@ const ManagedCafeMain: NextPageWithLayout = () => {
   );
 };
 
-ManagedCafeMain.getLayout = (page) => (
+DashboardDetail.getLayout = (page) => (
   <RequireLogin>
     <CagoAdminHeader />
     <Container>{page}</Container>
   </RequireLogin>
 );
 
-export default ManagedCafeMain;
+export default DashboardDetail;

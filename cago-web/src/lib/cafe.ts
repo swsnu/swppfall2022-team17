@@ -39,16 +39,16 @@ export const setForceClosed = async (id: number, force_closed: boolean, token: s
     const data = await getCagoRequest("patch", token)(`/cafes/${id}/`, { force_closed });
     await mutate(`/cafes/${id}/`, data, { revalidate: false });
   } catch (error) {
-    if (axios.isAxiosError<CagoAPIError>(error)) {
-      if (error.response?.status === 401) {
-        throw Error("로그인하지 않았습니다.");
-      }
-      if (error.response?.status === 403) {
-        throw Error("카페의 매니저가 아닙니다.");
-      }
-      if (error.response?.status === 404) {
-        throw Error("유효하지 않은 카페 ID입니다.");
-      }
-    }
+    // if (axios.isAxiosError<CagoAPIError>(error)) {
+    //   if (error.response?.status === 401) {
+    //     throw Error("로그인하지 않았습니다.");
+    //   }
+    //   if (error.response?.status === 403) {
+    //     throw Error("카페의 매니저가 아닙니다.");
+    //   }
+    //   if (error.response?.status === 404) {
+    //     throw Error("유효하지 않은 카페 ID입니다.");
+    //   }
+    // }
   }
 };
