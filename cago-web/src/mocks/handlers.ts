@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { profile, token, user } from "./stubs";
+import { cafes, profile, token, user } from "./stubs";
 
 // Simplest API handlers
 export const handlers = [
@@ -40,5 +40,13 @@ export const handlers = [
 
   rest.get("/customer-profiles/me/", (req, res, ctx) => {
     return res(ctx.json(profile));
+  }),
+
+  rest.get(`/cafes/${cafes[0].id}/info`, (req, res, ctx) => {
+    return res(ctx.json(cafes));
+  }),
+
+  rest.get(`/admin/dashboard/${cafes[0].id}/info`, (req, res, ctx) => {
+    return res(ctx.json(cafes));
   }),
 ];
