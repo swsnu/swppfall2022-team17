@@ -49,7 +49,7 @@ export const toE164 = (phone: string) => {
  * E.216 format to readable phone number.
  */
 export const parseE164 = (phone: string) => {
-  if (!phone || phone.length < 3) return phone;
+  if (phone.length < 3) return phone;
 
   let res = phone.substring(3);
   res = "0".concat(res);

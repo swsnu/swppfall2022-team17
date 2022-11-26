@@ -60,5 +60,8 @@ export const handlers = [
 
   rest.patch("/cafes/1/", (req, res, ctx) => {
     return res(ctx.json(cafes[0]));
+
+  rest.post("/cafes/", (req, res, ctx) => {
+    return res(ctx.status(201), ctx.json(cafes[0]));
   }),
 ];

@@ -17,4 +17,7 @@ const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/tests/setup.ts"],
 };
 
-module.exports = createJestConfig(customJestConfig);
+module.exports = async () => ({
+  ...(await createJestConfig(customJestConfig)()),
+  transformIgnorePatterns: ["node_modules/(?!(react-kakao-maps-sdk)/)"],
+});

@@ -3,32 +3,24 @@ import { mutate } from "swr";
 import { CagoAPIError, getCagoRequest } from "utils";
 
 export const registerCafe = async (
-  registrationNumber: string,
-  businessName: string,
-  representativeName: string,
-  address: string,
-  phoneNumber: string
+  data: {
+    address: string;
+    location: string;
+    registration_number: number;
+    name: string;
+    phone_number: string;
+  },
+  token: string
 ) => {
   try {
-    await getCagoRequest<{
-      id: number;
-      registration_number: string;
-      business_name: string;
-      representative_name: string;
-      address: string;
-      phone_number: string;
-    }>("post")("/cafes/", {
-      registration_number: registrationNumber,
-      business_name: businessName,
-      representative_name: representativeName,
-      address,
-      phone_number: phoneNumber,
-    });
+    await getCagoRequest("post", token)("/cafes/", data);
   } catch (error) {
     if (axios.isAxiosError<CagoAPIError>(error)) {
       const { errors } = error.response?.data!;
       if (errors.some((v) => v.code === "unique")) {
-        throw Error("이미 등록된 카페입니다.");
+        throw Error("Cago에서 이미 관리중인 카페입니다.");
+      } else {
+        throw Error(errors[0].detail);
       }
     }
   }
