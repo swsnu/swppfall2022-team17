@@ -1,5 +1,6 @@
-import axios from "axios";
-import { mutate } from "swr";
+import axios, { AxiosError } from "axios";
+import { Cafe, ManagedCafe } from "components/contents/CafesMap";
+import useSWR, { mutate } from "swr";
 import { CagoAPIError, getCagoRequest } from "utils";
 
 export const registerCafe = async (
@@ -43,4 +44,10 @@ export const setForceClosed = async (id: number, force_closed: boolean, token: s
     //   }
     // }
   }
+};
+
+export const useCafe = (cafeId?: string | string[]) => {
+  const { data } = useSWR<Cafe | ManagedCafe, AxiosError>(cafeId && `/cafes/${cafeId}/`, getCagoRequest());
+
+  return { data };
 };

@@ -11,11 +11,12 @@ const CafeToggleSwitch = ({ cafe }: Props) => {
   const { user } = useAuth();
 
   const openClassName =
-    "py-2 px-4 rounded-3xl text-xs text-white font-semibold bg-slate-900 bg-slate-900 hover:bg-slate-700";
+    "py-2 px-4 rounded-3xl text-sm text-white font-semibold bg-slate-900 bg-slate-900 hover:bg-slate-700";
   const closedClassName =
-    "py-2 px-4 rounded-3xl text-xs font-semibold bg-white hover:bg-slate-50 ring-2 ring-black";
+    "py-2 px-4 rounded-3xl text-sm font-semibold bg-white hover:bg-slate-50 ring-2 ring-black";
 
-  const handleOpenToggleSwitch: React.MouseEventHandler = async (e) => {
+  const handleToggle: React.MouseEventHandler = async (e) => {
+
     e.preventDefault();
 
     if (user) {
@@ -28,10 +29,7 @@ const CafeToggleSwitch = ({ cafe }: Props) => {
   };
 
   return (
-    <button
-      className={cafe.force_closed ? closedClassName : openClassName}
-      onClick={(e) => handleOpenToggleSwitch(e)}
-    >
+    <button className={cafe.force_closed ? closedClassName : openClassName} onClick={(e) => handleToggle(e)}>
       {cafe.force_closed ? "준비 중" : "영업 중"}
     </button>
   );
