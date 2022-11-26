@@ -20,8 +20,7 @@ describe("cago admin header", () => {
       await act(() => {
         render(<CagoAdminHeader />);
       });
-      await screen.findByRole("link", { name: /managedCafe1/ });
-      screen.getByText("# of likes");
+      await screen.findByRole("link", { name: /cafe1/ });
       await screen.findByRole("button", { name: /영업 중/ });
     });
   });

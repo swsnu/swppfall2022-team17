@@ -11,6 +11,6 @@ jest.mock("next/router", () => ({
     pathname: "/cafes/1/info",
     asPath: "/cafes/1/info",
     prefetch: jest.fn(),
-    query: {id: "1"},
+    query: { cafe_id: "1" },
   }),
 }));
