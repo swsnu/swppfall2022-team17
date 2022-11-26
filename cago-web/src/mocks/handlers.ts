@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { managedCafe_1, managedCafe_2 , managedCafeList, profile, token, user } from "./stubs";
+import { managedCafeList, managedCafe_1, managedCafe_2, profile, token, user } from "./stubs";
 
 // Simplest API handlers
 export const handlers = [
@@ -42,19 +42,21 @@ export const handlers = [
     return res(ctx.json(profile));
   }),
 
-  rest.get('/cafes/?manager=1', (req, res, ctx) => {
-    return res(ctx.json(managedCafeList))
+  rest.get("/cafes/", (req, res, ctx) => {
+    if (req.url.searchParams.get("manager")) {
+      return res(ctx.json(managedCafeList));
+    }
   }),
 
-  rest.get('/cafes/1', (req, res, ctx) => {
-    return res(ctx.json(managedCafe_1))
+  rest.get("/cafes/1/", (req, res, ctx) => {
+    return res(ctx.json(managedCafe_1));
   }),
 
-  rest.get('/cafes/2', (req, res, ctx) => {
-    return res(ctx.json(managedCafe_2))
+  rest.get("/cafes/2/", (req, res, ctx) => {
+    return res(ctx.json(managedCafe_2));
   }),
 
-  rest.patch('/cafes/1/', (req, res, ctx) => {
-    return res(ctx.json({ ...managedCafe_1, force_closed: true }))
+  rest.patch("/cafes/1/", (req, res, ctx) => {
+    return res(ctx.json({ ...managedCafe_1, force_closed: true }));
   }),
 ];

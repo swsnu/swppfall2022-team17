@@ -1,53 +1,71 @@
+import { AxiosError } from "axios";
+import { ManagedCafe } from "components/contents/CafesMap";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
-import { NextPageWithLayout } from "pages/_app";
-import { useRouter } from "next/router";
-import { getCafeDetail } from "lib/dashboard";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import { NextPageWithLayout } from "pages/_app";
+import useSWR from "swr";
+import { getCagoRequest } from "utils";
+
+interface CafeInfoBoxProps {
+  title: string;
+  children: React.ReactNode;
+  path?: string;
+}
+
+const CafeInfoContainer = ({ title, children, path }: CafeInfoBoxProps) => {
+  return (
+    <div className="outlined w-full h-full flex flex-col px-4 py-3">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg">{title}</h2>
+        {path && (
+          <Link href={path} className="contained">
+            자세히
+          </Link>
+        )}
+      </div>
+      <div className="border border-black shadow rounded-lg text-center p-4">{children}</div>
+    </div>
+  );
+};
 
 const ManagedCafeMain: NextPageWithLayout = () => {
-    const router = useRouter()
-    const { cafe_id } = router.query
-    const { data } = getCafeDetail(cafe_id)
-    console.log(data)
-    return (
-        <main className="p-4">
-            {data &&
-                <div className="min-h-fit grid grid-rows-3 grid-cols-2 grid-flow-col gap-4">
-                    {cafeInfoBox("카페 사진", "Todo: pictures", `/admin/dashboard/${cafe_id}/add-pictures`, "2")}
-                    {cafeInfoBox("게시판", "Todo: border", `/admin/dashboard/${cafe_id}/board`)}
-                    {cafeInfoBox("간단 소개글", data.introduction, `/admin/dashboard/${cafe_id}/info`)}
-                    {cafeInfoBox("리뷰", "Todo: Reviews", `/admin/dashboard/${cafe_id}/reviews`)}
-                    {cafeInfoBox("메뉴", "Todo: Menu", `/admin/dashboard/${cafe_id}/menu`)}
-                </div>
-            }
-        </main>)
-}
+  const router = useRouter();
+  const { cafe_id } = router.query;
+  const { data: cafe } = useSWR<ManagedCafe, AxiosError>(cafe_id && `/cafes/${cafe_id}/`, getCagoRequest());
 
-const cafeInfoBox = (title: string, contents: string, redirectURL: string, rowSpan: string = "1") => {
-    return (
-        <div className={`outlined font-extrabold w-full h-full row-span-${rowSpan}`}>
-            <div className="w-full h-full flex flex-col">
-                <div className="flex justify-between">
-                    {title}
-                    <Link href={redirectURL} className="border border-black aspect-square h-[4em] py-[1em] text-center text-xs rounded-full focus:ring-4 focus:ring-slate-400 hover:ring-4 hover:ring-slate-400 hover:bg-slate-300">
-                        More
-                    </Link>
-                </div>
-                <div className="w-full h-full border border-black shadow border-2 rounded-lg my-2 text-center p-4">
-                    {contents}
-                </div>
-            </div>
+  return (
+    <main className="mt-16">
+      {cafe && (
+        <div className="grid lg:grid-rows-3 lg:grid-cols-2 grid-rows-5 grid-flow-col gap-4">
+          <CafeInfoContainer title="카페 사진" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
+            {"TODO: picture"}
+          </CafeInfoContainer>
+          <CafeInfoContainer title="카페 소개" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
+            {cafe.introduction ?? "카페 소개를 작성해보세요!"}
+          </CafeInfoContainer>
+          <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
+            {"TODO: board"}
+          </CafeInfoContainer>
+          <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
+            {"TODO: review"}
+          </CafeInfoContainer>
+          <CafeInfoContainer title="메뉴" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
+            {"TODO: menu"}
+          </CafeInfoContainer>
         </div>
-    )
-}
+      )}
+    </main>
+  );
+};
 
 ManagedCafeMain.getLayout = (page) => (
-    <RequireLogin>
-        <CagoAdminHeader />
-        <Container>{page}</Container>
-    </RequireLogin>
+  <RequireLogin>
+    <CagoAdminHeader />
+    <Container>{page}</Container>
+  </RequireLogin>
 );
 
 export default ManagedCafeMain;

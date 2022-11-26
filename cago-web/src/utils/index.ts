@@ -32,3 +32,35 @@ export const getCagoRequest = <T>(method = "get", token: string | null = null) =
 
   return (url: string, data = {}) => axiosInstance<T>({ method, url, data }).then((res) => res.data);
 };
+
+/**
+ * Phone number to E.164 format.
+ */
+export const toE164 = (phone: string) => {
+  let res = phone.replaceAll("-", "");
+  if (phone.startsWith("0")) {
+    res = res.substring(1);
+  }
+  res = "+82".concat(res);
+  return res;
+};
+
+/**
+ * E.216 format to readable phone number.
+ */
+export const parseE164 = (phone: string) => {
+  if (!phone || phone.length < 3) return phone;
+
+  let res = phone.substring(3);
+  res = "0".concat(res);
+
+  if (res.length === 9) {
+    res = res.substring(0, 2) + "-" + res.substring(2, 5) + "-" + res.substring(5, 9);
+  } else if (res.length === 10) {
+    res = res.substring(0, 2) + "-" + res.substring(2, 6) + "-" + res.substring(6, 10);
+  } else if (res.length === 11) {
+    res = res.substring(0, 3) + "-" + res.substring(3, 7) + "-" + res.substring(7, 11);
+  }
+
+  return res;
+};
