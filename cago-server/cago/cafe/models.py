@@ -63,6 +63,7 @@ class ManagedCafe(Cafe):
     crowdedness = models.IntegerField(
         choices=Crowdedness.choices, default=Crowdedness.UNKNOWN
     )
+    liked_users = models.ManyToManyField(User, related_name="liked_cafes")
 
     class Meta:
         verbose_name = "managed_cafe"
@@ -70,7 +71,9 @@ class ManagedCafe(Cafe):
 
 
 class CafeImage(models.Model):
-    cafe = models.ForeignKey(Cafe, related_name="images", on_delete=models.CASCADE)
+    cafe = models.ForeignKey(
+        ManagedCafe, related_name="images", on_delete=models.CASCADE
+    )
     url = models.URLField(max_length=256)
     is_main = models.BooleanField(default=False)
 
@@ -88,7 +91,52 @@ class CafeImage(models.Model):
 
 
 class CafeMenu(models.Model):
-    cafe = models.ForeignKey(Cafe, related_name="menus", on_delete=models.CASCADE)
+    cafe = models.ForeignKey(
+        ManagedCafe, related_name="menus", on_delete=models.CASCADE
+    )
     name = models.CharField(max_length=64)
+    is_main = models.BooleanField(default=False)
+    category = models.CharField(max_length=64)
     price = models.PositiveIntegerField()
     image = models.URLField(max_length=256, default=default_menu_image)
+
+    class Meta:
+        verbose_name = "cafe_menu"
+        verbose_name_plural = "cafe_menu"
+
+
+class CafeReview(models.Model):
+    class Strength(models.TextChoices):
+        TASTE = "Taste"
+        SERVICE = "Service"
+        MOOD = "Mood"
+
+    class Rating(models.IntegerChoices):
+        ONE = 1
+        TWO = 2
+        THREE = 3
+        FOUR = 4
+        FIVE = 5
+
+    cafe = models.ForeignKey(
+        ManagedCafe, related_name="reviews", on_delete=models.CASCADE
+    )
+    author = models.ForeignKey(User, related_name="reviews", on_delete=models.CASCADE)
+    content = models.TextField()
+    rating = models.PositiveSmallIntegerField(
+        choices=Rating.choices, default=Rating.FIVE
+    )
+    strength = models.CharField(
+        max_length=16, choices=Strength.choices, default=Strength.TASTE
+    )
+
+    class Meta:
+        verbose_name = "cafe_review"
+        verbose_name_plural = "cafe_reviews"
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["cafe", "author"],
+                name="unique_review_cafe_author",
+            )
+        ]
