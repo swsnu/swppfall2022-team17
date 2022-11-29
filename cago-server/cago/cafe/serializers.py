@@ -30,7 +30,20 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
     class Meta:
         model = ManagedCafe
-        fields = "__all__"
+        fields = [  # Exclude liked_users
+            "id",
+            "name",
+            "phone_number",
+            "location",
+            "address",
+            "registration_number",
+            "owner",
+            "managers",
+            "introduction",
+            "avatar",
+            "force_closed",
+            "crowdedness",
+        ]
 
 
 class CafeReadOnlySerializer(ReadOnlyModelSerializer):
@@ -63,7 +76,20 @@ class CafeReadOnlySerializer(ReadOnlyModelSerializer):
 class ManagedCafeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ManagedCafe
-        fields = "__all__"
+        fields = [  # Exclude liked_users
+            "id",
+            "name",
+            "phone_number",
+            "location",
+            "address",
+            "registration_number",
+            "owner",
+            "managers",
+            "introduction",
+            "avatar",
+            "force_closed",
+            "crowdedness",
+        ]
         read_only_fields = ["owner", "managers"]
         extra_kwargs = {"location": {"required": True}}
 
