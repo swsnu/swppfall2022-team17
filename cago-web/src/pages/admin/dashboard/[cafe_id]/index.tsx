@@ -3,6 +3,7 @@ import { ManagedCafe } from "components/contents/CafesMap";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
+import RequireManager from "components/layouts/RequireManager";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
@@ -63,8 +64,10 @@ const DashboardDetail: NextPageWithLayout = () => {
 
 DashboardDetail.getLayout = (page) => (
   <RequireLogin>
-    <CagoAdminHeader />
-    <Container>{page}</Container>
+    <RequireManager>
+      <CagoAdminHeader />
+      <Container>{page}</Container>
+    </RequireManager>
   </RequireLogin>
 );
 
