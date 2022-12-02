@@ -1,7 +1,7 @@
 FROM python:3.10-buster
 WORKDIR /usr/src/cago-server
 
-RUN apt update && apt upgrade
+RUN apt update && apt upgrade -y
 RUN apt install --no-install-recommends -y nginx postgis
 
 COPY nginx.default /etc/nginx/sites-available/default
