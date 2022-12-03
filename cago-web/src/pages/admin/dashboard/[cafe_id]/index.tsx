@@ -44,16 +44,16 @@ const DashboardDetail: NextPageWithLayout = () => {
           <CafeInfoContainer title="카페 사진" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
             {"TODO: picture"}
           </CafeInfoContainer>
-          <CafeInfoContainer title="카페 소개" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
+          <CafeInfoContainer title="카페 소개" path={`/admin/dashboard/${cafe_id}/info`}>
             {cafe.introduction ?? "카페 소개를 작성해보세요!"}
           </CafeInfoContainer>
-          <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
+          <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafe_id}/board`}>
             {"TODO: board"}
           </CafeInfoContainer>
-          <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
+          <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafe_id}/reviews`}>
             {"TODO: review"}
           </CafeInfoContainer>
-          <CafeInfoContainer title="메뉴" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
+          <CafeInfoContainer title="메뉴" path={`/admin/dashboard/${cafe_id}/menu`}>
             {"TODO: menu"}
           </CafeInfoContainer>
         </div>
