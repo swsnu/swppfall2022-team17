@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.gis.measure import D
 from django.db import IntegrityError
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_list_or_404, get_object_or_404
 from django_filters import rest_framework as filters
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
@@ -13,7 +13,7 @@ from rest_framework.mixins import (
     UpdateModelMixin,
 )
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
-from rest_framework.views import Response
+from rest_framework.views import APIView, Response
 from rest_framework.viewsets import GenericViewSet
 
 from cago.cafe.permissions import BaseEditOwnerOnly
@@ -137,3 +137,23 @@ class CafeMenuViewSet(
     filterset_fields = ["cafe_id"]
     ordering_fields = ["category"]
     ordering = ["category"]
+
+
+class CafeLikeAPIView(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def post(self, request, **kwargs):
+        cafe_id = request.data.get("cafe", None) or request.data.get("cafe_id", None)
+        if cafe_id is None:
+            raise ValidationError("should provide cafe id", "invalid")
+        cafe = get_object_or_404(ManagedCafe, id=cafe_id)
+        cafe.liked_users.add(request.user)
+        return Response(status=201)
+
+    def delete(self, request, **kwargs):
+        cafe_id = request.data.get("cafe", None) or request.data.get("cafe_id", None)
+        if cafe_id is None:
+            raise ValidationError("should provide cafe id", "invalid")
+        cafe = get_object_or_404(ManagedCafe, id=cafe_id)
+        cafe.liked_users.remove(request.user)
+        return Response(status=204)
