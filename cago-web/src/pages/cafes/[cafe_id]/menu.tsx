@@ -1,0 +1,38 @@
+import CafeMenuContainer from "components/contents/CafeMenuContainer";
+import CagoHeader from "components/layouts/CagoHeader";
+import Container from "components/layouts/Container";
+import RequireProfile from "components/layouts/RequireProfile";
+import { useMenu } from "lib/menu";
+import { useRouter } from "next/router";
+import { NextPageWithLayout } from "pages/_app";
+
+const CafeMenu: NextPageWithLayout = () => {
+  const router = useRouter();
+  const { cafe_id } = router.query;
+  const { mainMenuList, categorizedMenuList } = useMenu(cafe_id);
+
+  return (
+    <main>
+      {/* Main menu */}
+      <div className="my-8">
+        <CafeMenuContainer category="대표 메뉴" menuList={mainMenuList} />
+      </div>
+
+      {/* Categorized menu */}
+      {categorizedMenuList.map((list) => (
+        <div key={list.category} className="mb-8">
+          <CafeMenuContainer category={list.category} menuList={list.menuList} />
+        </div>
+      ))}
+    </main>
+  );
+};
+
+CafeMenu.getLayout = (page) => (
+  <RequireProfile>
+    <CagoHeader />
+    <Container>{page}</Container>
+  </RequireProfile>
+);
+
+export default CafeMenu;
