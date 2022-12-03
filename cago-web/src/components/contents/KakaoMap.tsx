@@ -18,7 +18,6 @@ export interface Coordinates {
 }
 
 let isAlreadyLoaded = false;
-let watchPositionId = -1;
 
 const KakaoMap = (props: Props) => {
   const [loaded, setLoaded] = useState<boolean>(isAlreadyLoaded);
@@ -35,13 +34,6 @@ const KakaoMap = (props: Props) => {
     navigator.geolocation.getCurrentPosition((position) => {
       setCurrentLocation({ x: position.coords.longitude, y: position.coords.latitude });
     });
-
-    // Watch current position of the device, and modify center if changed. Useful in mobile device.
-    if (watchPositionId == -1) {
-      watchPositionId = navigator.geolocation.watchPosition((position) => {
-        setCurrentLocation({ x: position.coords.longitude, y: position.coords.latitude });
-      });
-    }
   }, []);
 
   // If current location is changed, call the callback and store it to local storage.
