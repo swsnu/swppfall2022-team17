@@ -43,6 +43,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "cdn4.iconfinder.com",
+        pathname: "/data/icons/**",
+      },
+      {
+        protocol: "https",
         hostname: "live.staticflickr.com",
         pathname: "/**",
       },
