@@ -96,12 +96,6 @@ class CafeReadOnlySerializer(ReadOnlyModelSerializer):
 
 
 class ManagedCafeSerializer(serializers.ModelSerializer):
-    num_likes = serializers.IntegerField(read_only=True)
-    num_reviews = serializers.IntegerField(read_only=True)
-    num_taste = serializers.IntegerField(read_only=True)
-    num_service = serializers.IntegerField(read_only=True)
-    num_mood = serializers.IntegerField(read_only=True)
-
     class Meta:
         model = ManagedCafe
         fields = [  # Exclude liked_users
@@ -117,11 +111,6 @@ class ManagedCafeSerializer(serializers.ModelSerializer):
             "avatar",
             "force_closed",
             "crowdedness",
-            "num_likes",
-            "num_reviews",
-            "num_taste",
-            "num_service",
-            "num_mood",
         ]
         read_only_fields = ["owner", "managers"]
         extra_kwargs = {"location": {"required": True}}
