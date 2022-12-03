@@ -7,6 +7,7 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.mixins import (
     CreateModelMixin,
+    DestroyModelMixin,
     ListModelMixin,
     RetrieveModelMixin,
     UpdateModelMixin,
@@ -17,13 +18,14 @@ from rest_framework.viewsets import GenericViewSet
 
 from cago.cafe.permissions import BaseEditOwnerOnly
 from cago.cafe.serializers import (
+    CafeMenuSerializer,
     CafeReadOnlySerializer,
     CustomerProfileSerializer,
     ManagedCafeSerializer,
 )
 from cago.cafe.utils import parse_coordinate
 
-from .models import Cafe, CustomerProfile, ManagedCafe
+from .models import Cafe, CafeMenu, CustomerProfile, ManagedCafe
 
 User = get_user_model()
 
@@ -110,3 +112,28 @@ class CafeViewSet(
         )
         # Initially add the owner to the managers.
         instance.managers.add(self.request.user)
+
+
+class CafeMenuViewSet(
+    CreateModelMixin,
+    ListModelMixin,
+    UpdateModelMixin,
+    DestroyModelMixin,
+    GenericViewSet,
+):
+    class EditOwnerOnly(BaseEditOwnerOnly):
+        owner_field = "owner"
+        owners_field = "managers"
+
+        def has_object_permission(self, request, view, obj):
+            # obj is cafe, not the menu
+            # On creation, permissions are checked in validation stage.
+            obj = obj.cafe
+            return super().has_object_permission(request, view, obj)
+
+    queryset = CafeMenu.objects.all()
+    serializer_class = CafeMenuSerializer
+    permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
+    filterset_fields = ["cafe_id"]
+    ordering_fields = ["category"]
+    ordering = ["category"]

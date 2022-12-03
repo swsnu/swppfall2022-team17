@@ -1,11 +1,13 @@
 import re
 
 from django.contrib.gis.measure import D
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
+from rest_framework.exceptions import PermissionDenied
 
 from cago.cafe.utils import parse_coordinate
 
-from .models import Cafe, CustomerProfile, ManagedCafe
+from .models import Cafe, CafeMenu, CustomerProfile, ManagedCafe
 
 
 class ReadOnlyModelSerializer(serializers.ModelSerializer):
@@ -147,3 +149,21 @@ class ManagedCafeSerializer(serializers.ModelSerializer):
                 )
 
         return point
+
+
+class CafeMenuSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CafeMenu
+        fields = ["id", "cafe", "name", "is_main", "category", "price", "image"]
+
+    def validate_cafe(self, value):
+        user = self.context.get("request").user
+
+        # Check whether the user has permission to add a menu.
+        # On update or delete, the permission backends kick in before validation.
+        if value.managers.filter(id=user.id).exists() or user.id == value.owner.id:
+            return value
+        else:
+            raise PermissionDenied(
+                "you don't have permission to create a menu on the cafe"
+            )
