@@ -30,6 +30,7 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 
 
 class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
+    is_liked: bool = serializers.SerializerMethodField()
     num_likes = serializers.IntegerField(read_only=True)
     num_reviews = serializers.IntegerField(read_only=True)
     num_taste = serializers.IntegerField(read_only=True)
@@ -51,12 +52,20 @@ class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
             "avatar",
             "force_closed",
             "crowdedness",
+            "is_liked",
             "num_likes",
             "num_reviews",
             "num_taste",
             "num_service",
             "num_mood",
         ]
+
+    def get_is_liked(self, obj):
+        user = self.context["request"].user
+        if user is None:
+            return False
+
+        return obj.liked_users.filter(id=user.id).exists()
 
 
 class CafeReadOnlySerializer(ReadOnlyModelSerializer):
