@@ -22,6 +22,11 @@ export const createMenu = async (data: Omit<Menu, "id">, token: string) => {
   mutate(`/menus/?cafe_id=${data.cafe}`);
 };
 
+export const deleteMenu = async (cafeId: number, menuId: number, token: string) => {
+  await getCagoRequest("delete", token)(`/menus/${menuId}/`);
+  mutate(`/menus/?cafe_id=${cafeId}`);
+};
+
 export const useMenu = (cafeId: string | string[] | undefined) => {
   const { data } = useSWR<Menu[]>(cafeId && `/menus/?cafe_id=${cafeId}`, getCagoRequest());
 
