@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { cafes, profile, token, user } from "./stubs";
+import { cafes, cafe_menu, profile, token, user } from "./stubs";
 
 // Simplest API handlers
 export const handlers = [
@@ -64,5 +64,17 @@ export const handlers = [
 
   rest.post("/cafes/", (req, res, ctx) => {
     return res(ctx.status(201), ctx.json(cafes[0]));
+  }),
+
+  rest.get("/menus/", (req, res, ctx) => {
+    return res(ctx.json(cafe_menu));
+  }),
+
+  rest.delete("/menus/1/", (req, res, ctx) => {
+    return res(ctx.status(204));
+  }),
+
+  rest.post("/menus/", (req, res, ctx) => {
+    return res(ctx.status(201), ctx.json(cafe_menu[0]));
   }),
 ];

@@ -43,3 +43,33 @@ export const cafes = [
     address: "address2",
   },
 ];
+
+export const cafe_menu = [
+  {
+    id: 1,
+    cafe: 1,
+    name: "아메리카노",
+    is_main: true,
+    category: "커피",
+    price: "5000",
+    image: "https://cdn4.iconfinder.com/data/icons/sketchy-basic-icons/94/coffee-512.png",
+  },
+  {
+    id: 2,
+    cafe: 1,
+    name: "카페라떼",
+    is_main: false,
+    category: "커피",
+    price: "6000",
+    image: "https://cdn4.iconfinder.com/data/icons/sketchy-basic-icons/94/coffee-512.png",
+  },
+  {
+    id: 3,
+    cafe: 1,
+    name: "치크 케이크",
+    is_main: true,
+    category: "케이크",
+    price: "10000",
+    image: "https://cdn4.iconfinder.com/data/icons/sketchy-basic-icons/94/coffee-512.png",
+  },
+];
