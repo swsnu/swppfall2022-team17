@@ -2,6 +2,7 @@ import axios, { AxiosError } from "axios";
 import { Cafe, ManagedCafe } from "components/contents/CafesMap";
 import useSWR, { mutate } from "swr";
 import { CagoAPIError, getCagoRequest } from "utils";
+import { useAuth } from "./auth";
 
 export const registerCafe = async (
   data: {
@@ -47,7 +48,15 @@ export const setForceClosed = async (id: number, force_closed: boolean, token: s
 };
 
 export const useCafe = (cafeId?: string | string[]) => {
-  const { data } = useSWR<Cafe | ManagedCafe, AxiosError>(cafeId && `/cafes/${cafeId}/`, getCagoRequest());
+  const { user, loggedIn } = useAuth();
+
+  // Fetch only when not logged in, or logged in and user object is set.
+  const shouldFetch = (!loggedIn || (loggedIn && !!user)) && cafeId;
+
+  const { data } = useSWR<Cafe | ManagedCafe, AxiosError>(
+    shouldFetch && `/cafes/${cafeId}/`,
+    getCagoRequest("get", user?.token)
+  );
 
   return { data };
 };
