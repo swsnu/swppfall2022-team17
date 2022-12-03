@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { getCagoRequest } from "utils";
 
 export interface Menu {
@@ -16,6 +16,11 @@ export interface CategorizedMenu {
   category: string;
   menuList: Menu[];
 }
+
+export const createMenu = async (data: Omit<Menu, "id">, token: string) => {
+  await getCagoRequest("post", token)("/menus/", data);
+  mutate(`/menus/?cafe_id=${data.cafe}`);
+};
 
 export const useMenu = (cafeId: string | string[] | undefined) => {
   const { data } = useSWR<Menu[]>(cafeId && `/menus/?cafe_id=${cafeId}`, getCagoRequest());
