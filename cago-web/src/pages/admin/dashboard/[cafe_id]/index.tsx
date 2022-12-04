@@ -20,9 +20,6 @@ interface CafeInfoBoxProps {
 }
 
 const CafeInfoContainer = ({ title, children, path }: CafeInfoBoxProps) => {
-  const router = useRouter();
-  const { cafe_id } = router.query;
-
   return (
     <div className={`outlined w-full h-full flex flex-col px-4 py-3 my-2`}>
       <div className="flex justify-between items-center mb-4">
@@ -62,7 +59,6 @@ const DashboardDetail: NextPageWithLayout = () => {
           <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafe_id}/board`}>
             <BoardSummary />
           </CafeInfoContainer>
-          
         </div>
       )}
     </main>
