@@ -1,0 +1,86 @@
+[
+    {
+        "id": 1,
+        "author_id": 1,
+        "content": "임시 리뷰 1",
+        "rating": 5,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 2,
+        "author_id": 1,
+        "content": "임시 리뷰 2",
+        "rating": 4,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 3,
+        "author_id": 1,
+        "content": "임시 리뷰 3",
+        "rating": 3,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 4,
+        "author_id": 1,
+        "content": "임시 리뷰 4",
+        "rating": 2,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 5,
+        "author_id": 1,
+        "content": "임시 리뷰 5",
+        "rating": 1,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 5,
+        "author_id": 1,
+        "content": "임시 리뷰 5",
+        "rating": 1,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 5,
+        "author_id": 1,
+        "content": "임시 리뷰 5",
+        "rating": 1,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 5,
+        "author_id": 1,
+        "content": "임시 리뷰 5",
+        "rating": 1,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 5,
+        "author_id": 1,
+        "content": "임시 리뷰 5",
+        "rating": 1,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 5,
+        "author_id": 1,
+        "content": "임시 리뷰 5",
+        "rating": 1,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 5,
+        "author_id": 1,
+        "content": "임시 리뷰 5",
+        "rating": 1,
+        "strength": "임시 강점 1"
+    },
+    {
+        "id": 5,
+        "author_id": 1,
+        "content": "임시 리뷰 5",
+        "rating": 1,
+        "strength": "임시 강점 1"
+    }
+]
