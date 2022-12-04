@@ -16,14 +16,15 @@ import ReviewSummary from "components/contents/ReviewSummary"
 interface CafeInfoBoxProps {
   title: string;
   children: React.ReactNode;
-  span?: string;
   path?: string;
 }
 
-const CafeInfoContainer = ({ title, children, span, path }: CafeInfoBoxProps) => {
+const CafeInfoContainer = ({ title, children, path }: CafeInfoBoxProps) => {
+  const router = useRouter();
+  const { cafe_id } = router.query;
+
   return (
-    /* span for large table */
-    <div className={`outlined w-full h-full flex flex-col px-4 py-3 col-span-${span}`}>
+    <div className={`outlined w-full h-full flex flex-col px-4 py-3 my-2`}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg">{title}</h2>
         {path && (
@@ -45,22 +46,23 @@ const DashboardDetail: NextPageWithLayout = () => {
   return (
     <main className="my-8">
       {cafe && (
-        <div className="grid lg:grid-rows-3 lg:grid-cols-2 grid-rows-5 grid-flow-col gap-4">
+        <div className="flex flex-col">
           <CafeInfoContainer title="카페 사진" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
             {/* <ImageView/> */}
           </CafeInfoContainer>
           <CafeInfoContainer title="카페 소개" path={`/admin/dashboard/${cafe_id}/info`}>
             {cafe.introduction ?? "카페 소개를 작성해보세요!"}
           </CafeInfoContainer>
-          <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafe_id}/board`} span='2'>
-            <BoardSummary />
+          <CafeInfoContainer title="메뉴" path={`/admin/dashboard/${cafe_id}/menu`}>
+            <MenuSummary cafe_id={`${cafe_id}`}/>
           </CafeInfoContainer>
           <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafe_id}/review`}>
             <ReviewSummary />
           </CafeInfoContainer>
-          <CafeInfoContainer title="메뉴" path={`/admin/dashboard/${cafe_id}/menu`}>
-            <MenuSummary/>
+          <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafe_id}/board`}>
+            <BoardSummary />
           </CafeInfoContainer>
+          
         </div>
       )}
     </main>
