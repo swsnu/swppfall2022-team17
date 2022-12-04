@@ -13,7 +13,11 @@ interface Stars {
 }
 
 const temp_list_review: Review[] = temp_review
+/*** 
+ * Todo : Work with api
+ * ***/
 
+/* for review stars */
 const Star = ({ rating }: Stars) => {
     return(
     rating <= 1 ?
@@ -27,12 +31,13 @@ const Star = ({ rating }: Stars) => {
                     : <span>★★★★★</span>)
 
 }
+
 const ReviewSummary = () => {
     return (
         <main className='flex flex-row overflow-auto scrollbar-hide'>
             {temp_list_review.map((review) => {
                 return (
-                    <div className='flex flex-col min-w-fit outlined m-2'>
+                    <div key={`${review.id} review container`} className='flex flex-col min-w-fit outlined m-2'>
                         <Star rating={review.rating} />
                         <div className='my-2'>{review.content}</div>
                     </div>
