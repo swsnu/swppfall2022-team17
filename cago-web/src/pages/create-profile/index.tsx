@@ -16,7 +16,8 @@ const CreateProfile: NextPageWithLayout = () => {
     router.prefetch(redirect);
 
     if (hasProfile) {
-      router.replace(redirect);
+      const { redirect: r, ...rest } = router.query;
+      router.replace({ pathname: redirect, query: rest });
     }
   }, [hasProfile, redirect, router]);
 
