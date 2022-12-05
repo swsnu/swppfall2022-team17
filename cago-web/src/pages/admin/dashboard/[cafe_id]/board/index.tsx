@@ -12,10 +12,10 @@ const AdminBoard: NextPageWithLayout = () => {
   const { articles } = useArticles();
   const router = useRouter();
   const id =
-    typeof router.query.id === "string" ? parseInt(router.query.id) : 0;
+    typeof router.query.cafe_id === "string" ? parseInt(router.query.cafe_id) : 0;
   const postArticleButton = (
     <Link
-      href={`/admin/dashboard/${router.query.id}/board/post`}
+      href={`/admin/dashboard/${id}/board/post`}
       className="block w-fit mx-auto outlined mt-4"
     >
       게시글 작성

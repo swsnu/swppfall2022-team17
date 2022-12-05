@@ -9,7 +9,7 @@ const PostArticleForm: NextComponentType = () => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const router = useRouter();
-  const cafe_id = router.query.id
+  const cafe_id = router.query.cafe_id
 
   const redirect = `/admin/dashboard/${cafe_id}/board`;
 

@@ -10,7 +10,7 @@ const Board: NextPageWithLayout = () => {
   const { articles } = useArticles();
   const router = useRouter();
   const id =
-    typeof router.query.id === "string" ? parseInt(router.query.id) : 0;
+    typeof router.query.cafe_id === "string" ? parseInt(router.query.cafe_id) : 0;
   return (
     <main>
       {articles &&

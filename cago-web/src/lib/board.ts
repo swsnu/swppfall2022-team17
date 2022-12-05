@@ -50,7 +50,7 @@ export const postArticle = async (
 
 export const useArticles = () => {
   const router = useRouter();
-  const cafe_id = router.query.id;
+  const cafe_id = router.query.cafe_id;
   const detail = cafe_id !== undefined;
 
   // Fetch cafe only when the user at admin dashboard detail page.
