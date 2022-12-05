@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.gis.measure import D
 from django.db import IntegrityError
-from django.shortcuts import get_list_or_404, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django_filters import rest_framework as filters
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
@@ -14,10 +14,12 @@ from rest_framework.mixins import (
 )
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView, Response
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from cago.cafe.permissions import BaseEditOwnerOnly
 from cago.cafe.serializers import (
+    CafeArticleSerializer,
+    CafeCommentSerializer,
     CafeImageSerialzier,
     CafeMenuSerializer,
     CafeReadOnlySerializer,
@@ -26,7 +28,15 @@ from cago.cafe.serializers import (
 )
 from cago.cafe.utils import parse_coordinate
 
-from .models import Cafe, CafeImage, CafeMenu, CustomerProfile, ManagedCafe
+from .models import (
+    BoardArticle,
+    BoardComment,
+    Cafe,
+    CafeImage,
+    CafeMenu,
+    CustomerProfile,
+    ManagedCafe,
+)
 
 User = get_user_model()
 
@@ -172,7 +182,7 @@ class CafeImageViewSet(
         owners_field = "managers"
 
         def has_object_permission(self, request, view, obj):
-            # obj is cafe, not the menu
+            # obj is cafe, not the image.
             # On creation, permissions are checked in validation stage.
             obj = obj.cafe
             return super().has_object_permission(request, view, obj)
@@ -183,3 +193,43 @@ class CafeImageViewSet(
     filterset_fields = ["cafe_id"]
     ordering_fields = ["id", "is_main"]
     ordering = ["-is_main", "id"]
+
+
+class CafeArticleViewSet(ModelViewSet):
+    class EditOwnerOnly(BaseEditOwnerOnly):
+        owner_field = "owner"
+        owners_field = "managers"
+
+        def has_object_permission(self, request, view, obj):
+            # obj is cafe, not the article.
+            # On creation, permissions are checked in validation stage.
+            obj = obj.cafe
+            return super().has_object_permission(request, view, obj)
+
+    queryset = BoardArticle.objects.all()
+    serializer_class = CafeArticleSerializer
+    permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
+    filterset_fields = ["cafe_id"]
+    ordering_fields = ["created_at", "updated_at"]
+    ordering = ["-created_at"]
+
+
+class CafeCommentViewSet(
+    CreateModelMixin,
+    ListModelMixin,
+    UpdateModelMixin,
+    DestroyModelMixin,
+    GenericViewSet,
+):
+    class EditOwnerOnly(BaseEditOwnerOnly):
+        owner_field = "author"
+
+    queryset = BoardComment.objects.all()
+    serializer_class = CafeCommentSerializer
+    permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
+    filterset_fields = ["article_id"]
+    ordering_fields = ["created_at", "updated_at"]
+    ordering = ["created_at"]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)

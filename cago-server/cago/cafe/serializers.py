@@ -2,12 +2,21 @@ import re
 
 from django.contrib.gis.measure import D
 from django.db import transaction
+from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 
 from cago.cafe.utils import parse_coordinate
 
-from .models import Cafe, CafeImage, CafeMenu, CustomerProfile, ManagedCafe
+from .models import (
+    BoardArticle,
+    BoardComment,
+    Cafe,
+    CafeImage,
+    CafeMenu,
+    CustomerProfile,
+    ManagedCafe,
+)
 
 
 class ReadOnlyModelSerializer(serializers.ModelSerializer):
@@ -165,6 +174,109 @@ class CafeMenuSerializer(serializers.ModelSerializer):
             raise PermissionDenied(
                 "you don't have permission to create a menu on the cafe"
             )
+
+
+class CafeProfileSerializer(ReadOnlyModelSerializer):
+    """
+    Serializer for nested expression of cafe board article.
+    """
+
+    class Meta:
+        model = ManagedCafe
+        fields = ["id", "name", "avatar"]
+
+
+class CafeCommentSerializer(serializers.ModelSerializer):
+    is_customer: bool = serializers.SerializerMethodField()
+    author = CustomerProfileSerializer(source="author.customer_profile", read_only=True)
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    is_updated: bool = serializers.SerializerMethodField()
+
+    class Meta:
+        model = BoardComment
+        fields = [
+            "id",
+            "article",
+            "content",
+            "is_customer",
+            "author",
+            "created_at",
+            "updated_at",
+            "is_updated",
+        ]
+        read_only_fields = ["author"]
+
+    def get_is_customer(self, obj):
+        author = obj.author
+        cafe = obj.article.cafe
+        if cafe.managers.filter(id=author.id).exists() or author.id == cafe.owner.id:
+            return False
+        else:
+            return True
+
+    def get_is_updated(self, obj):
+        return obj.updated_at - obj.created_at > timezone.timedelta(seconds=1)
+
+    def validate(self, data):
+        article = data.get("article", None) or self.instance.article
+        cafe = article.cafe
+        user = self.context["request"].user
+        is_manager = (
+            cafe.managers.filter(id=user.id).exists() or user.id == cafe.owner.id
+        )
+
+        # Only the users with customer profile can post a comment if not a manager.
+        if not hasattr(user, "customer_profile") and not is_manager:
+            raise serializers.ValidationError(
+                "author of a comment should have a customer profile", "invalid"
+            )
+        return data
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        author = instance.author
+        cafe = instance.article.cafe
+
+        # Replace author to CafeProfileSerializer if the comment is written by a manager.
+        if cafe.managers.filter(id=author.id).exists() or author.id == cafe.owner.id:
+            response["author"] = CafeProfileSerializer(cafe).data
+
+        return response
+
+
+class CafeArticleSerializer(serializers.ModelSerializer):
+    comments = CafeCommentSerializer(many=True, read_only=True)
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    is_updated = serializers.SerializerMethodField()
+
+    class Meta:
+        model = BoardArticle
+        fields = [
+            "id",
+            "cafe",
+            "title",
+            "content",
+            "comments",
+            "created_at",
+            "updated_at",
+            "is_updated",
+        ]
+
+    def validate_cafe(self, value):
+        user = self.context.get("request").user
+
+        # Same as the previous.
+        if value.managers.filter(id=user.id).exists() or user.id == value.owner.id:
+            return value
+        else:
+            raise PermissionDenied(
+                "you don't have permission to post an article on the cafe"
+            )
+
+    def get_is_updated(self, obj):
+        return obj.updated_at - obj.created_at > timezone.timedelta(seconds=1)
 
 
 class CafeImageSerialzier(serializers.ModelSerializer):
