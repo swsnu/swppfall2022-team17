@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { cafes, cafe_menu, profile, token, user } from "./stubs";
+import { cafes, cafe_menu, article, profile, token, user } from "./stubs";
 
 // Simplest API handlers
 export const handlers = [

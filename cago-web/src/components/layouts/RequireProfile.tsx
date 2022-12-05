@@ -14,7 +14,7 @@ const RequireProfile = ({ children }: Props) => {
 
   useEffect(() => {
     if (!!user && !profileLoading && !hasProfile) {
-      router.replace({ pathname: "/create-profile", query: { redirect: router.pathname } });
+      router.replace({ pathname: "/create-profile", query: { redirect: router.asPath } });
     }
   }, [user, profileLoading, hasProfile, router]);
 
