@@ -18,7 +18,8 @@ const RequireLogout = ({ children }: Props) => {
     router.prefetch(redirect);
 
     if (loggedIn) {
-      router.replace(redirect);
+      const { redirect: r, ...rest } = router.query;
+      router.replace({ pathname: redirect, query: rest });
     }
   }, [loggedIn, redirect, router]);
 

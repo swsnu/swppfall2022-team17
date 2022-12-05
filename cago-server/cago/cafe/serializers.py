@@ -38,6 +38,7 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 
 
 class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
+    is_liked: bool = serializers.SerializerMethodField()
     num_likes = serializers.IntegerField(read_only=True)
     num_reviews = serializers.IntegerField(read_only=True)
     num_taste = serializers.IntegerField(read_only=True)
@@ -59,12 +60,20 @@ class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
             "avatar",
             "force_closed",
             "crowdedness",
+            "is_liked",
             "num_likes",
             "num_reviews",
             "num_taste",
             "num_service",
             "num_mood",
         ]
+
+    def get_is_liked(self, obj):
+        user = self.context["request"].user
+        if user is None:
+            return False
+
+        return obj.liked_users.filter(id=user.id).exists()
 
 
 class CafeReadOnlySerializer(ReadOnlyModelSerializer):
@@ -95,12 +104,6 @@ class CafeReadOnlySerializer(ReadOnlyModelSerializer):
 
 
 class ManagedCafeSerializer(serializers.ModelSerializer):
-    num_likes = serializers.IntegerField(read_only=True)
-    num_reviews = serializers.IntegerField(read_only=True)
-    num_taste = serializers.IntegerField(read_only=True)
-    num_service = serializers.IntegerField(read_only=True)
-    num_mood = serializers.IntegerField(read_only=True)
-
     class Meta:
         model = ManagedCafe
         fields = [  # Exclude liked_users
@@ -116,11 +119,6 @@ class ManagedCafeSerializer(serializers.ModelSerializer):
             "avatar",
             "force_closed",
             "crowdedness",
-            "num_likes",
-            "num_reviews",
-            "num_taste",
-            "num_service",
-            "num_mood",
         ]
         read_only_fields = ["owner", "managers"]
         extra_kwargs = {"location": {"required": True}}
