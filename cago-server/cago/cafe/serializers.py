@@ -2,12 +2,20 @@ import re
 
 from django.contrib.gis.measure import D
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 
 from cago.cafe.utils import parse_coordinate
 
-from .models import Cafe, CafeMenu, CustomerProfile, ManagedCafe
+from .models import (
+    BoardArticle,
+    BoardComment,
+    Cafe,
+    CafeMenu,
+    CustomerProfile,
+    ManagedCafe,
+)
 
 
 class ReadOnlyModelSerializer(serializers.ModelSerializer):
@@ -167,3 +175,61 @@ class CafeMenuSerializer(serializers.ModelSerializer):
             raise PermissionDenied(
                 "you don't have permission to create a menu on the cafe"
             )
+
+
+class CafeCommentSerializer(serializers.ModelSerializer):
+    is_updated = serializers.SerializerMethodField()
+    article_id = serializers.IntegerField(write_only=True, required=False)
+
+    class Meta:
+        model = BoardComment
+        fields = "__all__"
+        read_only_fields = ["article", "author"]
+
+    def get_is_updated(self, obj):
+        return obj.updated_at - obj.created_at > timezone.timedelta(seconds=1)
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        profile = instance.author.customer_profile
+        response["author"] = CustomerProfileSerializer(profile).data
+        response["article"] = instance.article.id
+        return response
+
+
+# serializer for nested expression of cafe board article. Only cafe name and avatar
+class CafeProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ManagedCafe
+        fields = ["id", "name", "avatar"]
+
+
+class CafeArticleSerializer(serializers.ModelSerializer):
+    is_updated = serializers.SerializerMethodField()
+    cafe_id = serializers.IntegerField(write_only=True, required=False)
+
+    class Meta:
+        model = BoardArticle
+        fields = "__all__"
+        read_only_fields = ["cafe"]
+
+    def validate_cafe(self, value):
+        user = self.context.get("request").user
+        # Check whether the user has permission to post an article.
+        # On update or delete, the permission backends kick in before validation.
+        if value.managers.filter(id=user.id).exists() or user.id == value.owner.id:
+            return value
+        else:
+            raise PermissionDenied(
+                "you don't have permission to post an article on the cafe"
+            )
+
+    def get_is_updated(self, obj):
+        return obj.updated_at - obj.created_at > timezone.timedelta(seconds=1)
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        response["cafe"] = CafeProfileSerializer(instance.cafe).data
+        comments = BoardComment.objects.filter(article_id=instance.id)
+        response["comments"] = CafeCommentSerializer(comments, many=True).data
+        return response

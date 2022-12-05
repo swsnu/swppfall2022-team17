@@ -14,10 +14,12 @@ from rest_framework.mixins import (
 )
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import Response
-from rest_framework.viewsets import GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from cago.cafe.permissions import BaseEditOwnerOnly
 from cago.cafe.serializers import (
+    CafeArticleSerializer,
+    CafeCommentSerializer,
     CafeMenuSerializer,
     CafeReadOnlySerializer,
     CustomerProfileSerializer,
@@ -25,7 +27,14 @@ from cago.cafe.serializers import (
 )
 from cago.cafe.utils import parse_coordinate
 
-from .models import Cafe, CafeMenu, CustomerProfile, ManagedCafe
+from .models import (
+    BoardArticle,
+    BoardComment,
+    Cafe,
+    CafeMenu,
+    CustomerProfile,
+    ManagedCafe,
+)
 
 User = get_user_model()
 
@@ -137,3 +146,43 @@ class CafeMenuViewSet(
     filterset_fields = ["cafe_id"]
     ordering_fields = ["category"]
     ordering = ["category"]
+
+
+class CafeArticleViewSet(ModelViewSet):
+    class EditOwnerOnly(BaseEditOwnerOnly):
+        owner_field = "owner"
+        owners_field = "managers"
+
+        def has_object_permission(self, request, view, obj):
+            # obj is cafe, not the article
+            # On creation, permissions are checked in validation stage.
+            obj = obj.cafe
+            return super().has_object_permission(request, view, obj)
+
+    queryset = BoardArticle.objects.all()
+    serializer_class = CafeArticleSerializer
+    permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
+    filterset_fields = ["cafe_id"]
+    ordering_fields = ["created_at", "updated_at"]
+    ordeirng = ["created_at"]
+
+
+class CafeCommentViewSet(
+    CreateModelMixin,
+    ListModelMixin,
+    UpdateModelMixin,
+    DestroyModelMixin,
+    GenericViewSet,
+):
+    class EditOwnerOnly(BaseEditOwnerOnly):
+        owner_field = "author"
+
+    queryset = BoardComment.objects.all()
+    serializer_class = CafeCommentSerializer
+    permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
+    filterset_fields = ["article_id"]
+    ordering_fields = ["created_at", "updated_at"]
+    ordeirng = ["created_at"]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
