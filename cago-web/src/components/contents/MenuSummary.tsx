@@ -22,7 +22,7 @@ const MenuSummary = ({ cafe_id }: SummaryProps) => {
                             <div className="flex overflow-auto scrollbar-hide">
                                 {mainMenuList.map((mainMenu) => {
                                     return (
-                                        <div key={`${mainMenu.id} main container`} className='shadow-lg m-2 w-full min-w-fit flex flex-col justify-center'>
+                                        <div key={`${mainMenu.id} main container`} className='shadow-lg m-2 min-w-fit flex flex-col justify-center'>
                                             <div>{mainMenu.name}</div>
                                             {mainMenu.image && <img src={mainMenu.image} className='h-44' />}
                                             <div>{mainMenu.price}원</div>
