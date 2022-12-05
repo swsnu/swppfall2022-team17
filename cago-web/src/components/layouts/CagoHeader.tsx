@@ -45,7 +45,7 @@ const CagoHeader = () => {
           </ul>
           {cafe?.is_managed && (
             <ul className="flex gap-2 sm:text-xl text-md font-bold">
-              <li className="">
+              <li>
                 <Link href={`/cafes/${cafe.id}/info`}>{cafe.name}</Link>
               </li>
               {loggedIn && (
