@@ -1,4 +1,5 @@
 import { useMenu } from "lib/menu";
+import Image from "next/image"
 
 interface SummaryProps {
     cafe_id: string;
@@ -24,7 +25,7 @@ const MenuSummary = ({ cafe_id }: SummaryProps) => {
                                     return (
                                         <div key={`${mainMenu.id} main container`} className='shadow-lg m-2 min-w-fit flex flex-col justify-center'>
                                             <div>{mainMenu.name}</div>
-                                            {mainMenu.image && <img src={mainMenu.image} className='h-44' />}
+                                            {mainMenu.image && <Image src={mainMenu.image} alt="main-menu" width={180} height={160} className="mb-2" />}
                                             <div>{mainMenu.price}원</div>
                                         </div>
                                     )
