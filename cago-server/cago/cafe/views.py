@@ -18,6 +18,7 @@ from rest_framework.viewsets import GenericViewSet
 
 from cago.cafe.permissions import BaseEditOwnerOnly
 from cago.cafe.serializers import (
+    CafeImageSerialzier,
     CafeMenuSerializer,
     CafeReadOnlySerializer,
     CustomerProfileSerializer,
@@ -25,7 +26,7 @@ from cago.cafe.serializers import (
 )
 from cago.cafe.utils import parse_coordinate
 
-from .models import Cafe, CafeMenu, CustomerProfile, ManagedCafe
+from .models import Cafe, CafeImage, CafeMenu, CustomerProfile, ManagedCafe
 
 User = get_user_model()
 
@@ -157,3 +158,28 @@ class CafeLikeAPIView(APIView):
         cafe = get_object_or_404(ManagedCafe, id=cafe_id)
         cafe.liked_users.remove(request.user)
         return Response(status=204)
+
+
+class CafeImageViewSet(
+    CreateModelMixin,
+    ListModelMixin,
+    UpdateModelMixin,
+    DestroyModelMixin,
+    GenericViewSet,
+):
+    class EditOwnerOnly(BaseEditOwnerOnly):
+        owner_field = "owner"
+        owners_field = "managers"
+
+        def has_object_permission(self, request, view, obj):
+            # obj is cafe, not the menu
+            # On creation, permissions are checked in validation stage.
+            obj = obj.cafe
+            return super().has_object_permission(request, view, obj)
+
+    queryset = CafeImage.objects.all()
+    serializer_class = CafeImageSerialzier
+    permission_classess = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
+    filterset_fields = ["cafe_id"]
+    ordering_fields = ["id", "is_main"]
+    ordering = ["-is_main", "id"]

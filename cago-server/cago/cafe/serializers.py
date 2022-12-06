@@ -1,13 +1,13 @@
 import re
 
 from django.contrib.gis.measure import D
-from django.shortcuts import get_object_or_404
+from django.db import transaction
 from rest_framework import serializers
 from rest_framework.exceptions import PermissionDenied
 
 from cago.cafe.utils import parse_coordinate
 
-from .models import Cafe, CafeMenu, CustomerProfile, ManagedCafe
+from .models import Cafe, CafeImage, CafeMenu, CustomerProfile, ManagedCafe
 
 
 class ReadOnlyModelSerializer(serializers.ModelSerializer):
@@ -165,3 +165,34 @@ class CafeMenuSerializer(serializers.ModelSerializer):
             raise PermissionDenied(
                 "you don't have permission to create a menu on the cafe"
             )
+
+
+class CafeImageSerialzier(serializers.ModelSerializer):
+    class Meta:
+        model = CafeImage
+        fields = ["id", "cafe", "url", "is_main"]
+
+    def validate_cafe(self, value):
+        user = self.context.get("request").user
+
+        # Same as the previous.
+        if value.managers.filter(id=user.id).exists() or user.id == value.owner.id:
+            return value
+        else:
+            raise PermissionDenied(
+                "you don't have permission to create an image on the cafe"
+            )
+
+    @transaction.atomic
+    def validate(self, data):
+        is_main = data.get("is_main", None) or False
+
+        # Switch the main image if already exists.
+        if is_main:
+            cafe = data.get("cafe", None) or self.instance.cafe
+            prev_main = cafe.images.filter(is_main=True).first()
+            if prev_main is not None:
+                prev_main.is_main = False
+                prev_main.save()
+
+        return data
