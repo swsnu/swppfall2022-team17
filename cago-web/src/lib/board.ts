@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR from "swr";
 import { CagoAPIError, getCagoRequest } from "../utils/index";
+import { Profile } from "./profile";
+import { mutate } from "swr";
 
 interface CafeProfile {
   id: number;
@@ -14,8 +16,22 @@ export interface Article {
   id: number;
   title: string;
   content: string;
-  author: CafeProfile;
-  // created_at: string;
+  cafe: CafeProfile;
+  created_at: string;
+  updated_at: string;
+  is_updated: boolean;
+  comments: Comment[];
+  editable: boolean;
+}
+
+export interface Comment {
+  id: number;
+  article: number;
+  author: Profile;
+  content: string;
+  created_at: string;
+  updated_at: string;
+  is_updated: boolean;
 }
 
 export const postArticle = async (
@@ -24,48 +40,80 @@ export const postArticle = async (
   content: string,
   token: string
 ) => {
-  try {
-    await getCagoRequest<Article>("post", token)("/board/", {
-      cafe_id,
-      title,
-      content,
-    });
-  } catch (error) {
-    if (axios.isAxiosError<CagoAPIError>(error)) {
-      const { errors } = error.response?.data!;
-      if (axios.isAxiosError<CagoAPIError>(error)) {
-        if (error.response?.status === 401) {
-          throw Error("로그인하지 않았습니다.");
-        }
-        if (error.response?.status === 403) {
-          throw Error("카페의 매니저가 아닙니다.");
-        }
-        if (error.response?.status === 404) {
-          throw Error("유효하지 않은 카페 ID입니다.");
-        }
-      }
-    }
-  }
+  await getCagoRequest<Article>("post", token)("/board/", {
+    cafe: cafe_id,
+    title: title,
+    content: content,
+  });
+  mutate(`/board/?cafe_id=${cafe_id}`);
 };
 
-export const useArticles = () => {
-  const router = useRouter();
-  const cafe_id = router.query.id;
-  const detail = cafe_id !== undefined;
+export const editArticle = async (
+  cafe_id: number,
+  article_id: number,
+  title: string,
+  content: string,
+  token: string
+) => {  
+  await getCagoRequest<Article>("put", token)(`/board/${article_id}/`, {
+    cafe: cafe_id,
+    title: title,
+    content: content,
+  });
+  mutate(`/board/?cafe_id=${cafe_id}`);
+};
 
+export const deleteArticle = async (
+  cafe_id: number,
+  article_id: number,
+  token: string
+) => {
+  await getCagoRequest("delete", token)(`/board/${article_id}/`);
+  mutate(`/board/?cafe_id=${cafe_id}`);
+};
+
+export const useArticles = (cafe_id: string | string[] | undefined) => {
   // Fetch cafe only when the user at admin dashboard detail page.
   const { data, error, mutate } = useSWR<Article[], AxiosError>(
-    detail && `/board/?${cafe_id}`,
-    getCagoRequest("get"),
-    { shouldRetryOnError: false }
+    cafe_id && `/board/?cafe_id=${cafe_id}`,
+    getCagoRequest("get")
   );
 
-  useEffect(() => {
-    if (!detail) {
-      // Set data to undefined if user is not at the detail page.
-      mutate(undefined, { revalidate: false });
-    }
-  }, [detail, mutate]);
-
   return { articles: data };
+};
+
+export const addComment = async (
+  cafe_id: number,
+  article_id: number,
+  content: string,
+  token: string
+) => {
+  await getCagoRequest<Comment>("post", token)(`/comments/`, {
+    article: article_id,
+    content,
+  });
+  mutate(`/board/?cafe_id=${cafe_id}`);
+};
+
+export const editComment = async (
+  cafe_id: number,
+  article_id: number,
+  comment_id: number,
+  content: string,
+  token: string
+) => {
+  await getCagoRequest<Comment>("put", token)(`/comments/${comment_id}/`, {
+    article: article_id,
+    content,
+  });
+  mutate(`/board/?cafe_id=${cafe_id}`);
+};
+
+export const deleteComment = async (
+  cafe_id: number,
+  comment_id: number,
+  token: string
+) => {
+  await getCagoRequest("delete", token)(`/comments/${comment_id}/`);
+  mutate(`/board/?cafe_id=${cafe_id}`);
 };

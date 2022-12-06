@@ -9,7 +9,7 @@ const PostArticleForm: NextComponentType = () => {
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
   const router = useRouter();
-  const cafe_id = router.query.id
+  const cafe_id = router.query.cafe_id
 
   const redirect = `/admin/dashboard/${cafe_id}/board`;
 
@@ -47,7 +47,6 @@ const PostArticleForm: NextComponentType = () => {
         required
         onChange={(e) => setContent(e.target.value)}
         className="outlined font-normal mb-2 h-[50vh]"
-        autoComplete="new-password"
       />
       <button type="submit" className="contained">
         작성

@@ -12,25 +12,25 @@ const CafeButtonGroup = () => {
   return (
     <nav className="inline-flex rounded-md ring-2 ring-black fixed bottom-6 left-1/2 -translate-x-1/2 shadow-2xl">
       <Link
-        href={`/cafes/${router.query.id}/info`}
+        href={`/cafes/${router.query.cafe_id}/info`}
         className={path === "info" ? ariaCurrentTrue : ariaCurrentFalse}
       >
         정보
       </Link>
       <Link
-        href={`/cafes/${router.query.id}/menu`}
+        href={`/cafes/${router.query.cafe_id}/menu`}
         className={path === "menu" ? ariaCurrentTrue : ariaCurrentFalse}
       >
         메뉴
       </Link>
       <Link
-        href={`/cafes/${router.query.id}/reviews`}
+        href={`/cafes/${router.query.cafe_id}/reviews`}
         className={path === "reviews" ? ariaCurrentTrue : ariaCurrentFalse}
       >
         리뷰
       </Link>
       <Link
-        href={`/cafes/${router.query.id}/board`}
+        href={`/cafes/${router.query.cafe_id}/board`}
         className={path === "board" ? ariaCurrentTrue : ariaCurrentFalse}
       >
         게시판

@@ -5,32 +5,29 @@ import Container from "components/layouts/Container";
 import { NextPageWithLayout } from "pages/_app";
 import { useRouter } from "next/router";
 import { useArticles } from "lib/board";
+import RequireProfile from "../../../../components/layouts/RequireProfile";
 
 const Board: NextPageWithLayout = () => {
-  const { articles } = useArticles();
   const router = useRouter();
-  const id =
-    typeof router.query.id === "string" ? parseInt(router.query.id) : 0;
+  const { articles } = useArticles(router.query.cafe_id);
   return (
     <main>
       {articles &&
-        articles
-          .filter((at) => at.author.id === id)
-          .map((at) => {
-            return <ArticlePreview key={`${at.id}_article`} {...at} />;
-          })}
+        articles.map((at) => {
+          return <ArticlePreview key={`${at.id}_article`} {...at} editable={false} />;
+        })}
     </main>
   );
 };
 
 Board.getLayout = (page) => (
-  <>
+  <RequireProfile>
     <CagoHeader />
     <Container>
       {page}
       <CafeButtonGroup />
     </Container>
-  </>
+  </RequireProfile>
 );
 
 export default Board;
