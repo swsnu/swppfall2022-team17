@@ -21,12 +21,20 @@ from cago.cafe.serializers import (
     CafeImageSerialzier,
     CafeMenuSerializer,
     CafeReadOnlySerializer,
+    CafeReviewSerializer,
     CustomerProfileSerializer,
     ManagedCafeSerializer,
 )
 from cago.cafe.utils import parse_coordinate
 
-from .models import Cafe, CafeImage, CafeMenu, CustomerProfile, ManagedCafe
+from .models import (
+    Cafe,
+    CafeImage,
+    CafeMenu,
+    CafeReview,
+    CustomerProfile,
+    ManagedCafe,
+)
 
 User = get_user_model()
 
@@ -183,3 +191,21 @@ class CafeImageViewSet(
     filterset_fields = ["cafe_id"]
     ordering_fields = ["id", "is_main"]
     ordering = ["-is_main", "id"]
+
+
+class CafeReviewViewSet(
+    CreateModelMixin,
+    ListModelMixin,
+    DestroyModelMixin,
+    GenericViewSet,
+):
+    class EditOwnerOnly(BaseEditOwnerOnly):
+        owner_field = "author"
+
+    queryset = CafeReview.objects.all()
+    serializer_class = CafeReviewSerializer
+    permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
+    filterset_fields = ["cafe_id"]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)

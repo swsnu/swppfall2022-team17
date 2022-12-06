@@ -7,7 +7,14 @@ from rest_framework.exceptions import PermissionDenied
 
 from cago.cafe.utils import parse_coordinate
 
-from .models import Cafe, CafeImage, CafeMenu, CustomerProfile, ManagedCafe
+from .models import (
+    Cafe,
+    CafeImage,
+    CafeMenu,
+    CafeReview,
+    CustomerProfile,
+    ManagedCafe,
+)
 
 
 class ReadOnlyModelSerializer(serializers.ModelSerializer):
@@ -196,3 +203,30 @@ class CafeImageSerialzier(serializers.ModelSerializer):
                 prev_main.save()
 
         return data
+
+
+class CafeReviewSerializer(serializers.ModelSerializer):
+    cafe_id = serializers.IntegerField(write_only=True, required=False)
+
+    class Meta:
+        model = CafeReview
+        fields = "__all__"
+        read_only_fields = ["author"]
+
+    def validate_cafe(self, value):
+        user = self.context.get("request").user
+
+        # Check whether the user has permission to add a menu.
+        # On update or delete, the permission backends kick in before validation.
+        if not value.managers.filter(id=user.id).exists() and user.id != value.owner.id:
+            return value
+        else:
+            raise PermissionDenied(
+                "managers cannot leave a review"
+            )
+
+    def to_representation(self, instance):
+        response = super().to_representation(instance)
+        profile = instance.author.customer_profile
+        response["author"] = CustomerProfileSerializer(profile).data
+        return response
