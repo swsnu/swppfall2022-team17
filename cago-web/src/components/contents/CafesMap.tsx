@@ -16,9 +16,6 @@ export interface Cafe {
 }
 
 export interface ManagedCafe extends Omit<Cafe, "is_managed"> {
-  strength: string | number | undefined;
-  num_reviews: string | number | undefined;
-  num_likes: string | number | undefined;
   is_managed: true;
   avatar: string;
   crowdedness: 0 | 1 | 2 | 3;
@@ -27,6 +24,12 @@ export interface ManagedCafe extends Omit<Cafe, "is_managed"> {
   managers: number[];
   owner: number;
   registration_number: number;
+  is_liked: boolean;
+  num_likes: number;
+  num_reviews: number;
+  num_taste: number;
+  num_service: number;
+  num_mood: number;
 }
 
 const greyMarker = "https://i.imgur.com/LmqKNbd.png";
@@ -39,8 +42,7 @@ const CafesMap = () => {
   const [selectedCafe, setSelectedCafe] = useState<Cafe | ManagedCafe>();
 
   const { data: cafes } = useSWR<(Cafe | ManagedCafe)[], AxiosError>(
-    cafeSearchCenter &&
-      `/cafes/?location=${cafeSearchCenter.x},${cafeSearchCenter.y}`,
+    cafeSearchCenter && `/cafes/?location=${cafeSearchCenter.x},${cafeSearchCenter.y}`,
     getCagoRequest()
   );
 

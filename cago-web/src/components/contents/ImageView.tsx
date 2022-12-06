@@ -1,110 +1,52 @@
-import React, { FC, useEffect, useState } from "react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 interface Props {
   images: string[];
-  style: {
-    height: number;
-    width: number;
-  };
   onIndexChange?: (index: number) => void;
 }
 
-// Function as an album component.
-const ImageView: FC<Props> = (props: Props) => {
-  // loop list to make the movement fluent
-  const imageList = [
-    props.images[props.images?.length - 1],
-    ...props.images,
-    props.images[0],
-  ];
+const ImageView = (props: Props) => {
+  const { images, onIndexChange } = props;
 
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState<number>(0);
 
-  const { onIndexChange } = props;
+  // The actual index to use, bounded in the range [0, n).
+  const boundedIndex = ((index % images.length) + images.length) % images.length;
 
-  const [style, setStyle] = useState({
-    transform: `translateX(-${props.style.width}px)`,
-    transition: `all 0.5s ease-in-out`,
-  });
-
-  const toRight = () => {
-    setIndex(index + 1);
-    onIndexChange?.(index);
-    setStyle({
-      transform: `translateX(-${(index + 1) * props.style.width}px)`,
-      transition: `all 0.5s ease-in-out`,
-    });
-  };
-
-  const toLeft = () => {
-    setIndex(index - 1);
-    onIndexChange?.(index);
-    setStyle({
-      transform: `translateX(-${(index - 1) * props.style.width}px)`,
-      transition: `all 0.5s ease-in-out`,
-    });
-  };
-
-  //0ms transtion for loop functioning
+  // Callback when the index is changed.
   useEffect(() => {
-    if (index === 0) {
-      setIndex(imageList.length - 2);
-      setTimeout(function () {
-        setStyle({
-          transform: `translateX(-${
-            (imageList.length - 2) * props.style.width
-          }px)`,
-          transition: "0ms",
-        });
-      }, 100);
-    }
-
-    if (index >= imageList?.length - 1) {
-      setIndex(1);
-      setTimeout(() => {
-        setStyle({
-          transform: `translateX(-${props.style.width}px)`,
-          transition: "0ms",
-        });
-      }, 100);
-    }
-  }, [index, imageList.length]);
+    onIndexChange?.(boundedIndex);
+  }, [boundedIndex, onIndexChange]);
 
   return (
-    <div className="flex flex-row justify-center">
-      <button className="text-black text-xl " onClick={toLeft}>
-        <FaChevronLeft size="32" />
-      </button>
-      <div
-        className={`relative overflow-hidden w-[${props.style.width}px] h-[${props.style.height}px]`}
-      >
-        <div
-          className="absolute left-0 top-0 flex flex-row h-full items-center"
-          style={style}
-          placeholder={"이미지가 없습니다"}
-        >
-          {imageList?.map((image, key) => {
-            return (
-              <div
-                className={`flex align-center justify-center w-[${props.style.width}px] h-[${props.style.height}px]`}
-                key={key}
-              >
-                <img
-                  src={image}
-                  key={key}
-                  alt="http://placehold.it/800x600"
-                  className="object-contain"
-                />
-              </div>
-            );
-          })}
+    <figure className="relative w-[40rem] max-w-full aspect-video shadow-lg rounded">
+      {images.length > 0 ? (
+        <>
+          <Image src={images[boundedIndex]} alt="cafe-image" sizes="50vw" fill className="rounded" />
+
+          {/* Image slide controls. */}
+          <button
+            className="z-50 absolute left-0 bottom-1/2 translate-y-1/2 text-black"
+            onClick={(e) => setIndex((index) => index - 1)}
+          >
+            <FaChevronLeft size={35} />
+          </button>
+          <button
+            className="z-50 absolute right-0 bottom-1/2 translate-y-1/2 text-black"
+            onClick={(e) => setIndex((index) => index + 1)}
+          >
+            <FaChevronRight size={35} />
+          </button>
+        </>
+      ) : (
+        // Placeholder when no image to show.
+        <div className="flex justify-center items-center w-full h-full">
+          <h3 className="text-lg text-slate-600">이미지가 없습니다.</h3>
         </div>
-      </div>
-      <button className="text-black text-xl " onClick={toRight}>
-        <FaChevronRight size="32" />
-      </button>
-    </div>
+      )}
+    </figure>
   );
 };
 

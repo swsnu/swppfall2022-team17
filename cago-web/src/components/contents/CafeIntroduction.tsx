@@ -1,104 +1,65 @@
-import { useRouter } from "next/router";
-import React, { useState, useCallback } from "react";
-import { useCafe, postEditIntro } from "lib/cafe";
 import { useAuth } from "lib/auth";
+import { updateCafeIntroduction } from "lib/cafe";
+import { useState } from "react";
+import { FaPencilAlt } from "react-icons/fa";
 
-interface Props {
-  title: string;
-  info: string;
-  editable?: boolean;
+interface ReadOnlyProps {
+  introduction: string;
+  editable?: false;
 }
 
-//when the component below is used, editable should be decleared properly.
-const CafeIntroduction = (props: Props) => {
-  const router = useRouter();
-  const { cafe_id } = router.query;
-  const { data: cafe } = useCafe(cafe_id);
-  const IntroductionBox = (props: Props) => {
-    const { user } = useAuth();
+interface EditableProps extends Omit<ReadOnlyProps, "editable"> {
+  editable: true;
+  cafeId: number;
+}
 
-    if (cafe?.is_managed === true) {
-      const [editing, setEditing] = useState(false);
-      const [intro, setIntro] = useState<string>("");
-      const onPressSaveButton = useCallback(() => {
-        if (user) {
-          const introduction = intro;
-          postEditIntro(cafe.id, introduction, user.token);
-        }
+const CafeIntroduction = (props: ReadOnlyProps | EditableProps) => {
+  const { introduction, editable } = props;
+  const { user } = useAuth();
 
-        setEditing(false);
-      }, []);
-      const onPressEditButton = useCallback(() => {
-        setEditing(true);
-      }, []);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editingIntroduction, setEditingIntroduction] = useState<string>("");
 
-      if (!!!props.editable) {
-        return (
-          <div className="bg-slate-50 shadow-lg flex flex-col rounded-sm mr-2 place-content-evenly py-4">
-            <div>{props.title}</div>
-            <div className="text-2xl font-bold">{props.info}</div>
-          </div>
-        );
-      }
-      // delete and edit is only available when editable is true.
-      else
-        return !editing ? (
-          <div className="relative bg-slate-50 shadow-lg flex flex-col rounded-sm mr-2 place-content-evenly py-4">
-            <div>{props.title}</div>
-            <button
-              className="absolute top-0 right-0 w-20 h-10 bg-amber-800 text-white"
-              onClick={onPressEditButton}
-            >
-              수정하기
-            </button>
-            <div className="text-2xl font-bold">{props.info}</div>
-          </div>
-        ) : (
-          <div className="relative bg-slate-50 shadow-lg flex flex-col rounded-sm mr-2 place-content-evenly py-4">
-            <div>{props.title}</div>
-            <button
-              className="absolute top-0 right-0 w-20 h-10 bg-amber-800 text-white"
-              onClick={onPressSaveButton}
-            >
-              저장하기
-            </button>
-            <textarea
-              name="info"
-              placeholder={"please fill in"}
-              defaultValue={cafe?.introduction ?? "소개를 등록해주세요"}
-              onChange={(e) => setIntro(e.target.value)}
-            />
-          </div>
-        );
-    } else
-      return (
-        <div className="bg-slate-50 shadow-lg flex flex-col rounded-sm mr-2 place-content-evenly py-4">
-          <div className="text-2xl font-bold">
-            Cago에 등록된 카페가 아닙니다.
-          </div>
-        </div>
-      );
+  const onIntroductionSave = async () => {
+    if (editable && user) {
+      setIsEditing(false);
+      await updateCafeIntroduction(props.cafeId, editingIntroduction, user.token);
+    }
   };
 
-  if (cafe?.is_managed === true)
-    return (
-      <div title="소개">
-        <div className="bg-slate-50 py-4 shadow-lg rounded-sm h-full text-center align-middle mb-2 flex flex-col place-content-evenly">
-          <IntroductionBox
-            title="우리 가게를 소개합니다"
-            info={cafe?.introduction}
+  return (
+    <article className="relative p-4 rounded shadow-lg bg-slate-50">
+      <h3 className="text-center font-semibold text-lg mb-4">카페 소개</h3>
+
+      {(!editable || !isEditing) && <p className="text-justify p-2">{introduction}</p>}
+
+      {editable && !isEditing && (
+        <button
+          className="absolute rounded-tr top-0 right-0 p-2 text-black"
+          onClick={(e) => {
+            setEditingIntroduction(introduction);
+            setIsEditing(true);
+          }}
+        >
+          <FaPencilAlt />
+        </button>
+      )}
+
+      {editable && isEditing && (
+        <>
+          <textarea
+            value={editingIntroduction}
+            onChange={(e) => setEditingIntroduction(e.target.value)}
+            className="w-full mb-4 block rounded resize-none p-2"
+            rows={5}
           />
-        </div>
-      </div>
-    );
-  else
-    return (
-      <div title="소개">
-        <div className="bg-slate-50 py-4 shadow-lg rounded-sm h-full text-center align-middle mb-2 flex flex-col place-content-evenly">
-          <div>Cago에 등록된 카페가 아닙니다.</div>
-        </div>
-      </div>
-    );
+          <button className="contained w-full" onClick={(e) => onIntroductionSave()}>
+            저장하기
+          </button>
+        </>
+      )}
+    </article>
+  );
 };
 
 export default CafeIntroduction;

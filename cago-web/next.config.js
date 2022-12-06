@@ -51,6 +51,11 @@ const nextConfig = {
         hostname: "live.staticflickr.com",
         pathname: "/**",
       },
+      {
+        protocol: "http",
+        hostname: "the-edit.co.kr",
+        pathname: "/wp-content/**",
+      },
     ],
   },
 };
