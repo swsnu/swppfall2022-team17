@@ -1,17 +1,30 @@
 import { useAuth } from "lib/auth";
-import { Comment, deleteComment, editComment } from "lib/board";
-import { useState } from "react";
+import { Comment, deleteComment, updateComment } from "lib/board";
+import { useCafe } from "lib/cafe";
 import Image from "next/image";
+import { useMemo, useState } from "react";
 
-interface Props extends Comment {
+interface Props {
+  comment: Comment;
   cafe_id: number;
 }
 
-const CommentBox = (comment: Props) => {
+const CommentBox = ({ comment, cafe_id }: Props) => {
   const [editting, setEditting] = useState<boolean>(false);
   const [content, setContent] = useState<string>(comment.content);
   const { user } = useAuth();
-  const editable = user && user.id === comment.author.user;
+  const { data: cafe } = useCafe(cafe_id.toString());
+
+  const editable = useMemo(() => {
+    if (!!user) {
+      if (comment.is_customer) {
+        return user.id === comment.author.user;
+      } else if (cafe?.is_managed) {
+        return user.id === cafe.owner || cafe.managers.includes(user.id);
+      }
+    }
+    return false;
+  }, [user, comment, cafe]);
 
   const handleCancel = async () => {
     setContent(comment.content);
@@ -19,15 +32,9 @@ const CommentBox = (comment: Props) => {
   };
 
   const handleEdit = async () => {
-    if (editable) {
+    if (!!user && editable) {
       try {
-        await editComment(
-          comment.cafe_id,
-          comment.article,
-          comment.id,
-          content,
-          user.token
-        );
+        await updateComment(cafe_id, comment.article, comment.id, content, user.token);
         setEditting(false);
       } catch (e) {
         const error = e as Error;
@@ -37,14 +44,12 @@ const CommentBox = (comment: Props) => {
   };
 
   const handleDelete = async () => {
-    if (editable) {
-      await deleteComment(comment.cafe_id, comment.id, user.token);
+    if (!!user && editable) {
+      await deleteComment(cafe_id, comment.article, comment.id, user.token);
     }
   };
 
-  const last_updated = comment.is_updated
-    ? comment.updated_at + " (수정됨)"
-    : comment.created_at;
+  // const last_updated = comment.is_updated ? comment.updated_at + " (수정됨)" : comment.created_at;
 
   return (
     <ul className="flex items-center min-h-12 max-h-24 py-2 px-1 shadow-sm">
@@ -52,7 +57,7 @@ const CommentBox = (comment: Props) => {
         <ul className="flex justify-end gap-2">
           <li>
             <Image
-              loader={() => comment.author.avatar}
+              // loader={() => comment.author.avatar}
               src={comment.author.avatar}
               alt="comment-author-profile-avatar"
               width={35}
@@ -61,7 +66,7 @@ const CommentBox = (comment: Props) => {
             />
           </li>
           <li className="text-sm font-bold leading-loose pr-2">
-            {comment.author.display_name}
+            {comment.is_customer ? comment.author?.display_name : comment.author.name}
           </li>
         </ul>
       </li>
@@ -81,7 +86,7 @@ const CommentBox = (comment: Props) => {
             required
             autoFocus
             onChange={(e) => setContent(e.target.value)}
-            className="bg-slate-50 hover:bg-slate-100 border-2 border-slate-900 text-black font-bold py-1 px-2 rounded text-sm font-normal my-1 w-full"
+            className="bg-slate-50 hover:bg-slate-100 border-2 border-slate-900 text-black font-bold py-1 px-2 rounded text-sm my-1 w-full"
           />
         )}
       </li>

@@ -1,5 +1,5 @@
-import Board from "pages/cafes/[cafe_id]/board/index";
-import { render, act } from "tests/utils";
+import Board from "pages/cafes/[cafe_id]/board";
+import { act, render } from "tests/utils";
 
 describe("cafe board page", () => {
   it("renders", async () => {
