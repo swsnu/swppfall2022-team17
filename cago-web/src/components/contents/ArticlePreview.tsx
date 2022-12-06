@@ -49,20 +49,19 @@ const ArticlePreview = (props: Props) => {
 
   const articleHeader = (
     <header className="sticky top-0">
-      <ul className="flex items-center py-2 px-1 shadow-sm min-h-fit">
+      <ul className="flex items-center p-3 shadow-sm min-h-fit">
         <li className="float-left w-1/5 text-left">
           <ul className="flex justify-start gap-2 items-center">
             <li>
               <Link href={`/cafes/${article.cafe}/info`}>
-                {/* TODO admin page redirects to admin/dashboard/:id */}
-                <Image
-                  // loader={() => cafeAvatar}
-                  src={cafeAvatar}
-                  alt="cafe-profile-avatar"
-                  width={35}
-                  height={35}
-                  className="flex rounded-full border border-slate-800 h-full"
-                />
+                <div className="relative w-10 h-10">
+                  <Image
+                    src={cafeAvatar}
+                    alt="cafe-profile-avatar"
+                    fill
+                    className="flex rounded-full border border-slate-800 h-full"
+                  />
+                </div>
               </Link>
             </li>
             <li>

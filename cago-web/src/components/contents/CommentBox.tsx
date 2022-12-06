@@ -54,14 +54,13 @@ const CommentBox = ({ comment, cafe_id }: Props) => {
   return (
     <ul className="flex items-center min-h-12 max-h-24 py-2 px-1 shadow-sm">
       <li className="float-left w-1/6 text-left">
-        <ul className="flex justify-end gap-2">
-          <li>
+        <ul className="flex justify-end gap-2 items-center">
+          <li className="relative w-8 h-8">
             <Image
               // loader={() => comment.author.avatar}
               src={comment.author.avatar}
               alt="comment-author-profile-avatar"
-              width={35}
-              height={35}
+              fill
               className="flex rounded-full border border-slate-800 h-full"
             />
           </li>

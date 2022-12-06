@@ -1,4 +1,5 @@
 import axios from "axios";
+import { uuid } from "uuidv4";
 
 export interface CagoAPIError {
   type: string;
@@ -63,4 +64,18 @@ export const parseE164 = (phone: string) => {
   }
 
   return res;
+};
+
+export const uploadImage = async (file: File) => {
+  const ext = file.name.split(".").pop();
+  const fileName = `${uuid()}.${ext}`;
+  const key = `/user-content/${fileName}`;
+
+  const baseURL = process.env.NEXT_PUBLIC_S3_URL;
+  const formData = new FormData();
+  formData.append("files", file);
+
+  await axios.put(key, file, { baseURL });
+
+  return new URL(key, baseURL).href;
 };
