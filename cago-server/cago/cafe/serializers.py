@@ -207,6 +207,7 @@ class CafeImageSerialzier(serializers.ModelSerializer):
 
 class CafeReviewSerializer(serializers.ModelSerializer):
     cafe_id = serializers.IntegerField(write_only=True, required=False)
+    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = CafeReview

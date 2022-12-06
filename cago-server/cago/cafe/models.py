@@ -172,6 +172,7 @@ class CafeReview(models.Model):
     strength = models.CharField(
         max_length=16, choices=Strength.choices, default=Strength.TASTE
     )
+    created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = "cafe_review"
