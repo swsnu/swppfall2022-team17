@@ -47,7 +47,7 @@ const CommentBox = (comment: Props) => {
     : comment.created_at;
 
   return (
-    <ul className="flex items-center h-12 py-2 px-1 shadow-sm">
+    <ul className="flex items-center min-h-12 max-h-24 py-2 px-1 shadow-sm">
       <li className="float-left w-1/6 text-left">
         <ul className="flex justify-end gap-2">
           <li>
@@ -67,7 +67,9 @@ const CommentBox = (comment: Props) => {
       </li>
       <li className="float-left w-4/6 text-left">
         {!editting && (
-          <div className="text-lg font-normal px-2">{comment.content}</div>
+          <div className="text-lg font-normal leading-tight px-2 py-1 overflow-y-auto max-h-24 break-all">
+            {comment.content}
+          </div>
         )}
         {/* If editting is true, users can enter the new content. */}
         {editting && (
