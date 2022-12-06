@@ -1,6 +1,7 @@
 import { useAuth } from "lib/auth";
 import { deleteMenu, Menu } from "lib/menu";
 import Image from "next/image";
+import { IoMdClose } from "react-icons/io";
 
 interface ReadOnlyProps {
   category: string;
@@ -38,7 +39,7 @@ const CafeMenuCard = (props: CardProps) => {
             props.onDelete?.();
           }}
         >
-          ✖
+          <IoMdClose className="text-red-900" />
         </button>
       )}
     </div>
