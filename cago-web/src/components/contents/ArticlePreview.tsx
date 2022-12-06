@@ -103,7 +103,7 @@ const ArticlePreview = (article: Article) => {
   const articleContent = (
     <>
       {!editting && (
-        <article className="text-lg font-normal overflow-y-auto px-1 mb-1 mt-1 whitespace-pre-line shadow-sm min-h-[100px]">
+        <article className="text-lg font-normal max-h-[50vh] break-all overflow-y-auto px-1 mb-1 mt-1 whitespace-pre-line shadow-sm min-h-[100px]">
           {article.content}
         </article>
       )}
@@ -191,7 +191,7 @@ const ArticlePreview = (article: Article) => {
   );
 
   return (
-    <div className="flex flex-col justify-start max-h-[50vh] break-all shadow-md my-3">
+    <div className="flex flex-col justify-start shadow-md my-3">
       {articleHeader}
       {articleContent}
       {articleFooter}

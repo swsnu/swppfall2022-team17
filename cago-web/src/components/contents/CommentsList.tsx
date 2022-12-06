@@ -49,19 +49,21 @@ const CommentsList = (article: Article) => {
           </li>
         </ul>
       )}
-      {article.comments.map((comment) => (
-        <CommentBox
-          key={comment.id}
-          id={comment.id}
-          article={article.id}
-          author={comment.author}
-          content={comment.content}
-          created_at={comment.created_at}
-          updated_at={comment.updated_at}
-          is_updated={comment.is_updated}
-          cafe_id={article.cafe.id}
-        />
-      ))}
+      <div className="overflow-y-auto max-h-[30vh]">
+        {article.comments.map((comment) => (
+          <CommentBox
+            key={comment.id}
+            id={comment.id}
+            article={article.id}
+            author={comment.author}
+            content={comment.content}
+            created_at={comment.created_at}
+            updated_at={comment.updated_at}
+            is_updated={comment.is_updated}
+            cafe_id={article.cafe.id}
+          />
+        ))}
+      </div>
     </>
   );
 };
