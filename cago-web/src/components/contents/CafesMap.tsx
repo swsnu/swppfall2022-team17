@@ -16,6 +16,9 @@ export interface Cafe {
 }
 
 export interface ManagedCafe extends Omit<Cafe, "is_managed"> {
+  strength: string | number | undefined;
+  num_reviews: string | number | undefined;
+  num_likes: string | number | undefined;
   is_managed: true;
   avatar: string;
   crowdedness: 0 | 1 | 2 | 3;
@@ -36,7 +39,8 @@ const CafesMap = () => {
   const [selectedCafe, setSelectedCafe] = useState<Cafe | ManagedCafe>();
 
   const { data: cafes } = useSWR<(Cafe | ManagedCafe)[], AxiosError>(
-    cafeSearchCenter && `/cafes/?location=${cafeSearchCenter.x},${cafeSearchCenter.y}`,
+    cafeSearchCenter &&
+      `/cafes/?location=${cafeSearchCenter.x},${cafeSearchCenter.y}`,
     getCagoRequest()
   );
 
@@ -74,7 +78,10 @@ const CafesMap = () => {
           cafes.map((cafe) => (
             <div key={cafe.id}>
               <MapMarker
-                position={{ lng: parseFloat(cafe.location[0]), lat: parseFloat(cafe.location[1]) }}
+                position={{
+                  lng: parseFloat(cafe.location[0]),
+                  lat: parseFloat(cafe.location[1]),
+                }}
                 onClick={() => {
                   setSelectedCafe(cafe);
                   // Place the overlay at the center of the map.
@@ -91,7 +98,10 @@ const CafesMap = () => {
                 }}
               />
               <CustomOverlayMap
-                position={{ lng: parseFloat(cafe.location[0]), lat: parseFloat(cafe.location[1]) }}
+                position={{
+                  lng: parseFloat(cafe.location[0]),
+                  lat: parseFloat(cafe.location[1]),
+                }}
                 zIndex={99}
                 clickable={true}
               >
