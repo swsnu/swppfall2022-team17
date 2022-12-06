@@ -1,24 +1,25 @@
 import temp_review from 'components/contents/temp_data/temp_review.json'
-
-interface Review {
-    id: number;
-    author_id: number;
-    content: string;
-    rating: number;
-    strength: string;
-}
+import { Review } from 'lib/review';
 
 interface Stars {
     rating: number;
 }
 
-const temp_list_review: Review[] = temp_review
+interface TempReview {
+    id: number;
+    author_id: number;
+    content: string;
+    rating: number;
+    strength: string;
+  }
+
+const temp_list_review: TempReview[] = temp_review
 /*** 
  * Todo : Work with api
  * ***/
 
 /* for review stars */
-const Star = ({ rating }: Stars) => {
+export const Star = ({ rating }: Stars) => {
     return(
     rating <= 1 ?
         <span>★☆☆☆☆</span>

@@ -43,6 +43,7 @@ class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
     num_taste = serializers.IntegerField(read_only=True)
     num_service = serializers.IntegerField(read_only=True)
     num_mood = serializers.IntegerField(read_only=True)
+    average_rating = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = ManagedCafe
@@ -65,6 +66,7 @@ class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
             "num_taste",
             "num_service",
             "num_mood",
+            "average_rating",
         ]
 
     def get_is_liked(self, obj):

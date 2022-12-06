@@ -4,7 +4,7 @@ interface Props {
   numLikes: number;
 }
 
-const StatisticBox = ({ title, content }: { title: string; content: string | number }) => {
+export const StatisticBox = ({ title, content }: { title: string; content: string | number }) => {
   return (
     <div className="bg-slate-50 shadow-lg text-center p-4 rounded-lg w-full">
       <h3 className="font-semibold text-lg mb-2">{title}</h3>

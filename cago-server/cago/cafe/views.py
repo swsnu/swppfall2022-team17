@@ -224,6 +224,7 @@ class CafeReviewViewSet(
     serializer_class = CafeReviewSerializer
     permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
     filterset_fields = ["cafe_id"]
+    ordering = ["-created_at"]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

@@ -4,7 +4,7 @@ import useSWR, { mutate } from "swr";
 import { CagoAPIError, getCagoRequest } from "utils";
 import { useAuth } from "./auth";
 
-interface Profile {
+export interface Profile {
   id: number;
   user: number;
   display_name: string;
