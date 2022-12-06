@@ -31,7 +31,6 @@ from .models import (
     Cafe,
     CafeImage,
     CafeMenu,
-    CafeReview,
     CustomerProfile,
     ManagedCafe,
 )
@@ -191,6 +190,24 @@ class CafeImageViewSet(
     filterset_fields = ["cafe_id"]
     ordering_fields = ["id", "is_main"]
     ordering = ["-is_main", "id"]
+
+
+class CafeReviewViewSet(
+    CreateModelMixin,
+    ListModelMixin,
+    DestroyModelMixin,
+    GenericViewSet,
+):
+    class EditOwnerOnly(BaseEditOwnerOnly):
+        owner_field = "author"
+
+    queryset = CafeReview.objects.all()
+    serializer_class = CafeReviewSerializer
+    permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
+    filterset_fields = ["cafe_id"]
+
+    def perform_create(self, serializer):
+        return super().perform_create(serializer)
 
 
 class CafeReviewViewSet(
