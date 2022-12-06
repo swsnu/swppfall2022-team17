@@ -1,3 +1,4 @@
+import { useCafeImages } from "lib/image";
 import Image from "next/image";
 import Link from "next/link";
 import { parseE164 } from "utils";
@@ -5,16 +6,13 @@ import { Cafe, ManagedCafe } from "./CafesMap";
 import Crowdedness from "./Crowdedness";
 
 const CafeOverlay = ({ cafe }: { cafe: Cafe | ManagedCafe }) => {
+  const { mainImage } = useCafeImages(cafe.id.toString());
+
   return (
     <div className="font-normal p-4 rounded-md bg-slate-800 text-white w-64 min-w-fit">
-      {/* TODO: replace with actual repr. image of the cafe. */}
-      <Image
-        src="https://live.staticflickr.com/65535/50245686993_33e8c2d21a_c.jpg"
-        alt="cafe_image"
-        width={360}
-        height={360}
-        className="mb-2"
-      />
+      {mainImage && <Image src={mainImage} alt="cafe_image" width={360} height={360} className="mb-2" />}
+      {!mainImage && <h4 className="text-slate-500 mb-2">대표 이미지 없음</h4>}
+
       <h2 className="text-xl font-semibold mb-2">{cafe.name}</h2>
 
       {/* Crowdedness */}

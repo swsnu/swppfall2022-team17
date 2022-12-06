@@ -61,6 +61,11 @@ const nextConfig = {
         hostname: "the-edit.co.kr",
         pathname: "/wp-content/**",
       },
+      {
+        protocol: "https",
+        hostname: "cago-storage.s3.ap-northeast-2.amazonaws.com",
+        pathname: "/user-content/**",
+      },
     ],
   },
 };
