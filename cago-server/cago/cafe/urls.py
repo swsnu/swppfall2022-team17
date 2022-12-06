@@ -16,6 +16,5 @@ cafe_router.register(r"cafes", CafeViewSet, "cafe")
 cafe_router.register(r"menus", CafeMenuViewSet, "menu")
 cafe_router.register(r"cafe-images", CafeImageViewSet, "image")
 cafe_router.register(r"reviews", CafeReviewViewSet, "board-comment")
-cafe_router.register(r"reviews", CafeReviewViewSet, "board-comment")
 
 urlpatterns = cafe_router.urls + [path("like/", CafeLikeAPIView.as_view(), name="like")]
