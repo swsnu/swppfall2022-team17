@@ -1,17 +1,16 @@
-import { AxiosError } from "axios";
-import { ManagedCafe } from "components/contents/CafesMap";
+import BoardSummary from "components/contents/BoardSummary";
+import MenuSummary from "components/contents/MenuSummary";
+import ReviewSummary from "components/contents/ReviewSummary";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
 import RequireManager from "components/layouts/RequireManager";
+import { useArticles } from "lib/board";
+import { useCafe } from "lib/cafe";
+import { useMenu } from "lib/menu";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
-import useSWR from "swr";
-import { getCagoRequest } from "utils";
-import BoardSummary from "components/contents/BoardSummary"
-import MenuSummary from "components/contents/MenuSummary"
-import ReviewSummary from "components/contents/ReviewSummary"
 
 interface CafeInfoBoxProps {
   title: string;
@@ -38,11 +37,13 @@ const CafeInfoContainer = ({ title, children, path }: CafeInfoBoxProps) => {
 const DashboardDetail: NextPageWithLayout = () => {
   const router = useRouter();
   const { cafe_id } = router.query;
-  const { data: cafe } = useSWR<ManagedCafe, AxiosError>(cafe_id && `/cafes/${cafe_id}/`, getCagoRequest());
+  const { data: cafe } = useCafe(cafe_id);
+  const { articles } = useArticles(cafe_id);
+  const { mainMenuList } = useMenu(cafe_id);
 
   return (
     <main className="my-8">
-      {cafe && (
+      {cafe?.is_managed && (
         <div className="flex flex-col">
           <CafeInfoContainer title="카페 사진" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
             {/* <ImageView/> */}
@@ -51,13 +52,13 @@ const DashboardDetail: NextPageWithLayout = () => {
             {cafe.introduction ?? "카페 소개를 작성해보세요!"}
           </CafeInfoContainer>
           <CafeInfoContainer title="메뉴" path={`/admin/dashboard/${cafe_id}/menu`}>
-            <MenuSummary cafe_id={`${cafe_id}`}/>
+            <MenuSummary menuList={mainMenuList} />
           </CafeInfoContainer>
           <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafe_id}/review`}>
             <ReviewSummary />
           </CafeInfoContainer>
           <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafe_id}/board`}>
-            <BoardSummary />
+            <BoardSummary articles={articles} />
           </CafeInfoContainer>
         </div>
       )}

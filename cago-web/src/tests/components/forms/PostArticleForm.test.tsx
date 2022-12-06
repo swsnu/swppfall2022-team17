@@ -1,8 +1,8 @@
 import userEvent from "@testing-library/user-event";
 import PostArticleForm from "components/forms/PostArticleForm";
 import { server } from "mocks/server";
-import { rest } from 'msw';
-import { replace } from "tests/mocks";
+import { rest } from "msw";
+import { push } from "tests/mocks";
 import { render, screen, waitFor } from "tests/utils";
 
 describe("post article form", () => {
@@ -16,7 +16,7 @@ describe("post article form", () => {
     await userEvent.type(contentInput, "content");
     await userEvent.click(submitButton);
 
-    await waitFor(() => expect(replace).toBeCalled());
+    await waitFor(() => expect(push).toBeCalled());
   });
 
   it("handles error on creating an article", async () => {

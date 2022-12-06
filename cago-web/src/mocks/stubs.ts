@@ -74,14 +74,15 @@ export const cafe_menu = [
   },
 ];
 
-export const article = {
-  id: 1,
-  title: "title1",
-  content: "content1",
-  author: {
+export const articles = [
+  {
     id: 1,
-    name: "managedCafe1",
-    avatar:
-      "https://cdn4.iconfinder.com/data/icons/sketchy-basic-icons/94/coffee-512.png",
+    cafe: 1,
+    title: "title1",
+    content: "content1",
+    comments: [],
+    created_at: "2022-12-7",
+    updated_at: "2022-12-7",
+    is_updated: false,
   },
-};
+];
