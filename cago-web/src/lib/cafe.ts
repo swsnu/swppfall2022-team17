@@ -31,7 +31,9 @@ export const registerCafe = async (
 
 export const setForceClosed = async (id: number, force_closed: boolean, token: string) => {
   try {
-    const data = await getCagoRequest("patch", token)(`/cafes/${id}/`, { force_closed });
+    const data = await getCagoRequest("patch", token)(`/cafes/${id}/`, {
+      force_closed,
+    });
     await mutate(`/cafes/${id}/`, data, { revalidate: false });
   } catch (error) {
     return;
