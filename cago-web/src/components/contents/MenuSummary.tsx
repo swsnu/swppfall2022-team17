@@ -1,8 +1,8 @@
 import { useMenu } from "lib/menu";
-import Image from "next/image";
+import Image from "next/image"
 
 interface SummaryProps {
-  cafe_id: string;
+    cafe_id: string;
 }
 
 const MenuSummary = ({ cafe_id }: SummaryProps) => {

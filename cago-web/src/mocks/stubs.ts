@@ -73,3 +73,16 @@ export const cafe_menu = [
     image: "https://cdn4.iconfinder.com/data/icons/sketchy-basic-icons/94/coffee-512.png",
   },
 ];
+
+export const articles = [
+  {
+    id: 1,
+    cafe: 1,
+    title: "title1",
+    content: "content1",
+    comments: [],
+    created_at: "2022-12-7",
+    updated_at: "2022-12-7",
+    is_updated: false,
+  },
+];

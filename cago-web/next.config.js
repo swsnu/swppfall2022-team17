@@ -32,6 +32,11 @@ const nextConfig = {
         destination: "/admin/dashboard",
         permanent: true,
       },
+      {
+        source: "/cafes/:cafe_id",
+        destination: "/cafes/:cafe_id/info",
+        permanent: true,
+      },
     ];
   },
   images: {
@@ -55,6 +60,11 @@ const nextConfig = {
         protocol: "http",
         hostname: "the-edit.co.kr",
         pathname: "/wp-content/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cago-storage.s3.ap-northeast-2.amazonaws.com",
+        pathname: "/user-content/**",
       },
     ],
   },

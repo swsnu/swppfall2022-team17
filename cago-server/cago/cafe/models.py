@@ -184,3 +184,31 @@ class CafeReview(models.Model):
                 name="unique_review_cafe_author",
             )
         ]
+
+
+class BoardArticle(models.Model):
+    cafe = models.ForeignKey(
+        ManagedCafe, related_name="articles", on_delete=models.CASCADE
+    )
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "cafe_board_article"
+        verbose_name_plural = "cafe_board_articles"
+
+
+class BoardComment(models.Model):
+    article = models.ForeignKey(
+        BoardArticle, related_name="comments", on_delete=models.CASCADE
+    )
+    author = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "cafe_board_comment"
+        verbose_name_plural = "cafe_board_comments"
