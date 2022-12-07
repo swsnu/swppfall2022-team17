@@ -8,13 +8,13 @@ import { NextPageWithLayout } from "pages/_app";
 
 const CreateReview: NextPageWithLayout = () => {
   const router = useRouter();
-  const {cafe_id} = router.query;
+  const { cafe_id } = router.query;
   const id = cafe_id ? Number(cafe_id) : 0;
 
   return (
     <main className="flex flex-col mt-10 items-center justify-center">
-      <h1 className="font-bold text-3xl mb-6">새 리뷰 작성</h1>
-      <CreateReviewForm cafe_id={id}/>
+      <h1 className="font-bold text-2xl mb-6">리뷰 작성하기</h1>
+      <CreateReviewForm cafe_id={id} />
     </main>
   );
 };
