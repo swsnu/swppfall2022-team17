@@ -52,7 +52,7 @@ const DashboardDetail: NextPageWithLayout = () => {
         <div className="flex flex-col">
           <CafeInfoContainer title="카페 사진" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
             <div className="max-w-full w-fit mx-auto">
-              <ImageView images={cafeImages} />
+              <ImageView images={cafeImages.map((ci) => ci.url)} />
             </div>
           </CafeInfoContainer>
           <CafeInfoContainer title="카페 소개" path={`/admin/dashboard/${cafe_id}/info`}>
