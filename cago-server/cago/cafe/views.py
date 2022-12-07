@@ -235,7 +235,8 @@ class CafeCommentViewSet(
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
-        
+
+
 class CafeReviewViewSet(
     CreateModelMixin,
     ListModelMixin,
@@ -244,7 +245,7 @@ class CafeReviewViewSet(
 ):
     class EditOwnerOnly(BaseEditOwnerOnly):
         owner_field = "author"
-        
+
     queryset = CafeReview.objects.all()
     serializer_class = CafeReviewSerializer
     permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]

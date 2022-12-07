@@ -46,7 +46,9 @@ class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
     num_taste = serializers.IntegerField(read_only=True)
     num_service = serializers.IntegerField(read_only=True)
     num_mood = serializers.IntegerField(read_only=True)
-    average_rating = serializers.FloatField(max_value=5.0, min_value=1.0, read_only=True)
+    average_rating = serializers.FloatField(
+        max_value=5.0, min_value=1.0, read_only=True
+    )
 
     class Meta:
         model = ManagedCafe
@@ -314,26 +316,21 @@ class CafeImageSerialzier(serializers.ModelSerializer):
 
 
 class CafeReviewSerializer(serializers.ModelSerializer):
-    cafe_id = serializers.IntegerField(write_only=True, required=False)
+    author = CustomerProfileSerializer(source="author.customer_profile", read_only=True)
     created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = CafeReview
-        fields = "__all__"
+        fields = ["id", "cafe", "author", "content", "rating", "strength", "created_at"]
         read_only_fields = ["author"]
 
     def validate_cafe(self, value):
         user = self.context.get("request").user
 
-        # Check whether the user has permission to add a menu.
-        # On update or delete, the permission backends kick in before validation.
-        if not value.managers.filter(id=user.id).exists() and user.id != value.owner.id:
-            return value
-        else:
+        if value.managers.filter(id=user.id).exists() or user.id == value.owner.id:
             raise PermissionDenied("managers cannot leave a review")
 
-    def to_representation(self, instance):
-        response = super().to_representation(instance)
-        profile = instance.author.customer_profile
-        response["author"] = CustomerProfileSerializer(profile).data
-        return response
+        if user.reviews.filter(cafe_id=value.id).exists():
+            raise serializers.ValidationError("only one review per cafe", "unique")
+
+        return value
