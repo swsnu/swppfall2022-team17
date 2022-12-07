@@ -84,6 +84,7 @@ const CreateReviewForm = (props: Props) => {
           className={`hover:bg-slate-200 shadow-lg py-6 rounded-lg w-full ${
             strength === "Mood" ? "bg-slate-200" : "bg-slate-50"
           }`}
+          type="button"
           onClick={() => selectStrength("Mood")}
         >
           Mood
