@@ -1,4 +1,3 @@
-import { useAuth } from "lib/auth";
 import Link from "next/link";
 import { parseE164 } from "utils";
 import { ManagedCafe } from "./CafesMap";
@@ -9,8 +8,6 @@ interface Props {
 }
 
 const CafeSummary = ({ cafe }: Props) => {
-  const { user } = useAuth();
-
   return (
     <div className="relative">
       <Link

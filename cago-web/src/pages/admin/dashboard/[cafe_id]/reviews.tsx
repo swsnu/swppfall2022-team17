@@ -26,18 +26,15 @@ const CafeDashboardReview: NextPageWithLayout = () => {
               averageRating={cafe.average_rating}
             />
           </div>
-          {reviews && (
-            <div className="mt-12 mb-24">
-              {reviews.map((review) => (
-                <CafeReviewCard key={review.id} review={review} />
-              ))}
-              {reviews.length === 0 && (
-                <h4 className="text-center text-lg font-light">
-                  작성된 리뷰가 없습니다.
-                </h4>
-              )}
-            </div>
-          )}
+
+          <div className="mt-12 mb-24">
+            {reviews.map((review) => (
+              <CafeReviewCard key={review.id} review={review} />
+            ))}
+            {reviews.length === 0 && (
+              <h4 className="text-center text-lg font-light">작성된 리뷰가 없습니다.</h4>
+            )}
+          </div>
         </>
       )}
     </main>

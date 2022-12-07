@@ -23,7 +23,7 @@ interface CafeInfoBoxProps {
 
 const CafeInfoContainer = ({ title, children, path }: CafeInfoBoxProps) => {
   return (
-    <div className={`outlined w-full h-full flex flex-col px-4 py-3 my-2`}>
+    <div className="outlined w-full h-full flex flex-col px-4 py-3 my-2">
       <div className="flex justify-between items-center mb-2">
         <h2 className="text-2xl pl-2">{title}</h2>
         {path && (
@@ -32,9 +32,7 @@ const CafeInfoContainer = ({ title, children, path }: CafeInfoBoxProps) => {
           </Link>
         )}
       </div>
-      <div className="border border-black shadow rounded-lg text-center p-4">
-        {children}
-      </div>
+      <div className="p-4">{children}</div>
     </div>
   );
 };
@@ -52,36 +50,21 @@ const DashboardDetail: NextPageWithLayout = () => {
     <main className="my-8">
       {cafe?.is_managed && (
         <div className="flex flex-col">
-          <CafeInfoContainer
-            title="카페 사진"
-            path={`/admin/dashboard/${cafe_id}/add-pictures`}
-          >
+          <CafeInfoContainer title="카페 사진" path={`/admin/dashboard/${cafe_id}/add-pictures`}>
             <div className="max-w-full w-fit mx-auto">
               <ImageView images={cafeImages} />
             </div>
           </CafeInfoContainer>
-          <CafeInfoContainer
-            title="카페 소개"
-            path={`/admin/dashboard/${cafe_id}/info`}
-          >
+          <CafeInfoContainer title="카페 소개" path={`/admin/dashboard/${cafe_id}/info`}>
             {cafe.introduction ?? "카페 소개를 작성해보세요!"}
           </CafeInfoContainer>
-          <CafeInfoContainer
-            title="메뉴"
-            path={`/admin/dashboard/${cafe_id}/menu`}
-          >
+          <CafeInfoContainer title="메뉴" path={`/admin/dashboard/${cafe_id}/menu`}>
             <MenuSummary menuList={mainMenuList} />
           </CafeInfoContainer>
-          <CafeInfoContainer
-            title="리뷰"
-            path={`/admin/dashboard/${cafe_id}/reviews`}
-          >
+          <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafe_id}/reviews`}>
             <ReviewSummary reviews={reviews} />
           </CafeInfoContainer>
-          <CafeInfoContainer
-            title="공지사항"
-            path={`/admin/dashboard/${cafe_id}/board`}
-          >
+          <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafe_id}/board`}>
             <BoardSummary articles={articles} />
           </CafeInfoContainer>
         </div>
