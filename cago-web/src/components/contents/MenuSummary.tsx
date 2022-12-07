@@ -27,7 +27,7 @@ const MenuSummary = ({ cafe_id }: SummaryProps) => {
                   return (
                     <div
                       key={`${mainMenu.id} main container`}
-                      className="bg-slate-50 hover:bg-slate-100 shadow-lg p-2 mb-2 w-1/5 flex flex-col justify-center"
+                      className="bg-slate-50 hover:bg-slate-100 shadow-lg p-2 mb-2 w-1/6 flex flex-col justify-center"
                     >
                       <div>{mainMenu.name}</div>
                       {mainMenu.image && (
@@ -36,7 +36,7 @@ const MenuSummary = ({ cafe_id }: SummaryProps) => {
                           alt="main-menu"
                           width={180}
                           height={160}
-                          className="mb-2"
+                          className="mb-2 w-full"
                         />
                       )}
                       <div>{mainMenu.price}원</div>
