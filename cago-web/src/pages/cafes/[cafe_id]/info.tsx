@@ -19,7 +19,7 @@ const CafeInfo: NextPageWithLayout = () => {
   return (
     <main>
       <div className="max-w-full w-fit mx-auto mt-6">
-        <ImageView images={cafeImages} />
+        <ImageView images={cafeImages.map((ci) => ci.url)} />
       </div>
 
       {/* Introduction and Statistics */}
