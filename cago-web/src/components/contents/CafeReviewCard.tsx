@@ -18,44 +18,41 @@ const CafeReviewCard = ({ review }: Props) => {
   };
 
   const strengthBox = (
-    <div className="bg-slate-50 shadow-lg text-center p-4 rounded-lg w-1/6 mr-4">
-      <h3 className="font-semibold text-lg mb-2 w-full">장점</h3>
-      <p className="text-2xl font-bold w-full">{review.strength}</p>
+    <div className="bg-slate-50 shadow-inner text-center py-4 px-6 rounded-lg min-w-fit mr-4">
+      <h3 className="font-semibold mb-2 w-full">장점</h3>
+      <p className="text-lg font-bold w-full">{review.strength}</p>
     </div>
   );
 
   const infoBar = (
-    <div className="flex justify-between w-full h-full px-2">
-      <div className="flex justify-start h-full">
-        <div>
+    <div className="flex flex-wrap justify-between w-full h-full">
+      <div className="flex gap-2 items-center h-full">
+        <div className="relative w-8 h-8 xs:block hidden">
           <Image
             loader={() => review.author.avatar}
             src={review.author.avatar}
             alt="review-author-profile-avatar"
-            width={35}
-            height={35}
-            className="flex rounded-full border border-slate-800 my-1"
+            fill
+            className="rounded-full border border-slate-800"
           />
         </div>
-        <div className="text-lg font-bold leading-loose pl-2">
-          {review.author.display_name}
-        </div>
+        <div className="font-bold">{review.author.display_name}</div>
       </div>
-      <div className="text-2xl">{Star({ rating: review.rating })}</div>
+      <div className="text-lg">
+        <Star rating={review.rating} />
+      </div>
     </div>
   );
 
   return (
-    <div className="outlined w-full h-full flex justify-start px-4 py-3 my-2">
+    <div className="shadow-lg rounded w-full h-full flex p-4">
       {strengthBox}
-      <div className="flex flex-col w-full h-full pt-2 px-1">
+      <div className="flex flex-col w-full h-full">
         {infoBar}
-        <hr className="border-t-slate-300" />
-        <div className="flex items-center h-[79px] w-full pt-1 align-middle">
-          <div className="text-lg font-normal leading-tight overflow-y-auto px-2 pt-1 w-full y-fit max-h-full break-all">
-            {review.content}
-          </div>
-        </div>
+        <hr className="border-t-slate-300 my-2" />
+        <article className="h-18 w-full font-normal leading-tight overflow-y-auto break-all">
+          {review.content}
+        </article>
       </div>
     </div>
   );

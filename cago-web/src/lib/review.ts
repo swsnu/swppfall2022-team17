@@ -8,7 +8,7 @@ export interface Review {
   cafe: number;
   author: Profile;
   content: string;
-  rating: number;
+  rating: 1 | 2 | 3 | 4 | 5;
   strength: string;
   created_at: string;
 }
@@ -16,7 +16,7 @@ export interface Review {
 export const createReview = async (
   cafe_id: number,
   content: string,
-  rating: number,
+  rating: 1 | 2 | 3 | 4 | 5,
   strength: string,
   token: string
 ) => {
@@ -27,14 +27,10 @@ export const createReview = async (
     strength: strength,
   });
   mutate(`/reviews/?cafe_id=${cafe_id}`);
-  mutate(`/cafes/${cafe_id}/`)
+  mutate(`/cafes/${cafe_id}/`);
 };
 
-export const deleteReview = async (
-  cafe_id: number,
-  review_id: number,
-  token: string
-) => {
+export const deleteReview = async (cafe_id: number, review_id: number, token: string) => {
   await getCagoRequest("delete", token)(`/reviews/${review_id}/`);
   mutate(`/reviews/?cafe_id=${cafe_id}`);
 };
@@ -48,4 +44,3 @@ export const useReviews = (cafe_id: string | string[] | undefined) => {
 
   return { reviews: data ?? [] };
 };
-

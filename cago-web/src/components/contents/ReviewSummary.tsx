@@ -1,7 +1,7 @@
 import { Review } from "lib/review";
 
 interface Stars {
-  rating: number;
+  rating: 1 | 2 | 3 | 4 | 5;
 }
 
 interface Props {
@@ -9,17 +9,7 @@ interface Props {
 }
 
 export const Star = ({ rating }: Stars) => {
-  return rating <= 1 ? (
-    <span>★☆☆☆☆</span>
-  ) : rating <= 2 ? (
-    <span>★★☆☆☆</span>
-  ) : rating <= 3 ? (
-    <span>★★★☆☆</span>
-  ) : rating <= 4 ? (
-    <span>★★★★☆</span>
-  ) : (
-    <span>★★★★★</span>
-  );
+  return <span>{"★".repeat(rating) + "☆".repeat(5 - rating)}</span>;
 };
 
 const ReviewSummary = ({ reviews }: Props) => {

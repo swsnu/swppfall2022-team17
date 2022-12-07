@@ -1,5 +1,6 @@
 import CafeReviewCard from "components/contents/CafeReviewCard";
 import CafeReviewStatistics from "components/contents/CafeReviewStatistics";
+import CafeButtonGroup from "components/layouts/CafeButtonGroup";
 import CagoHeader from "components/layouts/CagoHeader";
 import Container from "components/layouts/Container";
 import RequireProfile from "components/layouts/RequireProfile";
@@ -18,13 +19,10 @@ const CafeReview: NextPageWithLayout = () => {
   return (
     <main>
       <div className="w-full text-right mt-8 mb-2">
-      <Link
-        href={`/cafes/${cafe_id}/reviews/create`}
-        className="contained"
-      >
-        리뷰 작성
-      </Link>
-    </div>
+        <Link href={`/cafes/${cafe_id}/reviews/create`} className="contained">
+          리뷰 작성
+        </Link>
+      </div>
       {cafe?.is_managed && (
         <>
           <div className="mt-6">
@@ -34,18 +32,14 @@ const CafeReview: NextPageWithLayout = () => {
               averageRating={cafe.average_rating}
             />
           </div>
-          {reviews && (
-            <div className="mt-12 mb-24">
-              {reviews.map((review) => (
-                <CafeReviewCard key={review.id} review={review} />
-              ))}
-              {reviews.length === 0 && (
-                <h4 className="text-center text-lg font-light">
-                  작성된 리뷰가 없습니다.
-                </h4>
-              )}
-            </div>
-          )}
+          <div className="mt-12 mb-24">
+            {reviews.map((review) => (
+              <CafeReviewCard key={review.id} review={review} />
+            ))}
+            {reviews.length === 0 && (
+              <h4 className="text-center text-lg font-light">작성된 리뷰가 없습니다.</h4>
+            )}
+          </div>
         </>
       )}
     </main>
@@ -55,7 +49,10 @@ const CafeReview: NextPageWithLayout = () => {
 CafeReview.getLayout = (page) => (
   <RequireProfile>
     <CagoHeader />
-    <Container>{page}</Container>
+    <Container>
+      {page}
+      <CafeButtonGroup />
+    </Container>
   </RequireProfile>
 );
 
