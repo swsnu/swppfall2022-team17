@@ -21,9 +21,6 @@ const CafeDashboardAddPicture: NextPageWithLayout = () => {
   const handleMainImageSet = async () => {
     if (!!user) {
       await setMainImage(parseInt(cafe_id as string), cafeImages[imageIndex].id, user.token);
-      setImageIndex(0);
-      console.log(imageIndex);
-      console.log(cafeImages);
     }
   };
 
