@@ -19,7 +19,7 @@ const MenuSummary = ({ menuList: menuList }: Props) => {
                 메뉴를 추가 및 삭제 하려면 자세히 버튼을 눌러주세요
               </div>
               {/* Only main menu is shown cause it looks bad when too many information on the screen */}
-              <div className="contained mb-2">대표메뉴</div>
+              <div className="contained mb-2">대표 메뉴</div>
               {/* className='scrollbar-hide' make scrollable without showing scorll bar. shift + scroll to scroll x-direction in pc */}
               <div className="flex flex-wrap justify-start">
                 {menuList.map((menu) => {

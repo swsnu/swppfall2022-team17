@@ -5,12 +5,12 @@ const CafeButtonGroup = () => {
   const router = useRouter();
   const path = router.pathname.split("/")[3];
   const ariaCurrentTrue =
-    "py-2 px-4 rounded-md text-sm font-semibold contained";
+    "py-2 px-4 rounded-md text-sm font-semibold contained w-1/4";
   const ariaCurrentFalse =
-    "py-2 px-4 rounded-md text-sm font-semibold bg-white hover:bg-slate-50";
+    "py-2 px-4 rounded-md text-sm font-semibold bg-white hover:bg-slate-50 w-1/4";
 
   return (
-    <nav className="inline-flex rounded-md ring-2 ring-black fixed bottom-6 left-1/2 -translate-x-1/2 shadow-2xl">
+    <nav className="inline-flex rounded-md ring-2 ring-black fixed bottom-6 left-1/2 -translate-x-1/2 shadow-2xl w-[30%] text-center bg-white">
       <Link
         href={`/cafes/${router.query.cafe_id}/info`}
         className={path === "info" ? ariaCurrentTrue : ariaCurrentFalse}
@@ -33,7 +33,7 @@ const CafeButtonGroup = () => {
         href={`/cafes/${router.query.cafe_id}/board`}
         className={path === "board" ? ariaCurrentTrue : ariaCurrentFalse}
       >
-        게시판
+        공지
       </Link>
     </nav>
   );
