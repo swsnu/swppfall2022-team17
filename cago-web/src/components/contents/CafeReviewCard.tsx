@@ -48,11 +48,13 @@ const CafeReviewCard = ({ review }: Props) => {
   return (
     <div className="outlined w-full h-full flex justify-start px-4 py-3 my-2">
       {strengthBox}
-      <div className="flex flex-col w-full h-full py-2 px-1">
+      <div className="flex flex-col w-full h-full pt-2 px-1">
         {infoBar}
         <hr className="border-t-slate-300" />
-        <div className="text-lg font-normal leading-tight px-2 py-1 overflow-y-auto h-fit max-h-[59px] break-all">
-          {review.content}
+        <div className="flex items-center h-[79px] w-full pt-1 align-middle">
+          <div className="text-lg font-normal leading-tight overflow-y-auto px-2 pt-1 w-full y-fit max-h-full break-all">
+            {review.content}
+          </div>
         </div>
       </div>
     </div>

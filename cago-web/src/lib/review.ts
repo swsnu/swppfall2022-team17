@@ -13,8 +13,8 @@ export interface Review {
   created_at: string;
 }
 
-export const postReview = async (
-  cafe_id: string,
+export const createReview = async (
+  cafe_id: number,
   content: string,
   rating: number,
   strength: string,
@@ -27,6 +27,7 @@ export const postReview = async (
     strength: strength,
   });
   mutate(`/reviews/?cafe_id=${cafe_id}`);
+  mutate(`/cafes/${cafe_id}/`)
 };
 
 export const deleteReview = async (

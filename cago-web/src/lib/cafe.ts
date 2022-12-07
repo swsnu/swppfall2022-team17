@@ -53,21 +53,23 @@ export const useCafe = (cafeId?: string | string[]) => {
     shouldFetch && `/cafes/${cafeId}/`,
     getCagoRequest("get", user?.token)
   );
+  
+  
 
   const bestStrength = useMemo(() => {
     if (data?.is_managed) {
-      const { num_taste, num_service, num_mood } = data;
+      const { num_taste, num_service, num_mood } = data;      
 
       // Naive comparison.
       const max = Math.max(num_taste, num_service, num_mood);
       if (max === 0) {
-        return "없음";
+        return "None";
       } else if (max === num_taste) {
-        return "맛";
+        return "Taste";
       } else if (max === num_service) {
-        return "서비스";
+        return "Service";
       } else {
-        return "분위기";
+        return "Mood";
       }
     }
   }, [data]);

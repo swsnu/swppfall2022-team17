@@ -43,7 +43,7 @@ class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
     num_taste = serializers.IntegerField(read_only=True)
     num_service = serializers.IntegerField(read_only=True)
     num_mood = serializers.IntegerField(read_only=True)
-    average_rating = serializers.IntegerField(read_only=True)
+    average_rating = serializers.FloatField(max_value=5.0, min_value=1.0, read_only=True)
 
     class Meta:
         model = ManagedCafe
