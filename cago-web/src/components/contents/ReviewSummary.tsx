@@ -1,11 +1,11 @@
-import { useReviews } from "lib/review";
+import { Review } from "lib/review";
 
 interface Stars {
   rating: number;
 }
 
 interface Props {
-  cafe_id: string;
+  reviews: Review[];
 }
 
 export const Star = ({ rating }: Stars) => {
@@ -22,18 +22,15 @@ export const Star = ({ rating }: Stars) => {
   );
 };
 
-const ReviewSummary = ({ cafe_id }: Props) => {
-  const { reviews } = useReviews(cafe_id);
+const ReviewSummary = ({ reviews }: Props) => {
   return (
     <main className="flex flex-row">
       {/* Check if review is existed. */}
-      {!reviews ||
-        (reviews.length === 0 && (
-            <div className="m-2 y-1/2 w-full">작성된 리뷰가 없습니다.</div>
-        ))}
-      {reviews && reviews.length !== 0 && (
+      {reviews.length === 0 ? (
+        <div className="m-2 y-1/2 w-full">작성된 리뷰가 없습니다.</div>
+      ) : (
         <div className="flex flex-wrap justify-start w-full min-w-fit">
-          {reviews.slice(0,17).map((review) => {
+          {reviews.slice(0, 17).map((review) => {
             return (
               <div
                 key={`${review.id} review container`}

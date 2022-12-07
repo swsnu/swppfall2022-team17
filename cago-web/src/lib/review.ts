@@ -46,6 +46,6 @@ export const useReviews = (cafe_id: string | string[] | undefined) => {
     getCagoRequest("get")
   );
 
-  return { reviews: data };
+  return { reviews: data ?? [] };
 };
 
