@@ -31,7 +31,7 @@ const CafeButtonGroup = () => {
         href={`/cafes/${router.query.cafe_id}/board`}
         className={path === "board" ? ariaCurrentTrue : ariaCurrentFalse}
       >
-        게시판
+        공지
       </Link>
     </nav>
   );
