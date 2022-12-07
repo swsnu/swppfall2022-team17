@@ -1,51 +1,53 @@
-import temp_review from 'components/contents/temp_data/temp_review.json'
-import { Review } from 'lib/review';
+import { useReviews } from "lib/review";
 
 interface Stars {
-    rating: number;
+  rating: number;
 }
 
-interface TempReview {
-    id: number;
-    author_id: number;
-    content: string;
-    rating: number;
-    strength: string;
-  }
+interface Props {
+  cafe_id: string;
+}
 
-const temp_list_review: TempReview[] = temp_review
-/*** 
- * Todo : Work with api
- * ***/
-
-/* for review stars */
 export const Star = ({ rating }: Stars) => {
-    return(
-    rating <= 1 ?
-        <span>★☆☆☆☆</span>
-        : rating <= 2 ?
-            <span>★★☆☆☆</span>
-            : rating <= 3 ?
-                <span>★★★☆☆</span>
-                : rating <= 4 ?
-                    <span>★★★★☆</span>
-                    : <span>★★★★★</span>)
+  return rating <= 1 ? (
+    <span>★☆☆☆☆</span>
+  ) : rating <= 2 ? (
+    <span>★★☆☆☆</span>
+  ) : rating <= 3 ? (
+    <span>★★★☆☆</span>
+  ) : rating <= 4 ? (
+    <span>★★★★☆</span>
+  ) : (
+    <span>★★★★★</span>
+  );
+};
 
-}
-
-const ReviewSummary = () => {
-    return (
-        <main className='flex flex-row overflow-auto scrollbar-hide'>
-            {temp_list_review.map((review) => {
-                return (
-                    <div key={`${review.id} review container`} className='flex flex-col min-w-fit outlined m-2'>
-                        <Star rating={review.rating} />
-                        <div className='my-2'>{review.content}</div>
-                    </div>
-                )
-            })}
-        </main>
-    )
+const ReviewSummary = ({ cafe_id }: Props) => {
+  const { reviews } = useReviews(cafe_id);
+  return (
+    <main className="flex flex-row">
+      {/* Check if review is existed. */}
+      {!reviews ||
+        (reviews.length === 0 && (
+            <div className="m-2 y-1/2 w-full">작성된 리뷰가 없습니다.</div>
+        ))}
+      {reviews && reviews.length !== 0 && (
+        <div className="flex flex-wrap justify-start w-full">
+          {reviews.slice(0,13).map((review) => {
+            return (
+              <div
+                key={`${review.id} review container`}
+                className="bg-slate-50 hover:bg-slate-100 shadow-lg p-2 mb-2 w-1/6 flex flex-col"
+              >
+                <Star rating={review.rating} />
+                <div className="my-1 text-xl">{review.strength}</div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </main>
+  );
 };
 
 export default ReviewSummary;

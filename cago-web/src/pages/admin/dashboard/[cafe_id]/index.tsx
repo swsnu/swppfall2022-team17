@@ -22,8 +22,8 @@ interface CafeInfoBoxProps {
 const CafeInfoContainer = ({ title, children, path }: CafeInfoBoxProps) => {
   return (
     <div className={`outlined w-full h-full flex flex-col px-4 py-3 my-2`}>
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg">{title}</h2>
+      <div className="flex justify-between items-center mb-2">
+        <h2 className="text-2xl pl-2">{title}</h2>
         {path && (
           <Link href={path} className="contained">
             자세히
@@ -53,8 +53,8 @@ const DashboardDetail: NextPageWithLayout = () => {
           <CafeInfoContainer title="메뉴" path={`/admin/dashboard/${cafe_id}/menu`}>
             <MenuSummary cafe_id={`${cafe_id}`}/>
           </CafeInfoContainer>
-          <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafe_id}/review`}>
-            <ReviewSummary />
+          <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafe_id}/reviews`}>
+            <ReviewSummary cafe_id={`${cafe_id}`}/>
           </CafeInfoContainer>
           <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafe_id}/board`}>
             <BoardSummary />
