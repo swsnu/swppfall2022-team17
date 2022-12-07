@@ -30,10 +30,10 @@ const ReviewSummary = ({ reviews }: Props) => {
         <div className="m-2 y-1/2 w-full">작성된 리뷰가 없습니다.</div>
       ) : (
         <div className="flex flex-wrap justify-start w-full min-w-fit">
-          {reviews.slice(0, 17).map((review) => {
+          {reviews.slice(0, 16).map((review) => {
             return (
               <div
-                key={`${review.id} review container`}
+                key={`${review.id} main container`}
                 className="bg-slate-50 hover:bg-slate-100 shadow-lg p-2 mb-2 w-[12.5%] min-w-fit flex flex-col"
               >
                 <Star rating={review.rating} />

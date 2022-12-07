@@ -11,7 +11,7 @@ const MenuSummary = ({ menuList: menuList }: Props) => {
       <div className="m-2 y-1/2">
         {
           /* Check if main menu is existed */
-          menuList.length == 0 ? (
+          menuList.length === 0 ? (
             <>메뉴가 없습니다. 추가하려면 자세히 버튼을 눌러주세요.</>
           ) : (
             <>
