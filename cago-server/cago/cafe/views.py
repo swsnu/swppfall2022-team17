@@ -23,6 +23,7 @@ from cago.cafe.serializers import (
     CafeImageSerialzier,
     CafeMenuSerializer,
     CafeReadOnlySerializer,
+    CafeReviewSerializer,
     CustomerProfileSerializer,
     ManagedCafeSerializer,
 )
@@ -34,6 +35,7 @@ from .models import (
     Cafe,
     CafeImage,
     CafeMenu,
+    CafeReview,
     CustomerProfile,
     ManagedCafe,
 )
@@ -230,6 +232,25 @@ class CafeCommentViewSet(
     filterset_fields = ["article_id"]
     ordering_fields = ["created_at", "updated_at"]
     ordering = ["created_at"]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+class CafeReviewViewSet(
+    CreateModelMixin,
+    ListModelMixin,
+    DestroyModelMixin,
+    GenericViewSet,
+):
+    class EditOwnerOnly(BaseEditOwnerOnly):
+        owner_field = "author"
+
+    queryset = CafeReview.objects.all()
+    serializer_class = CafeReviewSerializer
+    permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
+    filterset_fields = ["cafe_id"]
+    ordering = ["-created_at"]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

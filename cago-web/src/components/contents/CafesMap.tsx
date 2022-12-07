@@ -30,6 +30,7 @@ export interface ManagedCafe extends Omit<Cafe, "is_managed"> {
   num_taste: number;
   num_service: number;
   num_mood: number;
+  average_rating: number;
 }
 
 const greyMarker = "https://i.imgur.com/LmqKNbd.png";

@@ -10,6 +10,7 @@ import { useArticles } from "lib/board";
 import { useCafe } from "lib/cafe";
 import { useCafeImages } from "lib/image";
 import { useMenu } from "lib/menu";
+import { useReviews } from "lib/review";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
@@ -22,16 +23,16 @@ interface CafeInfoBoxProps {
 
 const CafeInfoContainer = ({ title, children, path }: CafeInfoBoxProps) => {
   return (
-    <div className={`outlined w-full h-full flex flex-col px-4 py-3 my-2`}>
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg">{title}</h2>
+    <div className="outlined w-full h-full flex flex-col px-4 py-3 my-2">
+      <div className="flex justify-between items-center mb-2">
+        <h2 className="text-2xl pl-2">{title}</h2>
         {path && (
           <Link href={path} className="contained">
             자세히
           </Link>
         )}
       </div>
-      <div className="border border-black shadow rounded-lg text-center p-4">{children}</div>
+      <div className="p-4">{children}</div>
     </div>
   );
 };
@@ -40,8 +41,9 @@ const DashboardDetail: NextPageWithLayout = () => {
   const router = useRouter();
   const { cafe_id } = router.query;
   const { data: cafe } = useCafe(cafe_id);
-  const { articles } = useArticles(cafe_id);
   const { mainMenuList } = useMenu(cafe_id);
+  const { reviews } = useReviews(cafe_id);
+  const { articles } = useArticles(cafe_id);
   const { cafeImages } = useCafeImages(cafe_id);
 
   return (
@@ -59,8 +61,8 @@ const DashboardDetail: NextPageWithLayout = () => {
           <CafeInfoContainer title="메뉴" path={`/admin/dashboard/${cafe_id}/menu`}>
             <MenuSummary menuList={mainMenuList} />
           </CafeInfoContainer>
-          <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafe_id}/review`}>
-            <ReviewSummary />
+          <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafe_id}/reviews`}>
+            <ReviewSummary reviews={reviews} />
           </CafeInfoContainer>
           <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafe_id}/board`}>
             <BoardSummary articles={articles} />
