@@ -1,5 +1,4 @@
 import temp_review from 'components/contents/temp_data/temp_review.json'
-import { Review } from 'lib/review';
 
 interface Stars {
     rating: number;

@@ -33,7 +33,7 @@ const CagoAdminHeader = () => {
                     {cafe.name}
                   </Link>
                 </li>
-                <li className="ml-2 text-xl font-bold">♡ 99</li>
+                <li className="ml-2 text-xl font-bold">♡ {cafe.num_likes}</li>
               </>
             )}
           </ul>

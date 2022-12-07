@@ -61,7 +61,7 @@ const CagoHeader = () => {
               )}
             </ul>
           )}
-          <ul className="flex gap-6">
+          <ul className="flex gap-6 items-center">
             {loggedIn && (
               <>
                 <li>
@@ -70,12 +70,11 @@ const CagoHeader = () => {
                   </button>
                 </li>
                 {profile && (
-                  <li>
+                  <li className="relative w-10 h-10">
                     <Image
                       src={profile.avatar}
                       alt="profile-avatar"
-                      width={35}
-                      height={35}
+                      fill
                       className="mx-auto rounded-full border border-slate-800 h-full"
                     />
                   </li>

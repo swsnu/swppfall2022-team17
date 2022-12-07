@@ -1,4 +1,5 @@
 import CafeMenuContainer from "components/contents/CafeMenuContainer";
+import CafeButtonGroup from "components/layouts/CafeButtonGroup";
 import CagoHeader from "components/layouts/CagoHeader";
 import Container from "components/layouts/Container";
 import RequireProfile from "components/layouts/RequireProfile";
@@ -31,7 +32,10 @@ const CafeMenu: NextPageWithLayout = () => {
 CafeMenu.getLayout = (page) => (
   <RequireProfile>
     <CagoHeader />
-    <Container>{page}</Container>
+    <Container>
+      {page}
+      <CafeButtonGroup />
+    </Container>
   </RequireProfile>
 );
 
