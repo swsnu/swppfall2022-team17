@@ -1,6 +1,7 @@
 import { useAuth } from "lib/auth";
 import { deleteReview, Review } from "lib/review";
 import Image from "next/image";
+import { IoMdClose } from "react-icons/io";
 import { Star } from "./ReviewSummary";
 
 interface Props {
@@ -18,7 +19,7 @@ const CafeReviewCard = ({ review }: Props) => {
   };
 
   const strengthBox = (
-    <div className="bg-slate-50 shadow-inner text-center py-4 px-6 rounded-lg min-w-fit mr-4">
+    <div className="bg-slate-50 shadow-inner text-center py-4 px-6 rounded-lg min-w-fit w-32 mr-4">
       <h3 className="font-semibold mb-2 w-full">장점</h3>
       <p className="text-lg font-bold w-full">{review.strength}</p>
     </div>
@@ -45,7 +46,7 @@ const CafeReviewCard = ({ review }: Props) => {
   );
 
   return (
-    <div className="shadow-lg rounded w-full h-full flex p-4">
+    <div className="relative shadow-lg rounded w-full h-full flex p-4">
       {strengthBox}
       <div className="flex flex-col w-full h-full">
         {infoBar}
@@ -54,6 +55,11 @@ const CafeReviewCard = ({ review }: Props) => {
           {review.content}
         </article>
       </div>
+      {deletable && (
+        <button onClick={(e) => handleDelete()} className="absolute top-0 right-0">
+          <IoMdClose />
+        </button>
+      )}
     </div>
   );
 };

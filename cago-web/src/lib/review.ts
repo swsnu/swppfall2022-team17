@@ -33,6 +33,7 @@ export const createReview = async (
 export const deleteReview = async (cafe_id: number, review_id: number, token: string) => {
   await getCagoRequest("delete", token)(`/reviews/${review_id}/`);
   mutate(`/reviews/?cafe_id=${cafe_id}`);
+  mutate(`/cafes/${cafe_id}/`);
 };
 
 export const useReviews = (cafe_id: string | string[] | undefined) => {
