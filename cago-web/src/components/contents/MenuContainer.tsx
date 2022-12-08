@@ -59,7 +59,7 @@ const MenuContainer = (props: ReadOnlyProps | EditableProps) => {
   return (
     <div>
       <h2 className="font-bold text-2xl mb-1">{category}</h2>
-      <hr className="mb-3 border-t-slate-300" />
+      <hr className="mb-3 border-t-gray-300" />
       <div className="flex flex-wrap gap-4 md:justify-start justify-center">
         {menuList.map((menu) => (
           <CafeMenuCard

@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { uploadImage } from "utils";
 
-const   CreateProfileForm: NextComponentType = () => {
+const CreateProfileForm: NextComponentType = () => {
   const [displayName, setDisplayName] = useState<string>("");
   const [avatar, setAvatar] = useState<File>();
 
@@ -47,7 +47,7 @@ const   CreateProfileForm: NextComponentType = () => {
             src={avatar ? URL.createObjectURL(avatar) : defaultAvatar}
             alt="profile-default-avatar"
             fill
-            className="mx-auto rounded-full border border-slate-800 cursor-pointer"
+            className="mx-auto rounded-full border border-gray-800 cursor-pointer"
           />
         </label>
       </div>

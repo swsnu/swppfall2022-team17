@@ -46,7 +46,7 @@ const AddPictures: NextPageWithLayout = () => {
         </div>
         {cafeImages.length > 0 && (
           <button
-            className="contained w-full mt-2 disabled:bg-slate-500"
+            className="contained w-full mt-2 disabled:bg-gray-500"
             disabled={mainImage?.id === cafeImages[imageIndex]?.id}
             onClick={(e) => handleMainImageSet()}
           >

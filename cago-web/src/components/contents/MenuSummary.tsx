@@ -7,7 +7,7 @@ interface props {
 
 const MenuSummary = ({ menuList: menuList }: props) => {
   return (
-    <div className="m-2 y-1/2 text-center">
+    <div className="m-2 y-1/2">
       {
         /* Check if main menu is existed */
         menuList.length == 0 ? (
@@ -16,16 +16,17 @@ const MenuSummary = ({ menuList: menuList }: props) => {
           <>
             <div className="mb-4">메뉴를 추가 및 삭제 하려면 자세히 버튼을 눌러주세요.</div>
             {/* Only main menu is shown cause it looks bad when too many information on the screen */}
-            <div className="contained mb-2">대표메뉴</div>
+            <h4 className="text-xl text-center font-semibold mb-2">대표메뉴</h4>
             {/* className='scrollbar-hide' make scrollable without showing scorll bar. shift + scroll to scroll x-direction in pc */}
-            <div className="flex overflow-auto scrollbar-hide">
+            <div className="flex gap-4 overflow-auto scrollbar-hide">
               {menuList.map((menu) => {
                 return (
                   <div
-                    key={`${menu.id} main container`}
-                    className="shadow-lg m-2 min-w-fit flex flex-col justify-center"
+                    key={`menu-${menu.id}`}
+                    className="shadow-lg p-2 my-2 min-w-fit flex flex-col rounded-lg justify-center text-center bg-white hover:bg-gray-50"
                   >
                     <div>{menu.name}</div>
+                    <hr className="my-1" />
                     <div className="relative h-36 w-36 my-2">
                       <Image src={menu.image} alt="main-menu" fill className="mb-2" />
                     </div>

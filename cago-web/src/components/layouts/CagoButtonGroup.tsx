@@ -4,11 +4,11 @@ import { useRouter } from "next/router";
 const CagoButtonGroup = () => {
   const router = useRouter();
   const path = router.pathname.split("/")[3];
-  const ariaCurrentTrue = "py-2 px-4 rounded-md text-sm font-semibold contained min-w-fit";
-  const ariaCurrentFalse = "py-2 px-4 rounded-md text-sm font-semibold bg-white hover:bg-slate-50 min-w-fit";
+  const ariaCurrentTrue = "py-2 px-4 text-sm font-semibold contained rounded-none min-w-fit";
+  const ariaCurrentFalse = "py-2 px-4 text-sm font-semibold hover:bg-gray-50 min-w-fit";
 
   return (
-    <nav className="inline-flex rounded-md ring-2 ring-black fixed bottom-6 left-1/2 -translate-x-1/2 shadow-2xl">
+    <nav className="flex backdrop-blur rounded-md ring-2 ring-black fixed bottom-6 left-1/2 -translate-x-1/2 shadow-2xl overflow-hidden min-w-fit">
       <Link
         href={`/cafes/${router.query.cafe_id}/info`}
         className={path === "info" ? ariaCurrentTrue : ariaCurrentFalse}

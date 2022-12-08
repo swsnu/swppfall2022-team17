@@ -28,7 +28,7 @@ const CafeIntroduction = (props: ReadOnlyProps | EditableProps) => {
   };
 
   return (
-    <article className="relative p-4 rounded shadow-lg bg-slate-50">
+    <article className="relative p-4 rounded shadow-lg bg-gray-50">
       <h3 className="text-center font-semibold text-lg mb-4">카페 소개</h3>
 
       {(!editable || !isEditing) && <p className="text-justify p-2">{introduction}</p>}

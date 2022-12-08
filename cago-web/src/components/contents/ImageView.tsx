@@ -26,26 +26,30 @@ const ImageView = (props: Props) => {
         <>
           <Image src={images[boundedIndex]} alt="cafe-image" sizes="50vw" fill className="rounded" />
 
-          {/* Image slide controls. */}
-          <button
-            aria-label="left"
-            className="z-50 absolute left-0 bottom-1/2 translate-y-1/2 text-black"
-            onClick={(e) => setIndex((index) => index - 1)}
-          >
-            <FaChevronLeft size={35} />
-          </button>
-          <button
-            aria-label="right"
-            className="z-50 absolute right-0 bottom-1/2 translate-y-1/2 text-black"
-            onClick={(e) => setIndex((index) => index + 1)}
-          >
-            <FaChevronRight size={35} />
-          </button>
+          {/* Image slide controls. Only display on two or more images. */}
+          {images.length > 1 && (
+            <>
+              <button
+                aria-label="left"
+                className="absolute left-0 bottom-1/2 translate-y-1/2 text-black"
+                onClick={(e) => setIndex((index) => index - 1)}
+              >
+                <FaChevronLeft size={35} />
+              </button>
+              <button
+                aria-label="right"
+                className="absolute right-0 bottom-1/2 translate-y-1/2 text-black"
+                onClick={(e) => setIndex((index) => index + 1)}
+              >
+                <FaChevronRight size={35} />
+              </button>
+            </>
+          )}
         </>
       ) : (
         // Placeholder when no image to show.
         <div className="flex justify-center items-center w-full h-full">
-          <h3 className="text-lg text-slate-600">이미지가 없습니다.</h3>
+          <h3 className="text-lg text-gray-600">이미지가 없습니다.</h3>
         </div>
       )}
     </figure>

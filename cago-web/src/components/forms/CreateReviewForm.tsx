@@ -32,22 +32,22 @@ const CreateReviewForm = (props: Props) => {
   };
 
   const ratingStars = (
-    <div className="flex flex-col border-2 border-slate-900 text-black font-bold py-2 px-4 mb-6 rounded w-full shadow-md">
+    <div className="flex flex-col border-2 border-gray-900 text-black font-bold py-2 px-4 mb-6 rounded w-full shadow-md">
       {/* <h2 className="text-2xl font-semibold text-center my-2">{"평점 : " + rating}</h2> */}
       <div className="flex justify-center text-3xl">
-        <button className="hover:bg-slate-200 rounded-full p-2" type="button" onClick={() => setRating(1)}>
+        <button className="hover:bg-gray-200 rounded-full p-2" type="button" onClick={() => setRating(1)}>
           ★
         </button>
-        <button className="hover:bg-slate-200 rounded-full p-2" type="button" onClick={() => setRating(2)}>
+        <button className="hover:bg-gray-200 rounded-full p-2" type="button" onClick={() => setRating(2)}>
           {rating >= 2 ? "★" : "☆"}
         </button>
-        <button className="hover:bg-slate-200 rounded-full p-2" type="button" onClick={() => setRating(3)}>
+        <button className="hover:bg-gray-200 rounded-full p-2" type="button" onClick={() => setRating(3)}>
           {rating >= 3 ? "★" : "☆"}
         </button>
-        <button className="hover:bg-slate-200 rounded-full p-2" type="button" onClick={() => setRating(4)}>
+        <button className="hover:bg-gray-200 rounded-full p-2" type="button" onClick={() => setRating(4)}>
           {rating >= 4 ? "★" : "☆"}
         </button>
-        <button className="hover:bg-slate-200 rounded-full p-2" type="button" onClick={() => setRating(5)}>
+        <button className="hover:bg-gray-200 rounded-full p-2" type="button" onClick={() => setRating(5)}>
           {rating >= 5 ? "★" : "☆"}
         </button>
       </div>
@@ -59,12 +59,12 @@ const CreateReviewForm = (props: Props) => {
   };
 
   const strengthSelect = (
-    <div className="flex flex-col border-2 border-slate-900 py-2 px-4 mb-6 rounded w-full shadow-md">
+    <div className="flex flex-col border-2 border-gray-900 py-2 px-4 mb-6 rounded w-full shadow-md">
       <h2 className="text-xl font-semibold text-center my-2">장점 선택</h2>
       <div className="flex gap-2 w-full my-3 text-xl font-semibold text-center">
         <button
-          className={`hover:bg-slate-200 shadow-lg py-6 rounded-lg w-full ${
-            strength === "Taste" ? "bg-slate-200" : "bg-slate-50"
+          className={`hover:bg-gray-200 shadow-lg py-6 rounded-lg w-full ${
+            strength === "Taste" ? "bg-gray-200" : "bg-gray-50"
           }`}
           type="button"
           onClick={() => selectStrength("Taste")}
@@ -72,8 +72,8 @@ const CreateReviewForm = (props: Props) => {
           Taste
         </button>
         <button
-          className={`hover:bg-slate-200 shadow-lg py-6 rounded-lg w-full ${
-            strength === "Service" ? "bg-slate-200" : "bg-slate-50"
+          className={`hover:bg-gray-200 shadow-lg py-6 rounded-lg w-full ${
+            strength === "Service" ? "bg-gray-200" : "bg-gray-50"
           }`}
           type="button"
           onClick={() => selectStrength("Service")}
@@ -81,8 +81,8 @@ const CreateReviewForm = (props: Props) => {
           Service
         </button>
         <button
-          className={`hover:bg-slate-200 shadow-lg py-6 rounded-lg w-full ${
-            strength === "Mood" ? "bg-slate-200" : "bg-slate-50"
+          className={`hover:bg-gray-200 shadow-lg py-6 rounded-lg w-full ${
+            strength === "Mood" ? "bg-gray-200" : "bg-gray-50"
           }`}
           type="button"
           onClick={() => selectStrength("Mood")}

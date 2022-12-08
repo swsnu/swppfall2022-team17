@@ -59,7 +59,7 @@ const ArticleCard = (props: Props) => {
                     src={cafeAvatar}
                     alt="cafe-profile-avatar"
                     fill
-                    className="flex rounded-full border border-slate-800 h-full"
+                    className="flex rounded-full border border-gray-800 h-full"
                   />
                 </div>
               </Link>
@@ -123,7 +123,7 @@ const ArticleCard = (props: Props) => {
           {/* Comments button */}
           {!showCommentsList && (
             <button
-              className="bg-slate-900 hover:bg-slate-700 text-white text-xs font-bold mb-1 py-1 px-2 rounded-sm"
+              className="bg-gray-900 hover:bg-gray-700 text-white text-xs font-bold mb-1 py-1 px-2 rounded-sm"
               onClick={() => setShowCommentsList(true)}
             >
               댓글 보기
@@ -132,7 +132,7 @@ const ArticleCard = (props: Props) => {
           {/* If showCommentsList is true, comment button changes to close comments list button. */}
           {showCommentsList && (
             <button
-              className="bg-slate-200 hover:bg-slate-300 text-xs font-bold mb-1 py-1 px-2 rounded-sm"
+              className="bg-gray-200 hover:bg-gray-300 text-xs font-bold mb-1 py-1 px-2 rounded-sm"
               onClick={() => setShowCommentsList(false)}
             >
               댓글 닫기
@@ -145,7 +145,7 @@ const ArticleCard = (props: Props) => {
             {/* Edit button */}
             {!isEditing && (
               <button
-                className="bg-slate-900 hover:bg-slate-700 text-white text-xs font-bold mb-1 py-1 px-2 rounded-sm"
+                className="bg-gray-900 hover:bg-gray-700 text-white text-xs font-bold mb-1 py-1 px-2 rounded-sm"
                 onClick={() => setIsEditing(true)}
               >
                 수정
@@ -154,7 +154,7 @@ const ArticleCard = (props: Props) => {
             {/* If editting is true, edit button changes to cancle button. */}
             {isEditing && (
               <button
-                className="bg-slate-100 hover:bg-slate-200 text-xs font-bold mb-1 py-1 px-2 rounded-sm"
+                className="bg-gray-100 hover:bg-gray-200 text-xs font-bold mb-1 py-1 px-2 rounded-sm"
                 onClick={() => handleCancel()}
               >
                 취소
@@ -172,7 +172,7 @@ const ArticleCard = (props: Props) => {
             {/* If editting is true, delete button changes to confirm edit button. */}
             {isEditing && (
               <button
-                className="bg-slate-900 hover:bg-slate-700 text-white text-xs font-bold ml-0.5 mb-1 py-1 px-2 rounded-sm"
+                className="bg-gray-900 hover:bg-gray-700 text-white text-xs font-bold ml-0.5 mb-1 py-1 px-2 rounded-sm"
                 onClick={() => handleEdit()}
               >
                 확인

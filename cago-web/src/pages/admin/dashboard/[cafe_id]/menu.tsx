@@ -45,7 +45,7 @@ const DashboardMenu: NextPageWithLayout = () => {
       {/* Modal to add a menu */}
       {showAddMenuModal && (
         <>
-          <div className="p-6 absolute bottom-1/2 translate-y-1/2 right-1/2 translate-x-1/2 bg-slate-50 shadow-lg rounded-lg z-50">
+          <div className="p-6 absolute bottom-1/2 translate-y-1/2 right-1/2 translate-x-1/2 bg-gray-50 shadow-lg rounded-lg z-50">
             <CreateMenuForm cafeId={parseInt(cafeId)} onSuccess={() => setShowAddMenuModal(false)} />
           </div>
 

@@ -75,7 +75,7 @@ const CagoHeader = () => {
                       src={profile.avatar}
                       alt="profile-avatar"
                       fill
-                      className="mx-auto rounded-full border border-slate-800 h-full"
+                      className="mx-auto rounded-full border border-gray-800 h-full"
                     />
                   </li>
                 )}

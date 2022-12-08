@@ -15,24 +15,23 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
 
-interface CafeInfoBoxProps {
+interface SummaryContainerProps {
   title: string;
   children: React.ReactNode;
-  path?: string;
+  path: string;
 }
 
-const CafeInfoContainer = ({ title, children, path }: CafeInfoBoxProps) => {
+const SummaryContainer = ({ title, children, path }: SummaryContainerProps) => {
   return (
-    <div className="outlined w-full h-full flex flex-col px-4 py-3 my-2">
-      <div className="flex justify-between items-center mb-2">
-        <h2 className="text-2xl pl-2">{title}</h2>
-        {path && (
-          <Link href={path} className="contained">
-            자세히
-          </Link>
-        )}
-      </div>
-      <div className="p-4">{children}</div>
+    <div className="w-full h-full p-4 shadow-inner bg-gray-50 rounded-lg">
+      <header className="flex justify-between items-center">
+        <h2 className="text-2xl font-semibold pl-2">{title}</h2>
+        <Link href={path} className="contained">
+          자세히
+        </Link>
+      </header>
+      <hr className="my-2" />
+      <main className="p-4">{children}</main>
     </div>
   );
 };
@@ -49,24 +48,24 @@ const DashboardDetail: NextPageWithLayout = () => {
   return (
     <main className="my-8">
       {cafe?.is_managed && (
-        <div className="flex flex-col">
-          <CafeInfoContainer title="카페 사진" path={`/admin/dashboard/${cafeId}/add-pictures`}>
+        <div className="flex flex-col gap-5">
+          <SummaryContainer title="카페 사진" path={`/admin/dashboard/${cafeId}/add-pictures`}>
             <div className="max-w-full w-fit mx-auto">
               <ImageView images={cafeImages.map((ci) => ci.url)} />
             </div>
-          </CafeInfoContainer>
-          <CafeInfoContainer title="카페 소개" path={`/admin/dashboard/${cafeId}/info`}>
+          </SummaryContainer>
+          <SummaryContainer title="카페 소개" path={`/admin/dashboard/${cafeId}/info`}>
             {cafe.introduction ?? "카페 소개를 작성해보세요!"}
-          </CafeInfoContainer>
-          <CafeInfoContainer title="메뉴" path={`/admin/dashboard/${cafeId}/menu`}>
+          </SummaryContainer>
+          <SummaryContainer title="메뉴" path={`/admin/dashboard/${cafeId}/menu`}>
             <MenuSummary menuList={mainMenuList} />
-          </CafeInfoContainer>
-          <CafeInfoContainer title="리뷰" path={`/admin/dashboard/${cafeId}/reviews`}>
+          </SummaryContainer>
+          <SummaryContainer title="리뷰" path={`/admin/dashboard/${cafeId}/reviews`}>
             <ReviewSummary reviews={reviews} />
-          </CafeInfoContainer>
-          <CafeInfoContainer title="공지사항" path={`/admin/dashboard/${cafeId}/board`}>
+          </SummaryContainer>
+          <SummaryContainer title="공지사항" path={`/admin/dashboard/${cafeId}/board`}>
             <BoardSummary articles={articles} />
-          </CafeInfoContainer>
+          </SummaryContainer>
         </div>
       )}
     </main>

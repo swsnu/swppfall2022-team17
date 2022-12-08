@@ -19,7 +19,7 @@ const ReviewCard = ({ review }: Props) => {
   };
 
   const strengthBox = (
-    <div className="bg-slate-50 shadow-inner text-center py-4 px-6 rounded-lg min-w-fit w-32 mr-4">
+    <div className="bg-gray-50 shadow-inner text-center py-4 px-6 rounded-lg min-w-fit w-32 mr-4">
       <h3 className="font-semibold mb-2 w-full">장점</h3>
       <p className="text-lg font-bold w-full">{review.strength}</p>
     </div>
@@ -33,7 +33,7 @@ const ReviewCard = ({ review }: Props) => {
             src={review.author.avatar}
             alt="review-author-profile-avatar"
             fill
-            className="rounded-full border border-slate-800"
+            className="rounded-full border border-gray-800"
           />
         </div>
         <div className="font-bold">{review.author.display_name}</div>
@@ -47,12 +47,10 @@ const ReviewCard = ({ review }: Props) => {
   return (
     <div className="relative shadow-lg rounded w-full h-full flex p-4">
       {strengthBox}
-      <div className="flex flex-col w-full h-full">
+      <div className="w-full h-full">
         {infoBar}
-        <hr className="border-t-slate-300 my-2" />
-        <article className="h-18 w-full font-normal leading-tight overflow-y-auto break-all">
-          {review.content}
-        </article>
+        <hr className="border-t-gray-300 my-2" />
+        <article className="font-normal break-all">{review.content}</article>
       </div>
       {deletable && (
         <button aria-label="delete" onClick={(e) => handleDelete()} className="absolute top-0 right-0">

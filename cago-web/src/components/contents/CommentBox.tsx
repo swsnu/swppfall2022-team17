@@ -61,7 +61,7 @@ const CommentBox = ({ comment, cafeId }: Props) => {
               src={comment.author.avatar}
               alt="comment-author-profile-avatar"
               fill
-              className="flex rounded-full border border-slate-800 h-full"
+              className="flex rounded-full border border-gray-800 h-full"
             />
           </li>
           <li className="text-sm font-bold leading-loose pr-2">
@@ -85,7 +85,7 @@ const CommentBox = ({ comment, cafeId }: Props) => {
             required
             autoFocus
             onChange={(e) => setContent(e.target.value)}
-            className="bg-slate-50 hover:bg-slate-100 border-2 border-slate-900 text-black font-bold py-1 px-2 rounded text-sm my-1 w-full"
+            className="bg-gray-50 hover:bg-gray-100 border-2 border-gray-900 text-black font-bold py-1 px-2 rounded text-sm my-1 w-full"
           />
         )}
       </li>
@@ -95,7 +95,7 @@ const CommentBox = ({ comment, cafeId }: Props) => {
           {/* Edit button */}
           {!editting && (
             <button
-              className="bg-slate-900 hover:bg-slate-700 text-white text-xs font-bold ml-1 mb-1 py-1 px-2 rounded-sm"
+              className="bg-gray-900 hover:bg-gray-700 text-white text-xs font-bold ml-1 mb-1 py-1 px-2 rounded-sm"
               onClick={() => setEditting(true)}
             >
               수정
@@ -104,7 +104,7 @@ const CommentBox = ({ comment, cafeId }: Props) => {
           {/* If editting is true, edit button changes to cancle button. */}
           {editting && (
             <button
-              className="bg-slate-100 hover:bg-slate-200 text-xs font-bold ml-1 mb-1 py-1 px-2 rounded-sm"
+              className="bg-gray-100 hover:bg-gray-200 text-xs font-bold ml-1 mb-1 py-1 px-2 rounded-sm"
               onClick={() => handleCancel()}
             >
               취소
@@ -122,7 +122,7 @@ const CommentBox = ({ comment, cafeId }: Props) => {
           {/* If editting is true, delete button changes to confirm edit button. */}
           {editting && (
             <button
-              className="bg-slate-900 hover:bg-slate-700 text-white text-xs font-bold ml-0.5 mb-1 py-1 px-2 rounded-sm"
+              className="bg-gray-900 hover:bg-gray-700 text-white text-xs font-bold ml-0.5 mb-1 py-1 px-2 rounded-sm"
               onClick={() => handleEdit()}
             >
               확인
