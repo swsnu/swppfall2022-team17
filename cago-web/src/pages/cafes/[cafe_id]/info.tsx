@@ -1,5 +1,5 @@
 import CafeIntroduction from "components/contents/CafeIntroduction";
-import CafeStatistics from "components/contents/CafeStatistics";
+import StatisticsContainer from "components/contents/CafeStatisticsContainer";
 import ImageView from "components/contents/ImageView";
 import CafeButtonGroup from "components/layouts/CafeButtonGroup";
 import CagoHeader from "components/layouts/CagoHeader";
@@ -29,10 +29,12 @@ const CafeInfo: NextPageWithLayout = () => {
             <CafeIntroduction introduction={cafe.introduction} />
           </div>
           <div className="mt-12 mb-24">
-            <CafeStatistics
-              bestStrength={bestStrength!}
-              numReviews={cafe.num_reviews}
-              numLikes={cafe.num_likes}
+            <StatisticsContainer
+              statList={[
+                { name: "대표 장점", value: bestStrength! },
+                { name: "리뷰 개수", value: cafe.num_reviews },
+                { name: "좋아요 개수", value: cafe.num_likes },
+              ]}
             />
           </div>
         </>

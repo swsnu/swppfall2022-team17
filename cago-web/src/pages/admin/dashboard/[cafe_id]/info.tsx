@@ -1,5 +1,5 @@
 import CafeIntroduction from "components/contents/CafeIntroduction";
-import CafeStatistics from "components/contents/CafeStatistics";
+import StatisticsContainer from "components/contents/CafeStatisticsContainer";
 import ImageView from "components/contents/ImageView";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
@@ -19,7 +19,7 @@ const CafeDashboardInfo: NextPageWithLayout = () => {
   return (
     <main>
       <div className="max-w-full w-fit mx-auto mt-6">
-        <ImageView images={cafeImages.map(ci => ci.url)} />
+        <ImageView images={cafeImages.map((ci) => ci.url)} />
       </div>
 
       {/* Introduction and Statistics */}
@@ -29,10 +29,12 @@ const CafeDashboardInfo: NextPageWithLayout = () => {
             <CafeIntroduction editable cafeId={cafe.id} introduction={cafe.introduction} />
           </div>
           <div className="mt-12 mb-24">
-            <CafeStatistics
-              bestStrength={bestStrength!}
-              numReviews={cafe.num_reviews}
-              numLikes={cafe.num_likes}
+            <StatisticsContainer
+              statList={[
+                { name: "대표 장점", value: bestStrength! },
+                { name: "리뷰 개수", value: cafe.num_reviews },
+                { name: "좋아요 개수", value: cafe.num_likes },
+              ]}
             />
           </div>
         </>

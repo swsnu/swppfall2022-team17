@@ -1,5 +1,5 @@
 import CafeReviewCard from "components/contents/CafeReviewCard";
-import CafeReviewStatistics from "components/contents/CafeReviewStatistics";
+import StatisticsContainer from "components/contents/CafeStatisticsContainer";
 import CafeButtonGroup from "components/layouts/CafeButtonGroup";
 import CagoHeader from "components/layouts/CagoHeader";
 import Container from "components/layouts/Container";
@@ -26,10 +26,12 @@ const CafeReview: NextPageWithLayout = () => {
       {cafe?.is_managed && (
         <>
           <div className="mt-6">
-            <CafeReviewStatistics
-              bestStrength={bestStrength!}
-              numReviews={cafe.num_reviews}
-              averageRating={cafe.average_rating}
+            <StatisticsContainer
+              statList={[
+                { name: "대표 장점", value: bestStrength! },
+                { name: "리뷰 개수", value: cafe.num_reviews },
+                { name: "리뷰 평점", value: cafe.average_rating.toFixed(1) },
+              ]}
             />
           </div>
           <div className="mt-12 mb-24 flex flex-col gap-4">

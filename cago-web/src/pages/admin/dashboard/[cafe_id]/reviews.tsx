@@ -1,5 +1,5 @@
 import CafeReviewCard from "components/contents/CafeReviewCard";
-import CafeReviewStatistics from "components/contents/CafeReviewStatistics";
+import StatisticsContainer from "components/contents/CafeStatisticsContainer";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
@@ -20,10 +20,12 @@ const CafeDashboardReview: NextPageWithLayout = () => {
       {cafe?.is_managed && (
         <>
           <div className="mt-6">
-            <CafeReviewStatistics
-              bestStrength={bestStrength!}
-              numReviews={cafe.num_reviews}
-              averageRating={cafe.average_rating}
+            <StatisticsContainer
+              statList={[
+                { name: "대표 장점", value: bestStrength! },
+                { name: "리뷰 개수", value: cafe.num_reviews },
+                { name: "리뷰 평점", value: cafe.average_rating.toFixed(1) },
+              ]}
             />
           </div>
 
