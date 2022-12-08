@@ -104,6 +104,8 @@ class CafeViewSet(
         IsAuthenticatedOrReadOnly,
     ]
     filterset_class = CafeFilter
+    ordering_fields = ["id"]
+    ordering = ["id"]
 
     def get_queryset(self):
         if self.request.method in ["GET"]:
@@ -148,8 +150,8 @@ class CafeMenuViewSet(
     serializer_class = CafeMenuSerializer
     permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
     filterset_fields = ["cafe_id"]
-    ordering_fields = ["category"]
-    ordering = ["category"]
+    ordering_fields = ["id", "is_main", "category"]
+    ordering = ["category", "-is_main", "id"]
 
 
 class CafeLikeAPIView(APIView):
@@ -230,7 +232,7 @@ class CafeCommentViewSet(
     serializer_class = CafeCommentSerializer
     permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
     filterset_fields = ["article_id"]
-    ordering_fields = ["created_at", "updated_at"]
+    ordering_fields = ["id", "created_at", "updated_at"]
     ordering = ["created_at"]
 
     def perform_create(self, serializer):
@@ -250,6 +252,7 @@ class CafeReviewViewSet(
     serializer_class = CafeReviewSerializer
     permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
     filterset_fields = ["cafe_id"]
+    ordering_fields = ["id", "created_at"]
     ordering = ["-created_at"]
 
     def perform_create(self, serializer):
