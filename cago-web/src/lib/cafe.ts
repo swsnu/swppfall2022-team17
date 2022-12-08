@@ -29,17 +29,6 @@ export const registerCafe = async (
   }
 };
 
-export const setForceClosed = async (id: number, force_closed: boolean, token: string) => {
-  try {
-    const data = await getCagoRequest("patch", token)(`/cafes/${id}/`, {
-      force_closed,
-    });
-    await mutate(`/cafes/${id}/`, data, { revalidate: false });
-  } catch (error) {
-    return;
-  }
-};
-
 export const updateCafeIntroduction = async (cafeId: number, introduction: string, token: string) => {
   await getCagoRequest("patch", token)(`/cafes/${cafeId}/`, { introduction });
   mutate(`/cafes/${cafeId}/`);
@@ -55,12 +44,10 @@ export const useCafe = (cafeId?: string | string[]) => {
     shouldFetch && `/cafes/${cafeId}/`,
     getCagoRequest("get", user?.token)
   );
-  
-  
 
   const bestStrength = useMemo(() => {
     if (data?.is_managed) {
-      const { num_taste, num_service, num_mood } = data;      
+      const { num_taste, num_service, num_mood } = data;
 
       // Naive comparison.
       const max = Math.max(num_taste, num_service, num_mood);
