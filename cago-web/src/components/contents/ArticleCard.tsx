@@ -194,7 +194,6 @@ const ArticleCard = (props: Props) => {
           cafeId={article.cafe}
           articleId={article.id}
           comments={article.comments}
-          writable={!editable}
         />
       )}
     </div>
