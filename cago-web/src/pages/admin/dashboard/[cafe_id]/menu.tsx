@@ -1,4 +1,4 @@
-import CafeMenuContainer from "components/contents/CafeMenuContainer";
+import MenuContainer from "components/contents/MenuContainer";
 import CreateMenuForm from "components/forms/CreateMenuForm";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
@@ -27,13 +27,13 @@ const DashboardMenu: NextPageWithLayout = () => {
 
       {/* Main menu */}
       <div className="mb-8">
-        <CafeMenuContainer category="대표 메뉴" menuList={mainMenuList} editable cafeId={parseInt(cafeId)} />
+        <MenuContainer category="대표 메뉴" menuList={mainMenuList} editable cafeId={parseInt(cafeId)} />
       </div>
 
       {/* Categorized menu */}
       {categorizedMenuList.map((list) => (
         <div key={list.category} className="mb-8">
-          <CafeMenuContainer
+          <MenuContainer
             category={list.category}
             menuList={list.menuList}
             editable

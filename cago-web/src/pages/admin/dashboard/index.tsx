@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import CafeSummary from "components/contents/CafeSummary";
+import ActivityToggleButton from "components/contents/ActivityToggleButton";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
@@ -8,7 +8,7 @@ import { ManagedCafe } from "lib/cafe";
 import Link from "next/link";
 import { NextPageWithLayout } from "pages/_app";
 import useSWR from "swr";
-import { getCagoRequest } from "utils";
+import { getCagoRequest, parseE164 } from "utils";
 
 const Dashboard: NextPageWithLayout = () => {
   const { user } = useAuth();
@@ -25,8 +25,26 @@ const Dashboard: NextPageWithLayout = () => {
         {cafes &&
           cafes.map((cafe) => {
             return (
-              <div key={cafe.id}>
-                <CafeSummary cafe={cafe} />
+              <div key={cafe.id} className="relative">
+                <Link
+                  href={`/admin/dashboard/${cafe.id}`}
+                  className="block w-full pl-12 pr-24 py-5 shadow-lg rounded-lg"
+                >
+                  {/* Name */}
+                  <h2 className="text-lg font-bold mb-2">{cafe.name}</h2>
+
+                  {/* Address & phone */}
+                  <div className="md:flex">
+                    <h3>{cafe.address}</h3>
+                    <div className="px-4 hidden md:block">|</div>
+                    <h3>{parseE164(cafe.phone_number)}</h3>
+                  </div>
+                </Link>
+
+                {/* Toggle Switch */}
+                <div className="z-50 absolute right-6 bottom-1/2 translate-y-1/2">
+                  <ActivityToggleButton cafe={cafe} />
+                </div>
               </div>
             );
           })}

@@ -12,7 +12,7 @@ interface Props {
   editable?: boolean;
 }
 
-const ArticlePreview = (props: Props) => {
+const ArticleCard = (props: Props) => {
   const { article, editable = false, cafeName, cafeAvatar } = props;
   const { user } = useAuth();
 
@@ -191,8 +191,8 @@ const ArticlePreview = (props: Props) => {
       {articleFooter}
       {showCommentsList && (
         <CommentsList
-          cafe_id={article.cafe}
-          article_id={article.id}
+          cafeId={article.cafe}
+          articleId={article.id}
           comments={article.comments}
           writable={!editable}
         />
@@ -201,4 +201,4 @@ const ArticlePreview = (props: Props) => {
   );
 };
 
-export default ArticlePreview;
+export default ArticleCard;

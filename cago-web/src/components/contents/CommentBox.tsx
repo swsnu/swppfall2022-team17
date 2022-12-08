@@ -6,14 +6,14 @@ import { useMemo, useState } from "react";
 
 interface Props {
   comment: Comment;
-  cafe_id: number;
+  cafeId: number;
 }
 
-const CommentBox = ({ comment, cafe_id }: Props) => {
+const CommentBox = ({ comment, cafeId }: Props) => {
   const [editting, setEditting] = useState<boolean>(false);
   const [content, setContent] = useState<string>(comment.content);
   const { user } = useAuth();
-  const { cafe } = useCafe(cafe_id.toString());
+  const { cafe } = useCafe(cafeId.toString());
 
   const editable = useMemo(() => {
     if (!!user) {
@@ -34,7 +34,7 @@ const CommentBox = ({ comment, cafe_id }: Props) => {
   const handleEdit = async () => {
     if (!!user && editable) {
       try {
-        await updateComment(cafe_id, comment.article, comment.id, content, user.token);
+        await updateComment(cafeId, comment.article, comment.id, content, user.token);
         setEditting(false);
       } catch (e) {
         const error = e as Error;
@@ -45,7 +45,7 @@ const CommentBox = ({ comment, cafe_id }: Props) => {
 
   const handleDelete = async () => {
     if (!!user && editable) {
-      await deleteComment(cafe_id, comment.article, comment.id, user.token);
+      await deleteComment(cafeId, comment.article, comment.id, user.token);
     }
   };
 

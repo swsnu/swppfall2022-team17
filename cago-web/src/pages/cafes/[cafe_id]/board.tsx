@@ -1,5 +1,5 @@
-import ArticlePreview from "components/contents/ArticlePreview";
-import CafeButtonGroup from "components/layouts/CafeButtonGroup";
+import ArticleCard from "components/contents/ArticleCard";
+import CagoButtonGroup from "components/layouts/CagoButtonGroup";
 import CagoHeader from "components/layouts/CagoHeader";
 import Container from "components/layouts/Container";
 import { useArticles } from "lib/board";
@@ -19,7 +19,7 @@ const Board: NextPageWithLayout = () => {
       {cafe?.is_managed &&
         articles.map((article) => {
           return (
-            <ArticlePreview
+            <ArticleCard
               key={`article_${article.id}`}
               cafeName={cafe.name}
               cafeAvatar={cafe.avatar}
@@ -36,7 +36,7 @@ Board.getLayout = (page) => (
     <CagoHeader />
     <Container>
       {page}
-      <CafeButtonGroup />
+      <CagoButtonGroup />
     </Container>
   </RequireProfile>
 );

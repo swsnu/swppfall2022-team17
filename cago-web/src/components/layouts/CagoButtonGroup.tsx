@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const CafeButtonGroup = () => {
+const CagoButtonGroup = () => {
   const router = useRouter();
   const path = router.pathname.split("/")[3];
   const ariaCurrentTrue = "py-2 px-4 rounded-md text-sm font-semibold contained min-w-fit";
@@ -37,4 +37,4 @@ const CafeButtonGroup = () => {
   );
 };
 
-export default CafeButtonGroup;
+export default CagoButtonGroup;

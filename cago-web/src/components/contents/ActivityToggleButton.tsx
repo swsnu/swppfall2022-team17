@@ -7,7 +7,7 @@ interface Props {
   cafe: ManagedCafe;
 }
 
-const CafeToggleSwitch = ({ cafe }: Props) => {
+const ActivityToggleButton = ({ cafe }: Props) => {
   const { user } = useAuth();
 
   const openClassName =
@@ -34,4 +34,4 @@ const CafeToggleSwitch = ({ cafe }: Props) => {
   );
 };
 
-export default CafeToggleSwitch;
+export default ActivityToggleButton;

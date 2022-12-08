@@ -1,7 +1,7 @@
 import CafeIntroduction from "components/contents/CafeIntroduction";
-import StatisticsContainer from "components/contents/CafeStatisticsContainer";
 import ImageView from "components/contents/ImageView";
-import CafeButtonGroup from "components/layouts/CafeButtonGroup";
+import StatisticsContainer from "components/contents/StatisticsContainer";
+import CagoButtonGroup from "components/layouts/CagoButtonGroup";
 import CagoHeader from "components/layouts/CagoHeader";
 import Container from "components/layouts/Container";
 import RequireProfile from "components/layouts/RequireProfile";
@@ -48,7 +48,7 @@ CafeInfo.getLayout = (page) => (
     <CagoHeader />
     <Container>
       {page}
-      <CafeButtonGroup />
+      <CagoButtonGroup />
     </Container>
   </RequireProfile>
 );

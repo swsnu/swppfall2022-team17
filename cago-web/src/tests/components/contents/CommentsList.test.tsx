@@ -6,7 +6,7 @@ import { act, render, screen } from "tests/utils";
 describe("comments list", () => {
   it("handles add comment", async () => {
     await act(() => {
-      render(<CommentsList writable cafe_id={1} article_id={1} comments={comments} />);
+      render(<CommentsList writable cafeId={1} articleId={1} comments={comments} />);
     });
     const textInput = screen.getByRole("textbox");
     await userEvent.type(textInput, "new comment");

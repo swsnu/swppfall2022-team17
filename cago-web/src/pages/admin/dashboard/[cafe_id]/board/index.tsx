@@ -1,4 +1,4 @@
-import ArticlePreview from "components/contents/ArticlePreview";
+import ArticleCard from "components/contents/ArticleCard";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
@@ -30,7 +30,7 @@ const AdminBoard: NextPageWithLayout = () => {
       {cafe?.is_managed &&
         articles.map((article) => {
           return (
-            <ArticlePreview
+            <ArticleCard
               key={`article_${article.id}`}
               cafeName={cafe.name}
               cafeAvatar={cafe.avatar}

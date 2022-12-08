@@ -1,12 +1,12 @@
 import userEvent from "@testing-library/user-event";
-import ArticlePreview from "components/contents/ArticlePreview";
-import { ManagedCafe } from "components/maps/CafesMap";
+import ArticleCard from "components/contents/ArticleCard";
+import { ManagedCafe } from "lib/cafe";
 import { articles, cafes } from "mocks/stubs";
 import { act, render, screen } from "tests/utils";
 
-const renderArticlePreview = () =>
+const renderArticleCard = () =>
   render(
-    <ArticlePreview
+    <ArticleCard
       cafeName="cafe1"
       cafeAvatar={(cafes[0] as ManagedCafe).avatar}
       article={articles[0]}
@@ -14,10 +14,10 @@ const renderArticlePreview = () =>
     />
   );
 
-describe("article preview", () => {
+describe("article card", () => {
   it("handles edit", async () => {
     await act(() => {
-      renderArticlePreview();
+      renderArticleCard();
     });
 
     const editButton = screen.getByRole("button", { name: /수정/ });
@@ -35,7 +35,7 @@ describe("article preview", () => {
 
   it("handles edit cancel", async () => {
     await act(() => {
-      renderArticlePreview();
+      renderArticleCard();
     });
 
     const editButton = screen.getByRole("button", { name: /수정/ });
@@ -47,7 +47,7 @@ describe("article preview", () => {
 
   it("handles delete", async () => {
     await act(() => {
-      renderArticlePreview();
+      renderArticleCard();
     });
 
     const deleteButton = screen.getByRole("button", { name: /삭제/ });
@@ -56,7 +56,7 @@ describe("article preview", () => {
 
   it("shows commnets list", async () => {
     await act(() => {
-      renderArticlePreview();
+      renderArticleCard();
     });
 
     const openButton = screen.getByRole("button", { name: /댓글 보기/ });

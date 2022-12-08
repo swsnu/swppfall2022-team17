@@ -6,7 +6,7 @@ import { act, render, screen } from "tests/utils";
 describe("comment box", () => {
   it("handles edit", async () => {
     await act(() => {
-      render(<CommentBox comment={comments[0]} cafe_id={1} />);
+      render(<CommentBox comment={comments[0]} cafeId={1} />);
     });
 
     await userEvent.click(screen.getByRole("button", { name: /수정/ }));
@@ -18,7 +18,7 @@ describe("comment box", () => {
 
   it("handles delete", async () => {
     await act(() => {
-      render(<CommentBox comment={comments[0]} cafe_id={1} />);
+      render(<CommentBox comment={comments[0]} cafeId={1} />);
     });
     await userEvent.click(screen.getByRole("button", { name: /삭제/ }));
   });

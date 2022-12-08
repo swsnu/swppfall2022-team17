@@ -4,20 +4,20 @@ import { useState } from "react";
 import CommentBox from "./CommentBox";
 
 interface Props {
-  cafe_id: number;
-  article_id: number;
+  cafeId: number;
+  articleId: number;
   comments: Comment[];
   writable?: boolean;
 }
 
-const CommentsList = ({ cafe_id, article_id, comments, writable = false }: Props) => {
+const CommentsList = ({ cafeId, articleId, comments, writable = false }: Props) => {
   const { user } = useAuth();
   const [content, setContent] = useState<string>("");
 
   const handleAddComment = async () => {
     if (user && writable) {
       try {
-        await addComment(cafe_id, article_id, content, user.token);
+        await addComment(cafeId, articleId, content, user.token);
         setContent("");
       } catch (e) {
         const error = e as Error;
@@ -55,7 +55,7 @@ const CommentsList = ({ cafe_id, article_id, comments, writable = false }: Props
       )}
       <div className="overflow-y-auto max-h-[30vh]">
         {comments.map((comment) => (
-          <CommentBox key={`comment-${comment.id}`} comment={comment} cafe_id={cafe_id} />
+          <CommentBox key={`comment-${comment.id}`} comment={comment} cafeId={cafeId} />
         ))}
       </div>
     </>

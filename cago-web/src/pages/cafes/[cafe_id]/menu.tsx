@@ -1,5 +1,5 @@
-import CafeMenuContainer from "components/contents/CafeMenuContainer";
-import CafeButtonGroup from "components/layouts/CafeButtonGroup";
+import MenuContainer from "components/contents/MenuContainer";
+import CagoButtonGroup from "components/layouts/CagoButtonGroup";
 import CagoHeader from "components/layouts/CagoHeader";
 import Container from "components/layouts/Container";
 import RequireProfile from "components/layouts/RequireProfile";
@@ -16,13 +16,13 @@ const CafeMenu: NextPageWithLayout = () => {
     <main>
       {/* Main menu */}
       <div className="my-8">
-        <CafeMenuContainer category="대표 메뉴" menuList={mainMenuList} />
+        <MenuContainer category="대표 메뉴" menuList={mainMenuList} />
       </div>
 
       {/* Categorized menu */}
       {categorizedMenuList.map((list) => (
         <div key={list.category} className="mb-8">
-          <CafeMenuContainer category={list.category} menuList={list.menuList} />
+          <MenuContainer category={list.category} menuList={list.menuList} />
         </div>
       ))}
     </main>
@@ -34,7 +34,7 @@ CafeMenu.getLayout = (page) => (
     <CagoHeader />
     <Container>
       {page}
-      <CafeButtonGroup />
+      <CagoButtonGroup />
     </Container>
   </RequireProfile>
 );

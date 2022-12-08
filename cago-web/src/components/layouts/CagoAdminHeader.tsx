@@ -1,4 +1,4 @@
-import CafeToggleSwitch from "components/contents/CafeToggleSwitch";
+import ActivityToggleButton from "components/contents/ActivityToggleButton";
 import { logout } from "lib/auth";
 import { useCafe } from "lib/cafe";
 import Link from "next/link";
@@ -41,7 +41,7 @@ const CagoAdminHeader = () => {
           <ul className="flex gap-4 items-center">
             {cafe?.is_managed && (
               <li className="text-lg">
-                <CafeToggleSwitch cafe={cafe} />
+                <ActivityToggleButton cafe={cafe} />
               </li>
             )}
             <li>

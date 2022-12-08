@@ -1,6 +1,6 @@
 import CafeIntroduction from "components/contents/CafeIntroduction";
-import StatisticsContainer from "components/contents/CafeStatisticsContainer";
 import ImageView from "components/contents/ImageView";
+import StatisticsContainer from "components/contents/StatisticsContainer";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";

@@ -46,7 +46,7 @@ const CafeMenuCard = (props: CardProps) => {
   );
 };
 
-const CafeMenuContainer = (props: ReadOnlyProps | EditableProps) => {
+const MenuContainer = (props: ReadOnlyProps | EditableProps) => {
   const { category, menuList, editable } = props;
   const { user } = useAuth();
 
@@ -77,4 +77,4 @@ const CafeMenuContainer = (props: ReadOnlyProps | EditableProps) => {
   );
 };
 
-export default CafeMenuContainer;
+export default MenuContainer;

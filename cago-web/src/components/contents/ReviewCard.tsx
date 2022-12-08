@@ -8,7 +8,7 @@ interface Props {
   review: Review;
 }
 
-const CafeReviewCard = ({ review }: Props) => {
+const ReviewCard = ({ review }: Props) => {
   const { user } = useAuth();
   const deletable = user && user.id === review.author.user;
 
@@ -63,4 +63,4 @@ const CafeReviewCard = ({ review }: Props) => {
   );
 };
 
-export default CafeReviewCard;
+export default ReviewCard;

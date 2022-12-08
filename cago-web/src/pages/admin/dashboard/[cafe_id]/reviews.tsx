@@ -1,5 +1,5 @@
-import CafeReviewCard from "components/contents/CafeReviewCard";
-import StatisticsContainer from "components/contents/CafeStatisticsContainer";
+import ReviewCard from "components/contents/ReviewCard";
+import StatisticsContainer from "components/contents/StatisticsContainer";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
@@ -31,7 +31,7 @@ const CafeDashboardReview: NextPageWithLayout = () => {
 
           <div className="mt-12 mb-24 flex flex-col gap-4">
             {reviews.map((review) => (
-              <CafeReviewCard key={review.id} review={review} />
+              <ReviewCard key={review.id} review={review} />
             ))}
             {reviews.length === 0 && (
               <h4 className="text-center text-lg font-light">작성된 리뷰가 없습니다.</h4>
