@@ -28,7 +28,7 @@ export interface ManagedCafe extends Omit<Cafe, "is_managed"> {
   num_taste: number;
   num_service: number;
   num_mood: number;
-  average_rating: number;
+  average_rating: number | null;
 }
 
 export const registerCafe = async (
