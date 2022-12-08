@@ -1,10 +1,10 @@
-import AdminBoard from "pages/admin/dashboard/[cafe_id]/board";
-import { render, act } from "tests/utils";
+import DashboardBoard from "pages/admin/dashboard/[cafe_id]/board";
+import { act, render } from "tests/utils";
 
 describe("admin board page", () => {
   it("renders", async () => {
     await act(() => {
-      render(<AdminBoard />);
+      render(<DashboardBoard />);
     });
   });
 });

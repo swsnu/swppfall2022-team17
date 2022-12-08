@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
 
-const CafeReview: NextPageWithLayout = () => {
+const Reviews: NextPageWithLayout = () => {
   const router = useRouter();
   const cafeId = router.query.cafe_id as string;
   const { cafe, bestStrength } = useCafe(cafeId);
@@ -48,7 +48,7 @@ const CafeReview: NextPageWithLayout = () => {
   );
 };
 
-CafeReview.getLayout = (page) => (
+Reviews.getLayout = (page) => (
   <RequireProfile>
     <CagoHeader />
     <Container>
@@ -58,4 +58,4 @@ CafeReview.getLayout = (page) => (
   </RequireProfile>
 );
 
-export default CafeReview;
+export default Reviews;

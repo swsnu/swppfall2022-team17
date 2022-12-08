@@ -7,7 +7,7 @@ import { useMenu } from "lib/menu";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
 
-const CafeMenu: NextPageWithLayout = () => {
+const Menu: NextPageWithLayout = () => {
   const router = useRouter();
   const cafeId = router.query.cafe_id as string;
   const { mainMenuList, categorizedMenuList } = useMenu(cafeId);
@@ -29,7 +29,7 @@ const CafeMenu: NextPageWithLayout = () => {
   );
 };
 
-CafeMenu.getLayout = (page) => (
+Menu.getLayout = (page) => (
   <RequireProfile>
     <CagoHeader />
     <Container>
@@ -39,4 +39,4 @@ CafeMenu.getLayout = (page) => (
   </RequireProfile>
 );
 
-export default CafeMenu;
+export default Menu;

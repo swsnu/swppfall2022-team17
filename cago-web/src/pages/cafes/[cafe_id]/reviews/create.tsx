@@ -6,7 +6,7 @@ import RequireProfile from "components/layouts/RequireProfile";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
 
-const CreateReview: NextPageWithLayout = () => {
+const ReviewsCreate: NextPageWithLayout = () => {
   const router = useRouter();
   const cafeId = router.query.cafe_id as string;
 
@@ -18,7 +18,7 @@ const CreateReview: NextPageWithLayout = () => {
   );
 };
 
-CreateReview.getLayout = (page) => (
+ReviewsCreate.getLayout = (page) => (
   <RequireLogin>
     <RequireProfile>
       <CagoHeader />
@@ -27,4 +27,4 @@ CreateReview.getLayout = (page) => (
   </RequireLogin>
 );
 
-export default CreateReview;
+export default ReviewsCreate;

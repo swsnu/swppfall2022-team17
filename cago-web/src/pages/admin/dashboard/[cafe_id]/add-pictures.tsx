@@ -10,7 +10,7 @@ import { NextPageWithLayout } from "pages/_app";
 import { useState } from "react";
 import { uploadImage } from "utils";
 
-const CafeDashboardAddPicture: NextPageWithLayout = () => {
+const AddPictures: NextPageWithLayout = () => {
   const router = useRouter();
   const cafeId = router.query.cafe_id as string;
   const { cafeImages, mainImage } = useCafeImages(cafeId);
@@ -69,7 +69,7 @@ const CafeDashboardAddPicture: NextPageWithLayout = () => {
   );
 };
 
-CafeDashboardAddPicture.getLayout = (page) => (
+AddPictures.getLayout = (page) => (
   <RequireLogin>
     <RequireManager>
       <CagoAdminHeader />
@@ -78,4 +78,4 @@ CafeDashboardAddPicture.getLayout = (page) => (
   </RequireLogin>
 );
 
-export default CafeDashboardAddPicture;
+export default AddPictures;

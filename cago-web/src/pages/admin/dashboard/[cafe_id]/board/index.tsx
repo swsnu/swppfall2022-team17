@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
 
-const AdminBoard: NextPageWithLayout = () => {
+const DashboardBoard: NextPageWithLayout = () => {
   const router = useRouter();
   const cafeId = router.query.cafe_id as string;
   const { cafe } = useCafe(cafeId);
@@ -43,7 +43,7 @@ const AdminBoard: NextPageWithLayout = () => {
   );
 };
 
-AdminBoard.getLayout = (page) => (
+DashboardBoard.getLayout = (page) => (
   <RequireLogin>
     <RequireManager>
       <CagoAdminHeader />
@@ -52,4 +52,4 @@ AdminBoard.getLayout = (page) => (
   </RequireLogin>
 );
 
-export default AdminBoard;
+export default DashboardBoard;

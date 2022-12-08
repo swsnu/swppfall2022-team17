@@ -10,7 +10,7 @@ import { useCafeImages } from "lib/image";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
 
-const CafeDashboardInfo: NextPageWithLayout = () => {
+const DashboardInfo: NextPageWithLayout = () => {
   const router = useRouter();
   const cafeId = router.query.cafe_id as string;
   const { cafe, bestStrength } = useCafe(cafeId);
@@ -43,7 +43,7 @@ const CafeDashboardInfo: NextPageWithLayout = () => {
   );
 };
 
-CafeDashboardInfo.getLayout = (page) => (
+DashboardInfo.getLayout = (page) => (
   <RequireLogin>
     <RequireManager>
       <CagoAdminHeader />
@@ -52,4 +52,4 @@ CafeDashboardInfo.getLayout = (page) => (
   </RequireLogin>
 );
 
-export default CafeDashboardInfo;
+export default DashboardInfo;

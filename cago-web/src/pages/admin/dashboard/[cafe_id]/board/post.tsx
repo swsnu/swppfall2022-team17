@@ -5,7 +5,7 @@ import RequireLogin from "components/layouts/RequireLogin";
 import RequireManager from "components/layouts/RequireManager";
 import { NextPageWithLayout } from "pages/_app";
 
-const PostArticle: NextPageWithLayout = () => {
+const DashboardBoardPost: NextPageWithLayout = () => {
   return (
     <main className="flex flex-col mt-10 items-center justify-center">
       <h1 className="font-bold text-4xl mb-6">새 게시글</h1>
@@ -16,7 +16,7 @@ const PostArticle: NextPageWithLayout = () => {
   );
 };
 
-PostArticle.getLayout = (page) => (
+DashboardBoardPost.getLayout = (page) => (
   <RequireLogin>
     <RequireManager>
       <CagoAdminHeader />
@@ -25,4 +25,4 @@ PostArticle.getLayout = (page) => (
   </RequireLogin>
 );
 
-export default PostArticle;
+export default DashboardBoardPost;

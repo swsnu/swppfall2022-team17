@@ -9,7 +9,7 @@ import { useReviews } from "lib/review";
 import { useRouter } from "next/router";
 import { NextPageWithLayout } from "pages/_app";
 
-const CafeDashboardReview: NextPageWithLayout = () => {
+const DashboardReview: NextPageWithLayout = () => {
   const router = useRouter();
   const cafeId = router.query.cafe_id as string;
   const { cafe, bestStrength } = useCafe(cafeId);
@@ -43,7 +43,7 @@ const CafeDashboardReview: NextPageWithLayout = () => {
   );
 };
 
-CafeDashboardReview.getLayout = (page) => (
+DashboardReview.getLayout = (page) => (
   <RequireLogin>
     <RequireManager>
       <CagoAdminHeader />
@@ -52,4 +52,4 @@ CafeDashboardReview.getLayout = (page) => (
   </RequireLogin>
 );
 
-export default CafeDashboardReview;
+export default DashboardReview;

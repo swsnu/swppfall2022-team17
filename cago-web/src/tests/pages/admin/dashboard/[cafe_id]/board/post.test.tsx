@@ -1,10 +1,10 @@
-import PostArticle from "pages/admin/dashboard/[cafe_id]/board/post";
-import { render, act } from "tests/utils";
+import DashboardBoardPost from "pages/admin/dashboard/[cafe_id]/board/post";
+import { act, render } from "tests/utils";
 
 describe("post article page", () => {
   it("renders", async () => {
     await act(() => {
-      render(<PostArticle />);
+      render(<DashboardBoardPost />);
     });
   });
 });
