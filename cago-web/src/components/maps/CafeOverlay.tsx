@@ -14,7 +14,11 @@ const CafeOverlay = ({ cafe }: Props) => {
 
   return (
     <div className="font-normal p-4 rounded-md bg-gray-800 text-white w-64 min-w-fit">
-      {mainImage && <Image src={mainImage.url} alt="cafe_image" width={360} height={360} className="mb-2" />}
+      {mainImage && (
+        <div className="relative w-full aspect-video">
+          <Image src={mainImage.url} alt="cafe_image" fill className="mb-2" priority />
+        </div>
+      )}
       {!mainImage && <h4 className="text-gray-500 mb-2">대표 이미지 없음</h4>}
 
       <h2 className="text-xl font-semibold mb-2">{cafe.name}</h2>
