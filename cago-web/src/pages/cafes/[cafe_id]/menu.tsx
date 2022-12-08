@@ -9,8 +9,8 @@ import { NextPageWithLayout } from "pages/_app";
 
 const CafeMenu: NextPageWithLayout = () => {
   const router = useRouter();
-  const { cafe_id } = router.query;
-  const { mainMenuList, categorizedMenuList } = useMenu(cafe_id);
+  const cafeId = router.query.cafe_id as string;
+  const { mainMenuList, categorizedMenuList } = useMenu(cafeId);
 
   return (
     <main>

@@ -12,15 +12,15 @@ import { uploadImage } from "utils";
 
 const CafeDashboardAddPicture: NextPageWithLayout = () => {
   const router = useRouter();
-  const { cafe_id } = router.query;
-  const { cafeImages, mainImage } = useCafeImages(cafe_id);
+  const cafeId = router.query.cafe_id as string;
+  const { cafeImages, mainImage } = useCafeImages(cafeId);
   const { user } = useAuth();
 
   const [imageIndex, setImageIndex] = useState<number>(0);
 
   const handleMainImageSet = async () => {
     if (!!user) {
-      await setMainImage(parseInt(cafe_id as string), cafeImages[imageIndex].id, user.token);
+      await setMainImage(parseInt(cafeId), cafeImages[imageIndex].id, user.token);
     }
   };
 
@@ -30,7 +30,7 @@ const CafeDashboardAddPicture: NextPageWithLayout = () => {
     if (!!user && files && files?.length > 0) {
       const file = files[0];
       const url = await uploadImage(file);
-      await postCafeImage(parseInt(cafe_id as string), url, user.token);
+      await postCafeImage(parseInt(cafeId), url, user.token);
     }
   };
 

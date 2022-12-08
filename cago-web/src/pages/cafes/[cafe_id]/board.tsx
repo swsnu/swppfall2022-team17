@@ -10,9 +10,9 @@ import RequireProfile from "../../../components/layouts/RequireProfile";
 
 const Board: NextPageWithLayout = () => {
   const router = useRouter();
-  const { cafe_id } = router.query;
-  const { data: cafe } = useCafe(cafe_id);
-  const { articles } = useArticles(cafe_id);
+  const cafeId = router.query.cafe_id as string;
+  const { cafe } = useCafe(cafeId);
+  const { articles } = useArticles(cafeId);
 
   return (
     <main>

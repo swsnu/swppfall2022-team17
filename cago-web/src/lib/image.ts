@@ -27,7 +27,7 @@ export const setMainImage = async (cafeId: number, imageId: number, token: strin
   await mutate(`/cafe-images/?cafe_id=${cafeId}`);
 };
 
-export const useCafeImages = (cafeId?: string | string[]) => {
+export const useCafeImages = (cafeId?: string) => {
   const { data } = useSWR<CafeImage[]>(cafeId && `/cafe-images/?cafe_id=${cafeId}`, getCagoRequest());
 
   const cafeImages = useMemo(() => {

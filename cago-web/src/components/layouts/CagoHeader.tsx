@@ -12,7 +12,7 @@ const CagoHeader = () => {
   const { loading, loggedIn, user } = useAuth();
   const { profile } = useProfile();
   const router = useRouter();
-  const { data: cafe } = useCafe(router.query.cafe_id);
+  const { cafe } = useCafe(router.query.cafe_id as string);
 
   const handleLogoutButtonClick: React.MouseEventHandler = async (e) => {
     e.preventDefault();

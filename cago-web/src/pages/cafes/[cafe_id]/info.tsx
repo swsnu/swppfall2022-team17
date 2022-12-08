@@ -12,9 +12,9 @@ import { NextPageWithLayout } from "pages/_app";
 
 const CafeInfo: NextPageWithLayout = () => {
   const router = useRouter();
-  const { cafe_id } = router.query;
-  const { data: cafe, bestStrength } = useCafe(cafe_id);
-  const { cafeImages } = useCafeImages(cafe_id);
+  const cafeId = router.query.cafe_id as string;
+  const { cafe, bestStrength } = useCafe(cafeId);
+  const { cafeImages } = useCafeImages(cafeId);
 
   return (
     <main>

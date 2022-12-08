@@ -49,7 +49,7 @@ export const deleteReview = async (cafeId: number, review_id: number, token: str
   mutate(`/cafes/${cafeId}/`);
 };
 
-export const useReviews = (cafeId: string | string[] | undefined) => {
+export const useReviews = (cafeId?: string) => {
   // Get the list of reviews
   const { data } = useSWR<Review[], AxiosError>(
     cafeId && `/reviews/?cafe_id=${cafeId}`,

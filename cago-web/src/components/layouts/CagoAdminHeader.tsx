@@ -7,8 +7,7 @@ import Container from "./Container";
 
 const CagoAdminHeader = () => {
   const router = useRouter();
-  const { cafe_id } = router.query;
-  const { data: cafe } = useCafe(cafe_id);
+  const { cafe } = useCafe(router.query.cafe_id as string);
 
   const handleLogoutButtonClick: React.MouseEventHandler = async (e) => {
     e.preventDefault();

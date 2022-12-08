@@ -11,10 +11,8 @@ import { useState } from "react";
 
 const DashboardMenu: NextPageWithLayout = () => {
   const router = useRouter();
-  const { cafe_id } = router.query;
-  const { mainMenuList, categorizedMenuList } = useMenu(cafe_id);
-
-  const cafeId = parseInt(cafe_id as string);
+  const cafeId = router.query.cafe_id as string;
+  const { mainMenuList, categorizedMenuList } = useMenu(cafeId);
 
   const [showAddMenuModal, setShowAddMenuModal] = useState<boolean>(false);
 
@@ -29,13 +27,18 @@ const DashboardMenu: NextPageWithLayout = () => {
 
       {/* Main menu */}
       <div className="mb-8">
-        <CafeMenuContainer category="대표 메뉴" menuList={mainMenuList} editable cafeId={cafeId} />
+        <CafeMenuContainer category="대표 메뉴" menuList={mainMenuList} editable cafeId={parseInt(cafeId)} />
       </div>
 
       {/* Categorized menu */}
       {categorizedMenuList.map((list) => (
         <div key={list.category} className="mb-8">
-          <CafeMenuContainer category={list.category} menuList={list.menuList} editable cafeId={cafeId} />
+          <CafeMenuContainer
+            category={list.category}
+            menuList={list.menuList}
+            editable
+            cafeId={parseInt(cafeId)}
+          />
         </div>
       ))}
 
@@ -43,7 +46,7 @@ const DashboardMenu: NextPageWithLayout = () => {
       {showAddMenuModal && (
         <>
           <div className="p-6 absolute bottom-1/2 translate-y-1/2 right-1/2 translate-x-1/2 bg-slate-50 shadow-lg rounded-lg z-50">
-            <CreateMenuForm cafeId={cafeId} onSuccess={() => setShowAddMenuModal(false)} />
+            <CreateMenuForm cafeId={parseInt(cafeId)} onSuccess={() => setShowAddMenuModal(false)} />
           </div>
 
           {/* Below overlaps the entire screen, and close the model if clicked. */}

@@ -60,20 +60,20 @@ export const updateCafeIntroduction = async (cafeId: number, introduction: strin
   mutate(`/cafes/${cafeId}/`);
 };
 
-export const useCafe = (cafeId?: string | string[]) => {
+export const useCafe = (cafeId?: string) => {
   const { user, loggedIn } = useAuth();
 
   // Fetch only when not logged in, or logged in and user object is set.
   const shouldFetch = (!loggedIn || (loggedIn && !!user)) && cafeId;
 
-  const { data } = useSWR<Cafe | ManagedCafe, AxiosError>(
+  const { data: cafe } = useSWR<Cafe | ManagedCafe, AxiosError>(
     shouldFetch && `/cafes/${cafeId}/`,
     getCagoRequest("get", user?.token)
   );
 
   const bestStrength = useMemo(() => {
-    if (data?.is_managed) {
-      const { num_taste, num_service, num_mood } = data;
+    if (cafe?.is_managed) {
+      const { num_taste, num_service, num_mood } = cafe;
 
       // Naive comparison.
       const max = Math.max(num_taste, num_service, num_mood);
@@ -87,7 +87,7 @@ export const useCafe = (cafeId?: string | string[]) => {
         return "Mood";
       }
     }
-  }, [data]);
+  }, [cafe]);
 
-  return { data, bestStrength };
+  return { cafe, bestStrength };
 };

@@ -12,14 +12,14 @@ import { NextPageWithLayout } from "pages/_app";
 
 const CafeReview: NextPageWithLayout = () => {
   const router = useRouter();
-  const { cafe_id } = router.query;
-  const { data: cafe, bestStrength } = useCafe(cafe_id);
-  const { reviews } = useReviews(cafe_id);
+  const cafeId = router.query.cafe_id as string;
+  const { cafe, bestStrength } = useCafe(cafeId);
+  const { reviews } = useReviews(cafeId);
 
   return (
     <main>
       <div className="w-full text-right mt-8 mb-2">
-        <Link href={`/cafes/${cafe_id}/reviews/create`} className="contained">
+        <Link href={`/cafes/${cafeId}/reviews/create`} className="contained">
           리뷰 작성
         </Link>
       </div>

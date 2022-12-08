@@ -96,7 +96,7 @@ export const deleteComment = async (cafeId: number, articleId: number, commentId
   mutate(`/board/${articleId}/`);
 };
 
-export const useArticles = (cafeId: string | string[] | undefined) => {
+export const useArticles = (cafeId?: string) => {
   // Fetch cafe only when the user at admin dashboard detail page.
   const { data } = useSWR<Article[], AxiosError>(
     cafeId && `/board/?cafe_id=${cafeId}`,

@@ -13,7 +13,7 @@ const CommentBox = ({ comment, cafe_id }: Props) => {
   const [editting, setEditting] = useState<boolean>(false);
   const [content, setContent] = useState<string>(comment.content);
   const { user } = useAuth();
-  const { data: cafe } = useCafe(cafe_id.toString());
+  const { cafe } = useCafe(cafe_id.toString());
 
   const editable = useMemo(() => {
     if (!!user) {

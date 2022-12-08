@@ -8,12 +8,12 @@ import { NextPageWithLayout } from "pages/_app";
 
 const CreateReview: NextPageWithLayout = () => {
   const router = useRouter();
-  const { cafe_id } = router.query;
+  const cafeId = router.query.cafe_id as string;
 
   return (
     <main className="flex flex-col mt-10 items-center justify-center">
       <h1 className="font-bold text-2xl mb-6">리뷰 작성하기</h1>
-      <CreateReviewForm cafe_id={parseInt(cafe_id as string)} />
+      <CreateReviewForm cafe_id={parseInt(cafeId)} />
     </main>
   );
 };

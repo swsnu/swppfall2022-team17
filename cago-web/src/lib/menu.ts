@@ -27,7 +27,7 @@ export const deleteMenu = async (cafeId: number, menuId: number, token: string) 
   mutate(`/menus/?cafe_id=${cafeId}`);
 };
 
-export const useMenu = (cafeId: string | string[] | undefined) => {
+export const useMenu = (cafeId?: string) => {
   const { data } = useSWR<Menu[]>(cafeId && `/menus/?cafe_id=${cafeId}`, getCagoRequest());
 
   // Get the categories.

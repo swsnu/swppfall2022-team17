@@ -11,8 +11,7 @@ const RequireManager = ({ children }: Props) => {
   const { user } = useAuth();
 
   const router = useRouter();
-  const { cafe_id } = router.query;
-  const { data: cafe } = useCafe(cafe_id);
+  const { cafe } = useCafe(router.query.cafe_id as string);
 
   const redirect = "/admin/dashboard";
   const is_manager = user && cafe?.is_managed && cafe.managers.includes(user.id);
