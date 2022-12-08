@@ -14,7 +14,7 @@ describe("cago header", () => {
 
     it("is able to toggle cafe like", async () => {
       render(<CagoHeader />);
-      const toggleButton = await screen.findByRole("button", { name: /♥|♡/ });
+      const toggleButton = await screen.findByRole("button", { name: /[♥♡]/ });
       await userEvent.click(toggleButton);
     });
   });

@@ -68,8 +68,7 @@ export const parseE164 = (phone: string) => {
 /**
  * Modified version of uuid.
  */
-export const uuid = () =>
-  "xxxx-xxxx-xxxx-xxxx".replace(/[x]/g, () => ((Math.random() * 16) | 0).toString(16));
+export const uuid = () => "xxxx-xxxx-xxxx-xxxx".replace(/x/g, () => ((Math.random() * 16) | 0).toString(16));
 
 export const uploadImage = async (file: File) => {
   const ext = file.name.split(".").pop();

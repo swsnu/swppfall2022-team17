@@ -49,8 +49,6 @@ const CommentBox = ({ comment, cafeId }: Props) => {
     }
   };
 
-  // const last_updated = comment.is_updated ? comment.updated_at + " (수정됨)" : comment.created_at;
-
   return (
     <ul className="flex items-center min-h-12 max-h-24 py-2 px-1 shadow-sm">
       <li className="float-left w-1/6 text-left">

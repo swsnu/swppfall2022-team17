@@ -1,11 +1,11 @@
 import { Menu } from "lib/menu";
 import Image from "next/image";
 
-interface props {
+interface Props {
   menuList: Menu[];
 }
 
-const MenuSummary = ({ menuList: menuList }: props) => {
+const MenuSummary = ({ menuList: menuList }: Props) => {
   return (
     <div className="m-2 y-1/2">
       {

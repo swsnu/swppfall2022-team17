@@ -1,8 +1,8 @@
-interface props {
+interface Props {
   crowdedness: 0 | 1 | 2 | 3;
 }
 
-const Crowdedness = ({ crowdedness }: props) => {
+const Crowdedness = ({ crowdedness }: Props) => {
   return (
     <div className="h-4 relative max-w-xl rounded-full overflow-hidden">
       {crowdedness == 0 && <div className="w-full h-full bg-gray-900 absolute" />}

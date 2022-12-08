@@ -61,7 +61,7 @@ const KakaoMap = (props: Props) => {
       {loaded && currentLocation && (
         // Draw a map centered at the current position.
         <Map
-          center={{ lng: currentLocation!.x, lat: currentLocation!.y }}
+          center={{ lng: currentLocation.x, lat: currentLocation.y }}
           level={3}
           maxLevel={4}
           className={"w-full h-full" + " " + props.className} // class name can be passed as a prop.

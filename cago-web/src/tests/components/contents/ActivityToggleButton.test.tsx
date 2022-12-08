@@ -23,6 +23,5 @@ describe("activity toggle button", () => {
       name: /영업 중/,
     });
     await userEvent.click(toggleButton);
-    // await waitFor(() => screen.getByText("준비 중"));
   });
 });

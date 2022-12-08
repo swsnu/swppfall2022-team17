@@ -19,6 +19,8 @@ from .models import (
     ManagedCafe,
 )
 
+date_time_format = "%Y-%m-%d %H:%M:%S"
+
 
 class ReadOnlyModelSerializer(serializers.ModelSerializer):
     """
@@ -194,8 +196,8 @@ class CafeProfileSerializer(ReadOnlyModelSerializer):
 class CafeCommentSerializer(serializers.ModelSerializer):
     is_customer: bool = serializers.SerializerMethodField()
     author = CustomerProfileSerializer(source="author.customer_profile", read_only=True)
-    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    created_at = serializers.DateTimeField(format=date_time_format, read_only=True)
+    updated_at = serializers.DateTimeField(format=date_time_format, read_only=True)
     is_updated: bool = serializers.SerializerMethodField()
 
     class Meta:
@@ -252,8 +254,8 @@ class CafeCommentSerializer(serializers.ModelSerializer):
 
 class CafeArticleSerializer(serializers.ModelSerializer):
     comments = CafeCommentSerializer(many=True, read_only=True)
-    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    updated_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    created_at = serializers.DateTimeField(format=date_time_format, read_only=True)
+    updated_at = serializers.DateTimeField(format=date_time_format, read_only=True)
     is_updated = serializers.SerializerMethodField()
 
     class Meta:
@@ -317,7 +319,7 @@ class CafeImageSerialzier(serializers.ModelSerializer):
 
 class CafeReviewSerializer(serializers.ModelSerializer):
     author = CustomerProfileSerializer(source="author.customer_profile", read_only=True)
-    created_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    created_at = serializers.DateTimeField(format=date_time_format, read_only=True)
 
     class Meta:
         model = CafeReview

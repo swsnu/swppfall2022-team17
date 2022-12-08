@@ -38,7 +38,6 @@ const CreateMenuForm = (props: Props) => {
   };
 
   return (
-    // TODO: upload image
     <form className="flex flex-col" onSubmit={(e) => handleSubmit(e)}>
       {/* Menu name */}
       <input
