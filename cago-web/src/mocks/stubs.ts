@@ -1,5 +1,5 @@
-import { Cafe, ManagedCafe } from "components/contents/CafesMap";
 import { Article, Comment } from "lib/board";
+import { Cafe, ManagedCafe } from "lib/cafe";
 import { CafeImage } from "lib/image";
 import { Menu } from "lib/menu";
 import { Profile } from "lib/profile";

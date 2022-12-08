@@ -1,37 +1,11 @@
 import { AxiosError } from "axios";
+import { Cafe, ManagedCafe } from "lib/cafe";
 import { useState } from "react";
 import { CustomOverlayMap, MapMarker } from "react-kakao-maps-sdk";
 import useSWR from "swr";
 import { getCagoRequest } from "utils";
 import CafeOverlay from "./CafeOverlay";
 import KakaoMap, { Coordinates } from "./KakaoMap";
-
-export interface Cafe {
-  id: number;
-  is_managed: false;
-  name: string;
-  phone_number: string;
-  location: string[];
-  address: string;
-}
-
-export interface ManagedCafe extends Omit<Cafe, "is_managed"> {
-  is_managed: true;
-  avatar: string;
-  crowdedness: 0 | 1 | 2 | 3;
-  force_closed: boolean;
-  introduction: string;
-  managers: number[];
-  owner: number;
-  registration_number: number;
-  is_liked: boolean;
-  num_likes: number;
-  num_reviews: number;
-  num_taste: number;
-  num_service: number;
-  num_mood: number;
-  average_rating: number;
-}
 
 const greyMarker = "https://i.imgur.com/LmqKNbd.png";
 const redMarker = "https://i.imgur.com/js6V323.png";
