@@ -1,4 +1,4 @@
-import CafesMap from "components/contents/CafesMap";
+import CafesMap from "components/maps/CafesMap";
 import { act, render } from "tests/utils";
 
 describe("cafes map", () => {

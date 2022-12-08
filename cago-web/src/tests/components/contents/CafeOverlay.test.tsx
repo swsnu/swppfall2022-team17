@@ -1,5 +1,5 @@
-import CafeOverlay from "components/contents/CafeOverlay";
 import { Cafe } from "components/contents/CafesMap";
+import CafeOverlay from "components/maps/CafeOverlay";
 import { cafes } from "mocks/stubs";
 import { act, render } from "tests/utils";
 

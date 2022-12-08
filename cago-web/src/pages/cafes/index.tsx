@@ -1,4 +1,4 @@
-import CafesMap from "components/contents/CafesMap";
+import CafesMap from "components/maps/CafesMap";
 import CagoHeader from "components/layouts/CagoHeader";
 import RequireProfile from "components/layouts/RequireProfile";
 import { NextPageWithLayout } from "pages/_app";

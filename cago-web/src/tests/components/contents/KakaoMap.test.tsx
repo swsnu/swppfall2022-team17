@@ -1,4 +1,4 @@
-import KakaoMap from "components/contents/KakaoMap";
+import KakaoMap from "components/maps/KakaoMap";
 import { render } from "tests/utils";
 
 describe("kakao map", () => {

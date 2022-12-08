@@ -1,4 +1,4 @@
-import KakaoMap, { Coordinates } from "components/contents/KakaoMap";
+import KakaoMap, { Coordinates } from "components/maps/KakaoMap";
 import { useAuth } from "lib/auth";
 import { registerCafe } from "lib/cafe";
 import { useRouter } from "next/router";

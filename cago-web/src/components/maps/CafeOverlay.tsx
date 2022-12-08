@@ -2,8 +2,8 @@ import { useCafeImages } from "lib/image";
 import Image from "next/image";
 import Link from "next/link";
 import { parseE164 } from "utils";
+import Crowdedness from "../contents/Crowdedness";
 import { Cafe, ManagedCafe } from "./CafesMap";
-import Crowdedness from "./Crowdedness";
 
 const CafeOverlay = ({ cafe }: { cafe: Cafe | ManagedCafe }) => {
   const { mainImage } = useCafeImages(cafe.id.toString());
