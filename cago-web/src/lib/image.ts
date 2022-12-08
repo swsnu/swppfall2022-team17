@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import useSWR, { mutate } from "swr";
 import { getCagoRequest } from "utils";
 
-interface CafeImage {
+export interface CafeImage {
   id: number;
   cafe: number;
   url: string;
