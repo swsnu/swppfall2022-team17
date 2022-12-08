@@ -2,7 +2,11 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "sans": ["Noto Sans KR", "sans-serif"],
+      },
+    },
     screens: {
       xs: "360px",
       sm: "500px",
