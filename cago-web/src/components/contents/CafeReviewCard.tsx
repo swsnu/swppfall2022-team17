@@ -30,7 +30,6 @@ const CafeReviewCard = ({ review }: Props) => {
       <div className="flex gap-2 items-center h-full">
         <div className="relative w-8 h-8 xs:block hidden">
           <Image
-            loader={() => review.author.avatar}
             src={review.author.avatar}
             alt="review-author-profile-avatar"
             fill
