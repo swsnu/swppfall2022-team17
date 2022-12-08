@@ -28,7 +28,7 @@ describe("cafe menu container", () => {
       await act(() => {
         render(<CafeMenuContainer category={categoryStub} menuList={menuListStub} editable cafeId={1} />);
       });
-      const button = screen.getAllByRole("button", { name: /✖/ })[0];
+      const button = screen.getAllByRole("button")[0];
       await userEvent.click(button);
     });
   });
