@@ -1,5 +1,4 @@
 import axios from "axios";
-import { uuid } from "uuidv4";
 
 export interface CagoAPIError {
   type: string;
@@ -65,6 +64,12 @@ export const parseE164 = (phone: string) => {
 
   return res;
 };
+
+/**
+ * Modified version of uuid.
+ */
+export const uuid = () =>
+  "xxxx-xxxx-xxxx-xxxx".replace(/[x]/g, () => ((Math.random() * 16) | 0).toString(16));
 
 export const uploadImage = async (file: File) => {
   const ext = file.name.split(".").pop();
