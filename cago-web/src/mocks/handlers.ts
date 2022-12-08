@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { articles, cafes, cafe_menu, images, profile, reviews, token, user } from "./stubs";
+import { articles, cafes, cafe_menu, comments, images, profile, reviews, token, user } from "./stubs";
 
 // Simplest API handlers
 export const handlers = [
@@ -86,8 +86,12 @@ export const handlers = [
     return res(ctx.json(articles));
   }),
 
-  rest.patch("/baord/1/", (req, res, ctx) => {
+  rest.patch("/board/1/", (req, res, ctx) => {
     return res(ctx.json(articles[0]));
+  }),
+
+  rest.delete("/board/1/", (req, res, ctx) => {
+    return res(ctx.status(204));
   }),
 
   rest.get("/cafe-images/", (req, res, ctx) => {
@@ -112,5 +116,29 @@ export const handlers = [
 
   rest.delete("/reviews/1/", (req, res, ctx) => {
     return res(ctx.status(204));
+  }),
+
+  rest.put("https://cago-storage.s3.ap-northeast-2.amazonaws.com/user-content/*", (req, res, ctx) => {
+    return res();
+  }),
+
+  rest.post("/like/", (req, res, ctx) => {
+    return res();
+  }),
+
+  rest.delete("/like/", (req, res, ctx) => {
+    return res(ctx.status(204));
+  }),
+
+  rest.post("/comments/", (req, res, ctx) => {
+    return res(ctx.status(201), ctx.json(comments[0]));
+  }),
+
+  rest.delete("/comments/1/", (req, res, ctx) => {
+    return res(ctx.status(204));
+  }),
+
+  rest.patch("/comments/1/", (req, res, ctx) => {
+    return res(ctx.json(comments[0]));
   }),
 ];

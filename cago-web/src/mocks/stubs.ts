@@ -101,7 +101,7 @@ export const comments: Comment[] = [
     article: 1,
     content: "hello",
     is_customer: true,
-    author: profile2,
+    author: profile,
     created_at: "",
     updated_at: "",
     is_updated: false,
@@ -146,14 +146,51 @@ export const images: CafeImage[] = [
   },
 ];
 
+// Ignore 'one review per user' policy.
 export const reviews: Review[] = [
   {
     id: 1,
     cafe: 1,
-    author: profile2,
+    author: profile,
     content: "review 1",
-    rating: 3,
+    rating: 5,
     strength: "Taste",
+    created_at: "2022-12-10",
+  },
+  {
+    id: 2,
+    cafe: 1,
+    author: profile,
+    content: "review 2",
+    rating: 3,
+    strength: "Service",
+    created_at: "2022-12-10",
+  },
+  {
+    id: 3,
+    cafe: 1,
+    author: profile2,
+    content: "review 3",
+    rating: 4,
+    strength: "Taste",
+    created_at: "2022-12-10",
+  },
+  {
+    id: 4,
+    cafe: 4,
+    author: profile2,
+    content: "review 4",
+    rating: 1,
+    strength: "Mood",
+    created_at: "2022-12-10",
+  },
+  {
+    id: 5,
+    cafe: 5,
+    author: profile2,
+    content: "review 5",
+    rating: 2,
+    strength: "Service",
     created_at: "2022-12-10",
   },
 ];
