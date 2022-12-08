@@ -86,3 +86,35 @@ export const articles = [
     is_updated: false,
   },
 ];
+
+export const images = [
+  {
+    id: 1,
+    cafe: 1,
+    url: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+    is_main: true,
+  },
+  {
+    id: 2,
+    cafe: 1,
+    url: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+    is_main: false,
+  },
+];
+
+export const reviews = [
+  {
+    id: 1,
+    cafe: 1,
+    author: {
+      id: 1,
+      user: 2,
+      display_name: "test2",
+      avatar: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678099-profile-filled-512.png",
+    },
+    content: "review 1",
+    rating: 3,
+    strength: "Taste",
+    created_at: "2022-12-10",
+  },
+];

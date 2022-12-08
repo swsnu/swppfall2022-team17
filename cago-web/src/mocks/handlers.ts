@@ -1,5 +1,5 @@
 import { rest } from "msw";
-import { articles, cafes, cafe_menu, profile, token, user } from "./stubs";
+import { articles, cafes, cafe_menu, images, profile, reviews, token, user } from "./stubs";
 
 // Simplest API handlers
 export const handlers = [
@@ -84,5 +84,33 @@ export const handlers = [
 
   rest.get("/board/", (req, res, ctx) => {
     return res(ctx.json(articles));
+  }),
+
+  rest.patch("/baord/1/", (req, res, ctx) => {
+    return res(ctx.json(articles[0]));
+  }),
+
+  rest.get("/cafe-images/", (req, res, ctx) => {
+    return res(ctx.json(images));
+  }),
+
+  rest.post("/cafe-images/", (req, res, ctx) => {
+    return res(ctx.status(201), ctx.json(images[0]));
+  }),
+
+  rest.patch("/cafe-images/1/", (req, res, ctx) => {
+    return res(ctx.json(images[0]));
+  }),
+
+  rest.get("/reviews/", (req, res, ctx) => {
+    return res(ctx.json(reviews));
+  }),
+
+  rest.post("/reviews/", (req, res, ctx) => {
+    return res(ctx.status(201), ctx.json(reviews[0]));
+  }),
+
+  rest.delete("/reviews/1/", (req, res, ctx) => {
+    return res(ctx.status(204));
   }),
 ];
