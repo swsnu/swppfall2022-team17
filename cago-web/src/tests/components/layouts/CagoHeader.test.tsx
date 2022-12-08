@@ -5,11 +5,17 @@ import { rest } from "msw";
 import { render, screen } from "tests/utils";
 
 describe("cago header", () => {
-  describe("logouts on clicking the logout button", () => {
+  describe("if the user is logged in", () => {
     it("renders a logout button", async () => {
       render(<CagoHeader />);
       const logoutButton = await screen.findByRole("button", { name: /로그아웃/ });
       await userEvent.click(logoutButton);
+    });
+
+    it("is able to toggle cafe like", async () => {
+      render(<CagoHeader />);
+      const toggleButton = await screen.findByRole("button", { name: /♥|♡/ });
+      await userEvent.click(toggleButton);
     });
   });
 

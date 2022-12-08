@@ -55,7 +55,7 @@ const CafeReviewCard = ({ review }: Props) => {
         </article>
       </div>
       {deletable && (
-        <button onClick={(e) => handleDelete()} className="absolute top-0 right-0">
+        <button aria-label="delete" onClick={(e) => handleDelete()} className="absolute top-0 right-0">
           <IoMdClose />
         </button>
       )}

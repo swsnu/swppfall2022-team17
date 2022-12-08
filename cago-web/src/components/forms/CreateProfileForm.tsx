@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { uploadImage } from "utils";
 
-const CreateProfileForm: NextComponentType = () => {
+const   CreateProfileForm: NextComponentType = () => {
   const [displayName, setDisplayName] = useState<string>("");
   const [avatar, setAvatar] = useState<File>();
 

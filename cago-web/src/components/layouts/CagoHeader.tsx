@@ -55,7 +55,7 @@ const CagoHeader = () => {
                       handleToggleLike();
                     }}
                   >
-                    {(cafe as any)?.is_liked ? "♥" : "♡"}
+                    {cafe.is_liked ? "♥" : "♡"}
                   </button>
                 </li>
               )}

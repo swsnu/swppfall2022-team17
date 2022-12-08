@@ -35,6 +35,7 @@ const CafeIntroduction = (props: ReadOnlyProps | EditableProps) => {
 
       {editable && !isEditing && (
         <button
+          aria-label="edit"
           className="absolute rounded-tr top-0 right-0 p-2 text-black"
           onClick={(e) => {
             setEditingIntroduction(introduction);

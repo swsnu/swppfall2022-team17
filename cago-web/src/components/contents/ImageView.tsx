@@ -28,12 +28,14 @@ const ImageView = (props: Props) => {
 
           {/* Image slide controls. */}
           <button
+            aria-label="left"
             className="z-50 absolute left-0 bottom-1/2 translate-y-1/2 text-black"
             onClick={(e) => setIndex((index) => index - 1)}
           >
             <FaChevronLeft size={35} />
           </button>
           <button
+            aria-label="right"
             className="z-50 absolute right-0 bottom-1/2 translate-y-1/2 text-black"
             onClick={(e) => setIndex((index) => index + 1)}
           >
