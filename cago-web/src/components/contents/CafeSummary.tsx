@@ -1,6 +1,6 @@
+import { ManagedCafe } from "lib/cafe";
 import Link from "next/link";
 import { parseE164 } from "utils";
-import { ManagedCafe } from "./CafesMap";
 import CafeToggleSwitch from "./CafeToggleSwitch";
 
 interface Props {

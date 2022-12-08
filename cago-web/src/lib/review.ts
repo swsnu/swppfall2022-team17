@@ -9,26 +9,26 @@ export interface Review {
   author: Profile;
   content: string;
   rating: 1 | 2 | 3 | 4 | 5;
-  strength: string;
+  strength: "Taste" | "Service" | "Mood";
   created_at: string;
 }
 
 export const createReview = async (
-  cafe_id: number,
+  cafeId: number,
   content: string,
   rating: 1 | 2 | 3 | 4 | 5,
-  strength: string,
+  strength: "Taste" | "Service" | "Mood",
   token: string
 ) => {
   try {
     await getCagoRequest<Review>("post", token)("/reviews/", {
-      cafe: cafe_id,
+      cafe: cafeId,
       content: content,
       rating: rating,
       strength: strength,
     });
-    mutate(`/reviews/?cafe_id=${cafe_id}`);
-    mutate(`/cafes/${cafe_id}/`);
+    mutate(`/reviews/?cafe_id=${cafeId}`);
+    mutate(`/cafes/${cafeId}/`);
   } catch (error) {
     if (axios.isAxiosError<CagoAPIError>(error)) {
       const { errors } = error.response?.data!;
@@ -43,16 +43,16 @@ export const createReview = async (
   }
 };
 
-export const deleteReview = async (cafe_id: number, review_id: number, token: string) => {
+export const deleteReview = async (cafeId: number, review_id: number, token: string) => {
   await getCagoRequest("delete", token)(`/reviews/${review_id}/`);
-  mutate(`/reviews/?cafe_id=${cafe_id}`);
-  mutate(`/cafes/${cafe_id}/`);
+  mutate(`/reviews/?cafe_id=${cafeId}`);
+  mutate(`/cafes/${cafeId}/`);
 };
 
-export const useReviews = (cafe_id: string | string[] | undefined) => {
+export const useReviews = (cafeId: string | string[] | undefined) => {
   // Get the list of reviews
   const { data } = useSWR<Review[], AxiosError>(
-    cafe_id && `/reviews/?cafe_id=${cafe_id}`,
+    cafeId && `/reviews/?cafe_id=${cafeId}`,
     getCagoRequest("get")
   );
 

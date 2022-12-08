@@ -44,69 +44,64 @@ export interface CommentByCustomer {
   is_updated: boolean;
 }
 
-export const postArticle = async (cafe_id: string, title: string, content: string, token: string) => {
+export const postArticle = async (cafeId: string, title: string, content: string, token: string) => {
   await getCagoRequest<Article>("post", token)("/board/", {
-    cafe: cafe_id,
+    cafe: cafeId,
     title: title,
     content: content,
   });
-  mutate(`/board/?cafe_id=${cafe_id}`);
+  mutate(`/board/?cafe_id=${cafeId}`);
 };
 
 export const updateArticle = async (
-  cafe_id: number,
-  article_id: number,
+  cafeId: number,
+  articleId: number,
   data: { title?: string; content?: string },
   token: string
 ) => {
-  await getCagoRequest<Article>("patch", token)(`/board/${article_id}/`, data);
-  mutate(`/board/?cafe_id=${cafe_id}`);
-  mutate(`/board/${article_id}/`);
+  await getCagoRequest<Article>("patch", token)(`/board/${articleId}/`, data);
+  mutate(`/board/?cafe_id=${cafeId}`);
+  mutate(`/board/${articleId}/`);
 };
 
-export const deleteArticle = async (cafe_id: number, article_id: number, token: string) => {
-  await getCagoRequest("delete", token)(`/board/${article_id}/`);
-  mutate(`/board/?cafe_id=${cafe_id}`);
+export const deleteArticle = async (cafeId: number, articleId: number, token: string) => {
+  await getCagoRequest("delete", token)(`/board/${articleId}/`);
+  mutate(`/board/?cafe_id=${cafeId}`);
 };
 
-export const useArticles = (cafe_id: string | string[] | undefined) => {
+export const addComment = async (cafeId: number, articleId: number, content: string, token: string) => {
+  await getCagoRequest<Comment>("post", token)(`/comments/`, {
+    article: articleId,
+    content,
+  });
+  mutate(`/board/?cafe_id=${cafeId}`);
+  mutate(`/board/${articleId}/`);
+};
+
+export const updateComment = async (
+  cafeId: number,
+  articleId: number,
+  commentId: number,
+  content: string,
+  token: string
+) => {
+  await getCagoRequest<Comment>("patch", token)(`/comments/${commentId}/`, { content });
+  mutate(`/board/?cafe_id=${cafeId}`);
+  mutate(`/board/${articleId}/`);
+};
+
+export const deleteComment = async (cafeId: number, articleId: number, commentId: number, token: string) => {
+  await getCagoRequest("delete", token)(`/comments/${commentId}/`);
+  mutate(`/board/?cafe_id=${cafeId}`);
+  mutate(`/board/${articleId}/`);
+};
+
+export const useArticles = (cafeId: string | string[] | undefined) => {
   // Fetch cafe only when the user at admin dashboard detail page.
   const { data } = useSWR<Article[], AxiosError>(
-    cafe_id && `/board/?cafe_id=${cafe_id}`,
+    cafeId && `/board/?cafe_id=${cafeId}`,
     getCagoRequest("get")
   );
 
   return { articles: data ?? [] };
-};
-
-export const addComment = async (cafe_id: number, article_id: number, content: string, token: string) => {
-  await getCagoRequest<Comment>("post", token)(`/comments/`, {
-    article: article_id,
-    content,
-  });
-  mutate(`/board/?cafe_id=${cafe_id}`);
-  mutate(`/board/${article_id}/`);
-};
-
-export const updateComment = async (
-  cafe_id: number,
-  article_id: number,
-  comment_id: number,
-  content: string,
-  token: string
-) => {
-  await getCagoRequest<Comment>("patch", token)(`/comments/${comment_id}/`, { content });
-  mutate(`/board/?cafe_id=${cafe_id}`);
-  mutate(`/board/${article_id}/`);
-};
-
-export const deleteComment = async (
-  cafe_id: number,
-  article_id: number,
-  comment_id: number,
-  token: string
-) => {
-  await getCagoRequest("delete", token)(`/comments/${comment_id}/`);
-  mutate(`/board/?cafe_id=${cafe_id}`);
-  mutate(`/board/${article_id}/`);
 };

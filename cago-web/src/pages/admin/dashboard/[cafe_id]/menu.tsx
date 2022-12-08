@@ -14,7 +14,7 @@ const DashboardMenu: NextPageWithLayout = () => {
   const { cafe_id } = router.query;
   const { mainMenuList, categorizedMenuList } = useMenu(cafe_id);
 
-  const cafeId = parseInt(cafe_id as any);
+  const cafeId = parseInt(cafe_id as string);
 
   const [showAddMenuModal, setShowAddMenuModal] = useState<boolean>(false);
 

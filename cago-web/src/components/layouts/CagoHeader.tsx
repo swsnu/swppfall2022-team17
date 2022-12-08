@@ -22,7 +22,7 @@ const CagoHeader = () => {
 
   const handleToggleLike = async () => {
     if (cafe?.is_managed && user) {
-      if ((cafe as any)?.is_liked) {
+      if (cafe.is_liked) {
         await getCagoRequest("delete", user.token)("/like/", { cafe: cafe.id });
         mutate(`/cafes/${cafe.id}/`);
       } else {

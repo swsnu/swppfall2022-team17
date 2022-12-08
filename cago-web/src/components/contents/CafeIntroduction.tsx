@@ -20,7 +20,7 @@ const CafeIntroduction = (props: ReadOnlyProps | EditableProps) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editingIntroduction, setEditingIntroduction] = useState<string>("");
 
-  const onIntroductionSave = async () => {
+  const handleIntroductionSave = async () => {
     if (editable && user) {
       setIsEditing(false);
       await updateCafeIntroduction(props.cafeId, editingIntroduction, user.token);
@@ -54,7 +54,7 @@ const CafeIntroduction = (props: ReadOnlyProps | EditableProps) => {
             className="w-full mb-4 block rounded resize-none p-2"
             rows={5}
           />
-          <button className="contained w-full" onClick={(e) => onIntroductionSave()}>
+          <button className="contained w-full" onClick={(e) => handleIntroductionSave()}>
             저장하기
           </button>
         </>

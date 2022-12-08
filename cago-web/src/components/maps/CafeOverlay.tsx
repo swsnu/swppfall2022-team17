@@ -1,11 +1,15 @@
+import { Cafe, ManagedCafe } from "lib/cafe";
 import { useCafeImages } from "lib/image";
 import Image from "next/image";
 import Link from "next/link";
 import { parseE164 } from "utils";
 import Crowdedness from "../contents/Crowdedness";
-import { Cafe, ManagedCafe } from "./CafesMap";
 
-const CafeOverlay = ({ cafe }: { cafe: Cafe | ManagedCafe }) => {
+interface Props {
+  cafe: Cafe | ManagedCafe;
+}
+
+const CafeOverlay = ({ cafe }: Props) => {
   const { mainImage } = useCafeImages(cafe.id.toString());
 
   return (

@@ -72,7 +72,7 @@ const ArticlePreview = (props: Props) => {
           </ul>
         </li>
         <li className="float-left w-3/5 text-center break-all">
-          {!isEditing && <div className="text-xl font-extrabold">{article.title}</div>}
+          {!isEditing && <div className="text-xl font-semibold">{article.title}</div>}
           {/* If editting is true, users can enter the new title. */}
           {isEditing && (
             <input
@@ -95,7 +95,7 @@ const ArticlePreview = (props: Props) => {
   );
 
   const articleContent = (
-    <>
+    <main>
       {!isEditing && (
         <article className="text-lg font-normal max-h-[50vh] break-all overflow-y-auto px-1 mb-1 mt-1 whitespace-pre-line shadow-sm min-h-[100px]">
           {article.content}
@@ -112,7 +112,7 @@ const ArticlePreview = (props: Props) => {
           className="outlined font-normal mb-2 min-h-[300px]"
         />
       )}
-    </>
+    </main>
   );
 
   const articleFooter = (
@@ -185,7 +185,7 @@ const ArticlePreview = (props: Props) => {
   );
 
   return (
-    <div className="flex flex-col justify-start shadow-md my-3">
+    <div className="flex flex-col justify-start shadow-md rounded my-3">
       {articleHeader}
       {articleContent}
       {articleFooter}

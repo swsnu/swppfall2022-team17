@@ -1,6 +1,6 @@
 import userEvent from "@testing-library/user-event";
 import ArticlePreview from "components/contents/ArticlePreview";
-import { ManagedCafe } from "components/contents/CafesMap";
+import { ManagedCafe } from "components/maps/CafesMap";
 import { articles, cafes } from "mocks/stubs";
 import { act, render, screen } from "tests/utils";
 

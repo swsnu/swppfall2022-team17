@@ -1,11 +1,11 @@
 import userEvent from "@testing-library/user-event";
-import { ManagedCafe } from "components/contents/CafesMap";
 import CafeToggleSwitch from "components/contents/CafeToggleSwitch";
+import { ManagedCafe } from "lib/cafe";
 import { cafes } from "mocks/stubs";
 import { act } from "react-dom/test-utils";
 import { render, screen } from "tests/utils";
 
-const cafe = cafes[0] as unknown as ManagedCafe;
+const cafe = cafes[0] as ManagedCafe;
 
 describe("open toggle switch", () => {
   it("follows the cafe's force-closed state", async () => {

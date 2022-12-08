@@ -1,10 +1,10 @@
 import { AxiosError } from "axios";
-import { ManagedCafe } from "components/contents/CafesMap";
 import CafeSummary from "components/contents/CafeSummary";
 import CagoAdminHeader from "components/layouts/CagoAdminHeader";
 import Container from "components/layouts/Container";
 import RequireLogin from "components/layouts/RequireLogin";
 import { useAuth } from "lib/auth";
+import { ManagedCafe } from "lib/cafe";
 import Link from "next/link";
 import { NextPageWithLayout } from "pages/_app";
 import useSWR from "swr";

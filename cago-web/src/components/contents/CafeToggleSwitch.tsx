@@ -1,7 +1,7 @@
 import { useAuth } from "lib/auth";
+import { ManagedCafe } from "lib/cafe";
 import { mutate } from "swr";
 import { getCagoRequest } from "utils";
-import { ManagedCafe } from "./CafesMap";
 
 interface Props {
   cafe: ManagedCafe;
@@ -16,7 +16,6 @@ const CafeToggleSwitch = ({ cafe }: Props) => {
     "py-2 px-4 rounded-3xl text-sm font-semibold bg-white hover:bg-slate-50 ring-2 ring-black";
 
   const handleToggle: React.MouseEventHandler = async (e) => {
-
     e.preventDefault();
 
     if (user) {
