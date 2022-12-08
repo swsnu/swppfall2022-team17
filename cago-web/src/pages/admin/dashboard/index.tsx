@@ -25,7 +25,7 @@ const Dashboard: NextPageWithLayout = () => {
         {cafes &&
           cafes.map((cafe) => {
             return (
-              <div key={cafe.id} className="relative">
+              <div key={cafe.id} className="relative zoom">
                 <Link
                   href={`/admin/dashboard/${cafe.id}`}
                   className="block w-full pl-12 pr-24 py-5 shadow-lg rounded-lg"

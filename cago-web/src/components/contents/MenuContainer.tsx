@@ -26,7 +26,7 @@ const CafeMenuCard = (props: CardProps) => {
   const { name, price, image } = props;
 
   return (
-    <div className="relative text-center p-4 shadow-xl rounded-lg w-48 h-fit hover:scale-105 transition-transform">
+    <div className="relative text-center p-4 shadow-xl rounded-lg w-48 h-fit zoom">
       <Image src={image} alt="cafe-menu" width={160} height={160} className="mb-2" />
       <h5 className="font-semibold text-lg">{name}</h5>
       <h5>{price}원</h5>

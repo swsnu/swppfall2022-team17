@@ -24,7 +24,7 @@ const ReviewSummary = ({ reviews }: Props) => {
             return (
               <div
                 key={`review-${review.id}`}
-                className="bg-white hover:bg-gray-50 shadow-lg rounded-lg py-2 px-4 mb-2 min-w-fit flex flex-col"
+                className="bg-white zoom shadow-lg rounded-lg py-2 px-4 mb-2 min-w-fit flex flex-col"
               >
                 <Star rating={review.rating} />
                 <div className="my-1 text-xl">{review.strength}</div>

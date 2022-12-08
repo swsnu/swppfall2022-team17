@@ -23,7 +23,7 @@ const MenuSummary = ({ menuList: menuList }: Props) => {
                 return (
                   <div
                     key={`menu-${menu.id}`}
-                    className="shadow-lg p-2 my-2 min-w-fit flex flex-col rounded-lg justify-center text-center bg-white hover:bg-gray-50"
+                    className="shadow-lg p-2 my-2 min-w-fit flex flex-col rounded-lg justify-center text-center bg-white zoom"
                   >
                     <div>{menu.name}</div>
                     <hr className="my-1" />

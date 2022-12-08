@@ -15,7 +15,7 @@ const BoardSummary = ({ articles }: Props) => {
               return (
                 <div
                   key={`article-${article.id}`}
-                  className="shadow-lg rounded-lg p-4 my-2 bg-white hover:bg-gray-50"
+                  className="shadow-lg rounded-lg p-4 my-2 bg-white zoom"
                 >
                   <h4 className="w-48 h-32 text-justify text-md break-all overflow-y-auto scrollbar-hide">
                     {article.title}

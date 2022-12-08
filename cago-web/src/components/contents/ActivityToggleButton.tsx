@@ -12,8 +12,7 @@ const ActivityToggleButton = ({ cafe }: Props) => {
 
   const openClassName =
     "py-2 px-4 rounded-3xl text-sm text-white font-semibold bg-gray-900 bg-gray-900 hover:bg-gray-700";
-  const closedClassName =
-    "py-2 px-4 rounded-3xl text-sm font-semibold bg-white hover:bg-gray-50 ring-2 ring-black";
+  const closedClassName = "py-2 px-4 rounded-3xl text-sm font-semibold bg-white ring-2 ring-black";
 
   const handleToggle: React.MouseEventHandler = async (e) => {
     e.preventDefault();
