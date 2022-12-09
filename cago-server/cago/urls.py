@@ -21,8 +21,6 @@ from drf_spectacular.views import (
     SpectacularSwaggerView,
 )
 
-from .cafe.urls import urlpatterns
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("cago.user.urls", namespace="auth")),
@@ -39,4 +37,5 @@ urlpatterns = [
         SpectacularRedocView.as_view(url_name="schema"),
         name="redoc",
     ),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
