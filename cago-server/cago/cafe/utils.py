@@ -11,5 +11,3 @@ def parse_coordinate(coord):
         raise ValueError("invalid coordinate format")
 
     return Point(coord)
-
-

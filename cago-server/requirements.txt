@@ -1,5 +1,6 @@
 asgiref==3.5.2
 astroid==2.12.12
+async-timeout==4.0.2
 attrs==22.1.0
 black==22.10.0
 Brotli==1.0.9
@@ -14,9 +15,11 @@ django-cors-headers==3.13.0
 django-extensions==3.2.1
 django-filter==22.1
 django-phonenumber-field==7.0.0
+django-redis==5.2.0
 django_debug_toolbar==3.8.1
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
+drf-extensions==0.7.1
 drf-spectacular==0.24.2
 drf-standardized-errors==0.12.2
 Flask==2.2.2
@@ -53,6 +56,7 @@ python-decouple==3.6
 pytz==2022.5
 PyYAML==6.0
 pyzmq==24.0.1
+redis==4.4.0
 requests==2.28.1
 roundrobin==0.0.4
 six==1.16.0

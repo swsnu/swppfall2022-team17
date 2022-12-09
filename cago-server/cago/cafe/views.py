@@ -16,7 +16,20 @@ from rest_framework.mixins import (
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView, Response
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
+from rest_framework_extensions.cache.decorators import cache_response
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
+from cago.cafe.cache import (
+    CAFE_ARTICLE_PREFIX,
+    CAFE_COMMENT_PREFIX,
+    CAFE_IMAGE_PREFIX,
+    CAFE_MENU_PREFIX,
+    CAFE_PREFIX,
+    CAFE_REVIEW_PREFIX,
+    PROFILE_PREFIX,
+    PrefixedKeyConstructor,
+    UserKeyConstructor,
+)
 from cago.cafe.permissions import BaseEditOwnerOnly
 from cago.cafe.serializers import (
     CafeArticleSerializer,
@@ -44,7 +57,9 @@ from .models import (
 User = get_user_model()
 
 
-class CustomerProfileViewSet(CreateModelMixin, UpdateModelMixin, GenericViewSet):
+class CustomerProfileViewSet(
+    CacheResponseMixin, CreateModelMixin, UpdateModelMixin, GenericViewSet
+):
     class EditOwnerOnly(BaseEditOwnerOnly):
         owner_field = "user"
 
@@ -59,6 +74,7 @@ class CustomerProfileViewSet(CreateModelMixin, UpdateModelMixin, GenericViewSet)
             raise ValidationError("customer profile already exists", "unique")
 
     @action(detail=False, permission_classes=[IsAuthenticated])
+    @cache_response(key_func=UserKeyConstructor(PROFILE_PREFIX))
     def me(self, request):
         customer_profile = get_object_or_404(CustomerProfile, user=request.user)
         serializer = self.get_serializer(customer_profile)
@@ -67,6 +83,7 @@ class CustomerProfileViewSet(CreateModelMixin, UpdateModelMixin, GenericViewSet)
 
 
 class CafeViewSet(
+    CacheResponseMixin,
     CreateModelMixin,
     RetrieveModelMixin,
     ListModelMixin,
@@ -107,6 +124,8 @@ class CafeViewSet(
     filterset_class = CafeFilter
     ordering_fields = ["id"]
     ordering = ["id"]
+    object_cache_key_func = UserKeyConstructor(CAFE_PREFIX)
+    list_cache_key_func = UserKeyConstructor(CAFE_PREFIX)
 
     def get_queryset(self):
         if self.request.method in ["GET"]:
@@ -158,6 +177,7 @@ class CafeViewSet(
 
 
 class CafeMenuViewSet(
+    CacheResponseMixin,
     CreateModelMixin,
     ListModelMixin,
     UpdateModelMixin,
@@ -180,6 +200,8 @@ class CafeMenuViewSet(
     filterset_fields = ["cafe_id"]
     ordering_fields = ["id", "is_main", "category"]
     ordering = ["category", "-is_main", "id"]
+    object_cache_key_func = PrefixedKeyConstructor(CAFE_MENU_PREFIX)
+    list_cache_key_func = PrefixedKeyConstructor(CAFE_MENU_PREFIX)
 
 
 class CafeLikeAPIView(APIView):
@@ -203,6 +225,7 @@ class CafeLikeAPIView(APIView):
 
 
 class CafeImageViewSet(
+    CacheResponseMixin,
     CreateModelMixin,
     ListModelMixin,
     UpdateModelMixin,
@@ -225,9 +248,11 @@ class CafeImageViewSet(
     filterset_fields = ["cafe_id"]
     ordering_fields = ["id", "is_main"]
     ordering = ["-is_main", "id"]
+    object_cache_key_func = PrefixedKeyConstructor(CAFE_IMAGE_PREFIX)
+    list_cache_key_func = PrefixedKeyConstructor(CAFE_IMAGE_PREFIX)
 
 
-class CafeArticleViewSet(ModelViewSet):
+class CafeArticleViewSet(CacheResponseMixin, ModelViewSet):
     class EditOwnerOnly(BaseEditOwnerOnly):
         owner_field = "owner"
         owners_field = "managers"
@@ -243,6 +268,8 @@ class CafeArticleViewSet(ModelViewSet):
     filterset_fields = ["cafe_id"]
     ordering_fields = ["created_at", "updated_at"]
     ordering = ["-created_at"]
+    object_cache_key_func = PrefixedKeyConstructor(CAFE_ARTICLE_PREFIX)
+    list_cache_key_func = PrefixedKeyConstructor(CAFE_ARTICLE_PREFIX)
 
     def get_queryset(self):
         comments_qs = (
@@ -265,6 +292,7 @@ class CafeArticleViewSet(ModelViewSet):
 
 
 class CafeCommentViewSet(
+    CacheResponseMixin,
     CreateModelMixin,
     ListModelMixin,
     UpdateModelMixin,
@@ -292,12 +320,15 @@ class CafeCommentViewSet(
     filterset_fields = ["article_id"]
     ordering_fields = ["id", "created_at", "updated_at"]
     ordering = ["created_at"]
+    object_cache_key_func = PrefixedKeyConstructor(CAFE_COMMENT_PREFIX)
+    list_cache_key_func = PrefixedKeyConstructor(CAFE_COMMENT_PREFIX)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
 
 class CafeReviewViewSet(
+    CacheResponseMixin,
     CreateModelMixin,
     ListModelMixin,
     DestroyModelMixin,
@@ -312,6 +343,8 @@ class CafeReviewViewSet(
     filterset_fields = ["cafe_id"]
     ordering_fields = ["id", "created_at"]
     ordering = ["-created_at"]
+    object_cache_key_func = PrefixedKeyConstructor(CAFE_REVIEW_PREFIX)
+    list_cache_key_func = PrefixedKeyConstructor(CAFE_REVIEW_PREFIX)
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)

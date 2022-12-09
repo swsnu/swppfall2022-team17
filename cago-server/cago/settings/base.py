@@ -73,6 +73,25 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
 }
 
+REST_FRAMEWORK_EXTENSIONS = {
+    "DEFAULT_CACHE_RESPONSE_TIMEOUT": 300,
+    "DEFAULT_CACHE_ERRORS": False,
+}
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
