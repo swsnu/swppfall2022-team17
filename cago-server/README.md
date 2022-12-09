@@ -77,7 +77,7 @@ GRANT ALL PRIVILEGES ON DATABASE cago TO postgres;
 ```bash
 source .venv/bin/activate
 gunicorn cago.wsgi --bind 127.0.0.1:8000 --workers 8
-locust -f locustfile.py -H "http://127.0.0.1:8000 -u 1000 -r 50 -t 3m"
+locust -f locustfile.py -H "http://127.0.0.1:8000 -u 3000 -r 300 -t 30s"
 ```
 
 Visit `http://127.0.0.1:8089`
