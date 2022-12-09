@@ -42,7 +42,7 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 
 
 class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
-    is_liked: bool = serializers.SerializerMethodField()
+    is_liked = serializers.BooleanField(read_only=True)
     num_likes = serializers.IntegerField(read_only=True)
     num_reviews = serializers.IntegerField(read_only=True)
     num_taste = serializers.IntegerField(read_only=True)
@@ -75,13 +75,6 @@ class ManagedCafeReadOnlySerializer(ReadOnlyModelSerializer):
             "num_mood",
             "average_rating",
         ]
-
-    def get_is_liked(self, obj):
-        user = self.context["request"].user
-        if user is None:
-            return False
-
-        return obj.liked_users.filter(id=user.id).exists()
 
 
 class CafeReadOnlySerializer(ReadOnlyModelSerializer):
@@ -194,7 +187,7 @@ class CafeProfileSerializer(ReadOnlyModelSerializer):
 
 
 class CafeCommentSerializer(serializers.ModelSerializer):
-    is_customer: bool = serializers.SerializerMethodField()
+    is_customer = serializers.BooleanField(read_only=True)
     author = CustomerProfileSerializer(source="author.customer_profile", read_only=True)
     created_at = serializers.DateTimeField(format=date_time_format, read_only=True)
     updated_at = serializers.DateTimeField(format=date_time_format, read_only=True)
@@ -213,14 +206,6 @@ class CafeCommentSerializer(serializers.ModelSerializer):
             "is_updated",
         ]
         read_only_fields = ["author"]
-
-    def get_is_customer(self, obj):
-        author = obj.author
-        cafe = obj.article.cafe
-        if cafe.managers.filter(id=author.id).exists() or author.id == cafe.owner.id:
-            return False
-        else:
-            return True
 
     def get_is_updated(self, obj):
         return obj.updated_at - obj.created_at > timezone.timedelta(seconds=1)
@@ -242,12 +227,8 @@ class CafeCommentSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         response = super().to_representation(instance)
-        author = instance.author
-        cafe = instance.article.cafe
-
-        # Replace author to CafeProfileSerializer if the comment is written by a manager.
-        if cafe.managers.filter(id=author.id).exists() or author.id == cafe.owner.id:
-            response["author"] = CafeProfileSerializer(cafe).data
+        if hasattr(instance, "is_customer") and not instance.is_customer:
+            response["author"] = CafeProfileSerializer(instance.article.cafe).data
 
         return response
 

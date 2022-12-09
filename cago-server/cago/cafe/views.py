@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.gis.measure import D
-from django.db import IntegrityError
+from django.db import IntegrityError, models
+from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django_filters import rest_framework as filters
 from rest_framework.decorators import action
@@ -109,7 +110,34 @@ class CafeViewSet(
 
     def get_queryset(self):
         if self.request.method in ["GET"]:
-            return Cafe.objects.all()
+            # Managed cafe queryset with the annotated fields.
+            managecafe_qs = ManagedCafe.objects.annotate(
+                is_liked=models.Exists(
+                    ManagedCafe.objects.filter(
+                        pk=models.OuterRef("pk"),
+                        liked_users=self.request.user.id,
+                    )
+                ),
+                num_likes=models.Count("liked_users", distinct=True),
+                num_reviews=models.Count("reviews", distinct=True),
+                num_taste=models.Count(
+                    "reviews", filter=models.Q(reviews__strength="Taste"), distinct=True
+                ),
+                num_service=models.Count(
+                    "reviews",
+                    filter=models.Q(reviews__strength="Service"),
+                    distinct=True,
+                ),
+                num_mood=models.Count(
+                    "reviews", filter=models.Q(reviews__strength="Mood"), distinct=True
+                ),
+                average_rating=models.Avg("reviews__rating"),
+            ).prefetch_related("managers")
+
+            return Cafe.objects.all().prefetch_related(
+                models.Prefetch("managedcafe", managecafe_qs)
+            )
+        # No need to show annotated fields on create or update.
         else:
             return ManagedCafe.objects.all()
 
@@ -210,12 +238,30 @@ class CafeArticleViewSet(ModelViewSet):
             obj = obj.cafe
             return super().has_object_permission(request, view, obj)
 
-    queryset = BoardArticle.objects.all()
     serializer_class = CafeArticleSerializer
     permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
     filterset_fields = ["cafe_id"]
     ordering_fields = ["created_at", "updated_at"]
     ordering = ["-created_at"]
+
+    def get_queryset(self):
+        comments_qs = (
+            BoardComment.objects.all()
+            .select_related("author__customer_profile", "article__cafe")
+            .annotate(
+                is_customer=models.Exists(
+                    BoardComment.objects.filter(
+                        ~Q(article__cafe__managers=models.OuterRef("author"))
+                        & ~Q(article__cafe__owner=models.OuterRef("author")),
+                        pk=models.OuterRef("pk"),
+                    )
+                )
+            )
+        )
+
+        return BoardArticle.objects.all().prefetch_related(
+            models.Prefetch("comments", comments_qs)
+        )
 
 
 class CafeCommentViewSet(
@@ -228,7 +274,19 @@ class CafeCommentViewSet(
     class EditOwnerOnly(BaseEditOwnerOnly):
         owner_field = "author"
 
-    queryset = BoardComment.objects.all()
+    queryset = (
+        BoardComment.objects.all()
+        .select_related("author__customer_profile", "article__cafe")
+        .annotate(
+            is_customer=models.Exists(
+                BoardComment.objects.filter(
+                    ~Q(article__cafe__managers=models.OuterRef("author"))
+                    & ~Q(article__cafe__owner=models.OuterRef("author")),
+                    pk=models.OuterRef("pk"),
+                )
+            )
+        )
+    )
     serializer_class = CafeCommentSerializer
     permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
     filterset_fields = ["article_id"]
@@ -248,7 +306,7 @@ class CafeReviewViewSet(
     class EditOwnerOnly(BaseEditOwnerOnly):
         owner_field = "author"
 
-    queryset = CafeReview.objects.all()
+    queryset = CafeReview.objects.all().select_related("author__customer_profile")
     serializer_class = CafeReviewSerializer
     permission_classes = [EditOwnerOnly, IsAuthenticatedOrReadOnly]
     filterset_fields = ["cafe_id"]

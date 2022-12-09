@@ -25,25 +25,11 @@ class CustomerProfile(models.Model):
         verbose_name_plural = "customer_profiles"
 
 
-class CafeManager(models.Manager):
-    def get_queryset(self):
-        """
-        Prefetch to use ManagedCafe's custom model manager which includes annotation fields.
-        """
-        return (
-            super()
-            .get_queryset()
-            .prefetch_related(models.Prefetch("managedcafe", ManagedCafe.objects.all()))
-        )
-
-
 class Cafe(models.Model):
     name = models.CharField(max_length=128)  # auto-created name by parsing
     phone_number = PhoneNumberField(blank=True, null=True)
     location = PointField(blank=False, null=False, default=Point(0, 0))
     address = models.CharField(max_length=256)
-
-    objects = CafeManager()
 
     class Meta:
         verbose_name = "cafe"
@@ -53,35 +39,6 @@ class Cafe(models.Model):
     def is_managed(self):
         if hasattr(self, "managedcafe"):
             return True
-
-        return False
-
-
-class ManagedCafeManager(models.Manager):
-    def get_queryset(self):
-        """
-        Add num_likes, num_reviews, num_taste, num_service, num_mood, average_rating
-        """
-        return (
-            super()
-            .get_queryset()
-            .annotate(
-                num_likes=models.Count("liked_users", distinct=True),
-                num_reviews=models.Count("reviews", distinct=True),
-                num_taste=models.Count(
-                    "reviews", filter=models.Q(reviews__strength="Taste"), distinct=True
-                ),
-                num_service=models.Count(
-                    "reviews",
-                    filter=models.Q(reviews__strength="Service"),
-                    distinct=True,
-                ),
-                num_mood=models.Count(
-                    "reviews", filter=models.Q(reviews__strength="Mood"), distinct=True
-                ),
-                average_rating=models.Avg("reviews__rating"),
-            )
-        )
 
 
 class ManagedCafe(Cafe):
@@ -105,8 +62,6 @@ class ManagedCafe(Cafe):
         choices=Crowdedness.choices, default=Crowdedness.UNKNOWN
     )
     liked_users = models.ManyToManyField(User, related_name="liked_cafes")
-
-    objects = ManagedCafeManager()
 
     class Meta:
         verbose_name = "managed_cafe"
