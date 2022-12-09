@@ -1,7 +1,7 @@
 from locust import HttpUser, between, task
 
 credentials = {"email": "test1@test.com", "password": "qwer1234"}
-cafe_id = 1
+cafe_id = 396
 
 
 class APIUser(HttpUser):
