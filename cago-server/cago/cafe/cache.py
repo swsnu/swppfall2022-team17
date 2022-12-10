@@ -47,12 +47,12 @@ def set_receivers_for_invalidation(prefix, model, m2m_fields=[]):
     def invalidate(sender=None, instance=None, *args, **kwargs):
         cache.delete_pattern(f"{prefix}:*")
 
-    post_save.connect(receiver=invalidate, sender=model)
-    post_delete.connect(receiver=invalidate, sender=model)
+    post_save.connect(receiver=invalidate, sender=model, weak=False)
+    post_delete.connect(receiver=invalidate, sender=model, weak=False)
 
     for m2m_field in m2m_fields:
         m2m_changed.connect(
-            receiver=invalidate, sender=getattr(model, m2m_field).through
+            receiver=invalidate, sender=getattr(model, m2m_field).through, weak=False
         )
 
 
