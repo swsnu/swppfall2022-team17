@@ -37,23 +37,24 @@ pacman, brew, apt, whatever...
 ```bash
 postgresql@14   # For running development database
 postgis         # For using GeoDjango APIs with postgresql
+redis           # Local cache server
 ```
 
 ## Development Database
 
-### Running and checking postgresql daemon
+### Running the daemons
 ```bash
 # systemctl
 sudo systemctl start postgresql
-sudo systemctl status postgresql
+sudo systemctl start redis
 
 # brew
 brew services run postgresql
-brew services info postgresql
+brew services run redis-server
 
 # service
 sudo service postgresql start
-sudo service postgresql status
+sudo service redis-server start
 
 # else, RTFM
 ```
@@ -72,7 +73,7 @@ ALTER ROLE postgres SET TIMEZONE TO 'Asia/Seoul';
 GRANT ALL PRIVILEGES ON DATABASE cago TO postgres;
 ```
 
-### Load testing with Locust
+## Load testing with Locust
 
 ```bash
 source .venv/bin/activate
