@@ -9,7 +9,7 @@ jobs:
       python: 3.10
       services:
         - postgresql
-        - redis-server
+        - redis
       env:
         - MODE="DEVELOPMENT"
         - DJANGO_SECRET_KEY="django-insecure-u(^8h(h2@+++ayblbqsn!zw#w4yl$^6o2(_mi3j*iijd#l1m3h"
