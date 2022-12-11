@@ -9,13 +9,18 @@ jobs:
       python: 3.10
       services:
         - postgresql
-        - redis
       env:
         - MODE="DEVELOPMENT"
         - DJANGO_SECRET_KEY="django-insecure-u(^8h(h2@+++ayblbqsn!zw#w4yl$^6o2(_mi3j*iijd#l1m3h"
         - DB_HOST="127.0.0.1"
         - DB_PASSWORD="qwer1234"
       addons:
+        apt:
+          sources:
+            - sourceline: "ppa:chris-lea/redis-server"
+          packages:
+            - redis-tools
+            - redis-server
         sonarcloud:
           organization: swsnu
           token:
@@ -33,6 +38,7 @@ jobs:
         - cd ..
         - gem install coveralls-lcov
       before_script:
+        - sudo systemctl start redis
         - psql --version
         - psql -U postgres -c 'CREATE DATABASE cago;'
         - psql -U postgres -c "ALTER USER postgres WITH PASSWORD '"$DB_PASSWORD"';"
