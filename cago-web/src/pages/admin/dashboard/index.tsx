@@ -42,7 +42,7 @@ const Dashboard: NextPageWithLayout = () => {
                 </Link>
 
                 {/* Toggle Switch */}
-                <div className="z-50 absolute right-6 bottom-1/2 translate-y-1/2">
+                <div className="z-10 absolute right-6 bottom-1/2 translate-y-1/2">
                   <ActivityToggleButton cafe={cafe} />
                 </div>
               </div>
